@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class FactoryBase (ABC):
 
     @abstractmethod
-    def getDataPreProcessor():
+    def getDataPreProcessorType():
         pass
 
     @abstractmethod

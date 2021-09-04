@@ -4,14 +4,14 @@ import numpy as np
 
 class SimpleDataPreProcessor (PreProcessDataBase):
 
-    def __init__(self, train_data, dataIncludesLabels=True) -> None:
-        super().__init__(train_data, dataIncludesLabels)
+    def __init__(self, data, dataIncludesLabels=True) -> None:
+        super().__init__(data, dataIncludesLabels)
         self.dataIsProcessed = False
 
     def getProcessedData(self):
         if(not self.dataIsProcessed):
             self.preProcessData()
-        return self.y, self.X
+        return np.array(self.y), np.array(self.X)
 
     def preProcessData(self):
         self.eliminateFirstColumnInTrainData()
@@ -26,19 +26,19 @@ class SimpleDataPreProcessor (PreProcessDataBase):
 
     def eliminateFirstColumnInTrainData(self):
         newData = []
-        for line in self.train_data:
+        for line in self.data:
             newData.append(line[1:])
-        self.train_data = newData
+        self.data = newData
 
     def seperateLabelsFromData(self):
         self.y = []
         self.X = []
-        for line in self.train_data:
+        for line in self.data:
             self.y.append(line[0])
             self.X.append(line[1:])
     
     def createXAndMockLabels(self):
-        self.X = self.train_data
+        self.X = self.data
         self.y = None
 
     def scaleValuesInX(self):

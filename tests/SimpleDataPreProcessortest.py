@@ -9,7 +9,7 @@ class SimpleDataPreProcessorTest (unittest.TestCase):
         simpleDataPreProcessor = SimpleDataPreProcessor(data)
         simpleDataPreProcessor.eliminateFirstColumnInTrainData()
         solution = [[2,3], [5,6], [8,9]]
-        self.assertEqual(simpleDataPreProcessor.train_data, solution)
+        self.assertEqual(simpleDataPreProcessor.data, solution)
 
     def test_seperateLabelsFromData(self):
         data = [[1,2,3], [4,5,6], [7,8,9]]

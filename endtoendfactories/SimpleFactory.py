@@ -1,6 +1,6 @@
 from endtoendfactories.FactoryBase import FactoryBase
 from preprocessdata.SimpleDataPreProcessor import SimpleDataPreProcessor
-from model.SimpleDenseModel import SimpleDenseModel
+from modelgenerators.SimpleDenseModelGenerator import SimpleDenseModelGenerator
 
 class SimpleFactory (FactoryBase):
 
@@ -10,8 +10,8 @@ class SimpleFactory (FactoryBase):
             SimpleFactory.instance = SimpleFactory()
         return SimpleFactory.instance
             
-    def getDataPreProcessor(self):
+    def getDataPreProcessorType(self):
         return SimpleDataPreProcessor
 
     def getModelType(self):
-        return SimpleDenseModel
+        return SimpleDenseModelGenerator
