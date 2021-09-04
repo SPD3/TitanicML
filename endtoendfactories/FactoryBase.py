@@ -5,3 +5,7 @@ class FactoryBase (ABC):
     @abstractmethod
     def getDataPreProcessor():
         pass
+
+    @abstractmethod
+    def getModelType():
+        pass
