@@ -1,6 +1,11 @@
+from preprocessdata.PreProcessDataBase import PreProcessDataBase
+from modelgenerators.ModelGeneratorBase import ModelGeneratorBase
+from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
+from preprocessdata.DataPreProcessorWithVisitor import DataPreProcessorWithVisitor
 from endtoendfactories.FactoryBase import FactoryBase
 from preprocessdata.SimpleDataPreProcessor import SimpleDataPreProcessor
 from modelgenerators.SimpleDenseModelGenerator import SimpleDenseModelGenerator
+from datacategoryvisitors.SimpleDataCategoryVisitor import SimpleDataCategoryVisitor
 
 class SimpleFactory (FactoryBase):
 
@@ -10,8 +15,11 @@ class SimpleFactory (FactoryBase):
             SimpleFactory.instance = SimpleFactory()
         return SimpleFactory.instance
             
-    def getDataPreProcessorType(self):
-        return SimpleDataPreProcessor
+    def getDataPreProcessor(self, data, dataIncludesLabels) -> PreProcessDataBase:
+        return DataPreProcessorWithVisitor(data, dataIncludesLabels, self.getDataCategoryVisitor())
 
-    def getModelType(self):
-        return SimpleDenseModelGenerator
+    def getModel(self, inputShape) -> ModelGeneratorBase:
+        return SimpleDenseModelGenerator(inputShape)
+
+    def getDataCategoryVisitor(self) -> DataCategoryVisitorBase:
+        return SimpleDataCategoryVisitor()

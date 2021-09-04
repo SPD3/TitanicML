@@ -3,9 +3,13 @@ from abc import ABC, abstractmethod
 class FactoryBase (ABC):
 
     @abstractmethod
-    def getDataPreProcessorType():
+    def getDataPreProcessor(self, data, dataIncludesLabels):
         pass
 
     @abstractmethod
-    def getModelType():
+    def getModel(self, inputShape):
+        pass
+
+    @abstractmethod
+    def getDataCategoryVisitor(self):
         pass

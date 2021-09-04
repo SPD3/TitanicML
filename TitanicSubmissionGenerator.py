@@ -5,20 +5,21 @@ import csv
 if( __name__ == "__main__"):
     factory = Main.factory
     checkpoint_path = Main.checkpoint_path
+    submissionName = Main.name + "Submission.csv"
 
     test_data = pd.read_csv("/Users/seandoyle/git/TitanicML/titanic/test.csv")
     test_data = test_data.to_numpy()
 
-    _, X = factory.getDataPreProcessorType()(test_data, False).getProcessedData()
+    _, X = factory.getDataPreProcessor(test_data, False).getProcessedData()
     
-    modelGenerator = factory.getModelType()(len(X[0]))
+    modelGenerator = factory.getModel(len(X[0]))
     modelGenerator.createModel()
     model = modelGenerator.getModel()
     model.load_weights(checkpoint_path)
 
     predictions = model.predict(X)
 
-    f = open("submissions/submission1.csv", "w")
+    f = open("submissions/" + submissionName, "w")
     writer = csv.writer(f)
 
     header = ["PassengerId", "Survived"]

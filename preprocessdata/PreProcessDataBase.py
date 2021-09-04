@@ -5,6 +5,8 @@ class PreProcessDataBase (ABC):
         super().__init__()
         self.data = data
         self.dataIncludesLabels = dataIncludesLabels
+        self.y = []
+        self.X = []
     
     @abstractmethod
     def getProcessedData(self):

@@ -42,6 +42,7 @@ class SimpleDataPreProcessor (PreProcessDataBase):
         self.y = None
 
     def scaleValuesInX(self):
+        print("IN THE WRONG ONE!!!!")
         self.scalePClass()
         self.binarySex()
         self.scaleAge()
