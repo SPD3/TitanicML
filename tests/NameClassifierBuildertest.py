@@ -7,5 +7,6 @@ class NameClassifierBuilderTest (unittest.TestCase):
     def test_getTitle(self):
         """Makes sure that getTitle does find titles"""
         name = "Mrs. ldajfhgp"
-        title = NameClassifierBuilder.getTitle(name)
+        nameClassifierBuilder = NameClassifierBuilder()
+        title = nameClassifierBuilder.getTitle(name)
         self.assertEquals(title, "Mrs")
