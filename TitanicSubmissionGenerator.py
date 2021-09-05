@@ -1,3 +1,4 @@
+from preprocessdata.DataPreProcessorWithVisitor import DataPreProcessorWithVisitor
 import Main
 import pandas as pd
 import csv
@@ -10,18 +11,15 @@ file to be submitted for grading.
 """
 
 if( __name__ == "__main__"):
-    factory = Main.factory
     checkpoint_path = Main.checkpoint_path
     submissionName = Main.name + "Submission.csv"
 
-    test_data = pd.read_csv("/Users/seandoyle/git/TitanicML/titanic/test.csv")
+    test_data = pd.read_csv("titanic/test.csv")
     test_data = test_data.to_numpy()
 
-    _, X = factory.getDataPreProcessor(test_data, False).getProcessedData()
+    _, X = DataPreProcessorWithVisitor(test_data, False, Main.visitor).getProcessedData()
     
-    modelGenerator = factory.getModel(len(X[0]))
-    modelGenerator.createModel()
-    model = modelGenerator.getModel()
+    model = Main.myModel.getModel()
     model.load_weights(checkpoint_path)
 
     predictions = model.predict(X)

@@ -12,15 +12,17 @@ checkpoint_path path.
 name = "Model1"
 checkpoint_path = "savedmodels/" + name + "cp.ckpt1"
 
+train_data = pd.read_csv("titanic/train.csv")
+train_data = train_data.to_numpy()
+
+visitor = CategorizedDataVisitor()
+dataPreProcessor = DataPreProcessorWithVisitor(train_data, True, visitor)
+y, X = dataPreProcessor.getProcessedData()
+
+myModel = SimpleDenseModelGenerator(len(X[0]))
+
 if( __name__ == "__main__"):
-    train_data = pd.read_csv("/Users/seandoyle/git/TitanicML/titanic/train.csv")
-    train_data = train_data.to_numpy()
-
-    visitor = CategorizedDataVisitor()
-    dataPreProcessor = DataPreProcessorWithVisitor(train_data, True, visitor)
-    y, X = dataPreProcessor.getProcessedData()
-
-    myModel = SimpleDenseModelGenerator(len(X[0]))
+    
     myModel.fitModel(X, y, checkpoint_path)
 
 
