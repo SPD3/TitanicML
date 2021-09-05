@@ -10,7 +10,7 @@ class PortOfEmbarkationBuilder (ProcessedDataBuilderBase):
         for port in self.preprocessedData:
             self.initializeCurrentPortMapping()
             self.mapPort(port)
-            self.processedData.append(self.portMapping)
+            self.processedData.append(self.currentPortMapping)
     
     def initializeCurrentPortMapping(self) -> None:
         """Creates the current port mapping with three bins."""
