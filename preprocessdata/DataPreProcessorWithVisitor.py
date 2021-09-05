@@ -1,10 +1,13 @@
+from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
 from typing import Dict, List
 from preprocessdata.PreProcessDataBase import PreProcessDataBase
 import numpy as np
 
 class DataPreProcessorWithVisitor (PreProcessDataBase):
+    """Takes a DataCategoryVisitorBase and visits all the columns in the data to 
+    process the data and prepare it for an ML algorithm"""
     
-    def __init__(self, data, dataIncludesLabels, dataCategoryVisitor) -> None:
+    def __init__(self, data:np.ndarray, dataIncludesLabels:bool, dataCategoryVisitor:DataCategoryVisitorBase) -> None:
         super().__init__(data, dataIncludesLabels)
         self.categoryDictionary = {
             "PassengerId" : [],
@@ -24,9 +27,13 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
         self.dataCategoryVisitor = dataCategoryVisitor
 
     def getCategoryDictionary(self) -> Dict:
+        """Gets the category dictionary which has entries for each section of 
+        information for every passenger"""
         return self.categoryDictionary
 
-    def getProcessedData(self) -> List:
+    def getProcessedData(self) -> tuple[np.ndarray, np.ndarray]:
+        """Processes the data if it has not yet done so and then returns 
+        y and X"""
         if(not self.hasProcessedData):
             self.putDataIntoCategories()
             self.visitAllDataCategories()
@@ -35,6 +42,8 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
         return np.array(self.y), np.array(self.X)
 
     def putDataIntoCategories(self) -> None:
+        """Takes the data for each passenger and places it into the right 
+        categories"""
         for passenger in self.data:
             passengerValueIndex = 0 
             for key in self.categoryDictionary.keys():
@@ -44,6 +53,8 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
                 passengerValueIndex+= 1
 
     def visitAllDataCategories(self) -> None:
+        """Visits all of the data categories and reassigns categoryDictionary 
+        accordingly"""
         self.categoryDictionary["PassengerId"] = self.dataCategoryVisitor.visitPassengerId(self.categoryDictionary["PassengerId"])
         self.categoryDictionary["Survived"] = self.dataCategoryVisitor.visitSurvived(self.categoryDictionary["Survived"])
         self.categoryDictionary["Pclass"] = self.dataCategoryVisitor.visitPclass(self.categoryDictionary["Pclass"])
@@ -58,6 +69,9 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
         self.categoryDictionary["Embarked"] = self.dataCategoryVisitor.visitEmbarked(self.categoryDictionary["Embarked"])
 
     def arrangeDataPerPassengerInXAndY(self) -> None:
+        """Arranges the data from categoryDictionary into X and y such that it 
+        can be passed to the client in a format that can be easily used by an 
+        ML algorithm"""
         for label in self.categoryDictionary["Survived"]:
             self.y.append(label[0])
         for i in range(len(self.data)):
@@ -68,5 +82,3 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
                 for value in self.categoryDictionary[key][i]:
                     passenger.append(value)
             self.X.append(passenger)
-
-
