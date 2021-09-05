@@ -10,7 +10,7 @@ The model is trained on the data that is processed and saved away to the
 checkpoint_path path.
 """
 name = "Model1"
-checkpoint_path = "/Users/seandoyle/NNModels/savedmodels/" + name + "cp.ckpt1"
+checkpoint_path = "savedmodels/" + name + "cp.ckpt1"
 
 if( __name__ == "__main__"):
     train_data = pd.read_csv("/Users/seandoyle/git/TitanicML/titanic/train.csv")
