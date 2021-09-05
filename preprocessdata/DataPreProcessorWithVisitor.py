@@ -44,29 +44,28 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
                 passengerValueIndex+= 1
 
     def visitAllDataCategories(self) -> None:
-        self.categoryDictionary["PassengerId"] = self.dataCategoryVisitor.visitPassengerId(self.categoryDictionary["PassengerId"])
-        self.categoryDictionary["Survived"] = self.dataCategoryVisitor.visitSurvived(self.categoryDictionary["Survived"])
-        self.categoryDictionary["Pclass"] = self.dataCategoryVisitor.visitPclass(self.categoryDictionary["Pclass"])
-        self.categoryDictionary["Name"] = self.dataCategoryVisitor.visitName(self.categoryDictionary["Name"])
-        self.categoryDictionary["Sex"] = self.dataCategoryVisitor.visitSex(self.categoryDictionary["Sex"])
-        self.categoryDictionary["Age"] = self.dataCategoryVisitor.visitAge(self.categoryDictionary["Age"])
-        self.categoryDictionary["SibSp"] = self.dataCategoryVisitor.visitSibSp(self.categoryDictionary["SibSp"])
-        self.categoryDictionary["Parch"] = self.dataCategoryVisitor.visitParch(self.categoryDictionary["Parch"])
-        self.categoryDictionary["Ticket"] = self.dataCategoryVisitor.visitTicket(self.categoryDictionary["Ticket"])
-        self.categoryDictionary["Fare"] = self.dataCategoryVisitor.visitFare(self.categoryDictionary["Fare"])
-        self.categoryDictionary["Cabin"] = self.dataCategoryVisitor.visitCabin(self.categoryDictionary["Cabin"])
-        self.categoryDictionary["Embarked"] = self.dataCategoryVisitor.visitEmbarked(self.categoryDictionary["Embarked"])
+        self.visitedCategoriesDictionary = {}
+        self.visitedCategoriesDictionary["PassengerId"] = self.dataCategoryVisitor.visitPassengerId(self.categoryDictionary["PassengerId"])
+        self.visitedCategoriesDictionary["Survived"] = self.dataCategoryVisitor.visitSurvived(self.categoryDictionary["Survived"])
+        self.visitedCategoriesDictionary["Pclass"] = self.dataCategoryVisitor.visitPclass(self.categoryDictionary["Pclass"])
+        self.visitedCategoriesDictionary["Name"] = self.dataCategoryVisitor.visitName(self.categoryDictionary["Name"])
+        self.visitedCategoriesDictionary["Sex"] = self.dataCategoryVisitor.visitSex(self.categoryDictionary["Sex"])
+        self.visitedCategoriesDictionary["Age"] = self.dataCategoryVisitor.visitAge(self.categoryDictionary["Age"])
+        self.visitedCategoriesDictionary["SibSp"] = self.dataCategoryVisitor.visitSibSp(self.categoryDictionary["SibSp"])
+        self.visitedCategoriesDictionary["Parch"] = self.dataCategoryVisitor.visitParch(self.categoryDictionary["Parch"])
+        self.visitedCategoriesDictionary["Ticket"] = self.dataCategoryVisitor.visitTicket(self.categoryDictionary["Ticket"])
+        self.visitedCategoriesDictionary["Fare"] = self.dataCategoryVisitor.visitFare(self.categoryDictionary["Fare"])
+        self.visitedCategoriesDictionary["Cabin"] = self.dataCategoryVisitor.visitCabin(self.categoryDictionary["Cabin"])
+        self.visitedCategoriesDictionary["Embarked"] = self.dataCategoryVisitor.visitEmbarked(self.categoryDictionary["Embarked"])
 
     def arrangeDataPerPassengerInXAndY(self) -> None:
-        for label in self.categoryDictionary["Survived"]:
+        for label in self.visitedCategoriesDictionary["Survived"]:
             self.y.append(label[0])
         for i in range(len(self.data)):
             passenger = []
-            for key in self.categoryDictionary.keys():
+            for key in self.visitedCategoriesDictionary.keys():
                 if(key == "Survived"):
                     continue
-                for value in self.categoryDictionary[key][i]:
+                for value in self.visitedCategoriesDictionary[key][i]:
                     passenger.append(value)
             self.X.append(passenger)
-
-

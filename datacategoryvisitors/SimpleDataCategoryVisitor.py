@@ -1,60 +1,72 @@
-from datacategoryvisitors.processeddatabuilders.ScaleDataBuilder import ScaleDataBuilder
-from datacategoryvisitors.processeddatabuilders.NoModificationsToDataBuilder import NoModificationsToDataBuilder
-from datacategoryvisitors.processeddatabuilders.BinarySexDataBuilder import BinarySexDataBuilder
-from datacategoryvisitors.processeddatabuilders.ReplaceNanWithZeroBuilder import ReplaceNanWithZeroBuilder
-from datacategoryvisitors.processeddatabuilders.CompositeDataBuilder import CompositeDataBuilder
-from typing import List, Tuple
-from datacategoryvisitors.processeddatabuilders.DestroyDataBuilder import DestroyDataBuilder
+from datacategoryvisitors.processeddatabuilders.PortOfEmbarkationBuilder \
+    import PortOfEmbarkationBuilder
+from datacategoryvisitors.processeddatabuilders.CabinClassifierBuilder \
+    import CabinClassifierBuilder
+from datacategoryvisitors.processeddatabuilders.TicketClassifierBuilder \
+    import TicketClassifierBuilder
+from datacategoryvisitors.processeddatabuilders.NameClassifierBuilder \
+    import NameClassifierBuilder
+from datacategoryvisitors.processeddatabuilders.AgeClassifierBuilder \
+    import AgeClassifierBuilder
+from datacategoryvisitors.processeddatabuilders.ScaleDataBuilder \
+    import ScaleDataBuilder
+from datacategoryvisitors.processeddatabuilders.NoModificationsToDataBuilder \
+    import NoModificationsToDataBuilder
+from datacategoryvisitors.processeddatabuilders.BinarySexDataBuilder \
+    import BinarySexDataBuilder
+from typing import List
+from datacategoryvisitors.processeddatabuilders.DestroyDataBuilder \
+    import DestroyDataBuilder
 from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
 
 class SimpleDataCategoryVisitor (DataCategoryVisitorBase):
+    """This data category visitor prefers to scale data for a ML 
+    algorithm as opposed to putting the data into bins"""
 
     def visitPassengerId(self, passengerId) -> List:
-        destroyDataBuilder = DestroyDataBuilder()
-        return destroyDataBuilder.getProcessedData(passengerId)
+        builder = DestroyDataBuilder()
+        return builder.getProcessedData(passengerId)
 
     def visitSurvived(self, survived) -> List:
-        noModificationsToDataBuilder = NoModificationsToDataBuilder()
-        return noModificationsToDataBuilder.getProcessedData(survived)
+        builder = NoModificationsToDataBuilder()
+        return builder.getProcessedData(survived)
 
     def visitPclass(self, pClass) -> List:
-        scaleDataBuilder = ScaleDataBuilder(1.0/3.0)
-        return scaleDataBuilder.getProcessedData(pClass)
+        builder = ScaleDataBuilder(1.0/3.0)
+        return builder.getProcessedData(pClass)
 
     def visitName(self, name) -> List:
-        destroyDataBuilder = DestroyDataBuilder()
-        return destroyDataBuilder.getProcessedData(name)
+        builder = NameClassifierBuilder()
+        return builder.getProcessedData(name)
 
     def visitSex(self, sex) -> List:
-        binarySexDataBuilder = BinarySexDataBuilder()
-        return binarySexDataBuilder.getProcessedData(sex)
+        builder = BinarySexDataBuilder()
+        return builder.getProcessedData(sex)
 
     def visitAge(self, age) -> List:
-        scaleDataBuilder = ScaleDataBuilder(1.0/100.0)
-        replaceNanWithZeroBuilder = ReplaceNanWithZeroBuilder()
-        composite = CompositeDataBuilder([replaceNanWithZeroBuilder, scaleDataBuilder])
-        return composite.getProcessedData(age)
+        builder = ScaleDataBuilder(1.0/80.0)
+        return builder.getProcessedData(age)
 
     def visitSibSp(self, sibSp) -> List:
-        scaleDataBuilder = ScaleDataBuilder(1.0/8.0)
-        return scaleDataBuilder.getProcessedData(sibSp)
+        builder = ScaleDataBuilder(1.0/8.0)
+        return builder.getProcessedData(sibSp)
 
     def visitParch(self, parch) -> List:
-        scaleDataBuilder = ScaleDataBuilder(1.0/6.0)
-        return scaleDataBuilder.getProcessedData(parch)
+        builder = ScaleDataBuilder(1.0/6.0)
+        return builder.getProcessedData(parch)
 
     def visitTicket(self, ticket) -> List:
-        destroyDataBuilder = DestroyDataBuilder()
-        return destroyDataBuilder.getProcessedData(ticket)
+        builder = TicketClassifierBuilder()
+        return builder.getProcessedData(ticket)
 
     def visitFare(self, fare) -> List:
-        scaleDataBuilder = ScaleDataBuilder(1.0/512.0)
-        return scaleDataBuilder.getProcessedData(fare)
+        builder = ScaleDataBuilder(1.0/512.0)
+        return builder.getProcessedData(fare)
 
     def visitCabin(self, cabin) -> List:
-        destroyDataBuilder = DestroyDataBuilder()
-        return destroyDataBuilder.getProcessedData(cabin)
+        builder = CabinClassifierBuilder()
+        return builder.getProcessedData(cabin)
 
     def visitEmbarked(self, embarked) -> List:
-        destroyDataBuilder = DestroyDataBuilder()
-        return destroyDataBuilder.getProcessedData(embarked)
+        builder = PortOfEmbarkationBuilder()
+        return builder.getProcessedData(embarked)

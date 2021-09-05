@@ -12,6 +12,9 @@ if( __name__ == "__main__"):
     dataPreProcessor = factory.getDataPreProcessor(train_data, True)
     y, X = dataPreProcessor.getProcessedData()
 
+    print("Length")
+    print(len(X[0]))
     myModel = factory.getModel(len(X[0]))
     myModel.fitModel(X, y, checkpoint_path)
+
 

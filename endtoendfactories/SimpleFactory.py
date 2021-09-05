@@ -1,3 +1,5 @@
+from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
+from datacategoryvisitors.DataCategoryVisitorAccountingForTestData import DataCategoryVisitorAccountingForTestData
 from preprocessdata.PreProcessDataBase import PreProcessDataBase
 from modelgenerators.ModelGeneratorBase import ModelGeneratorBase
 from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
@@ -22,4 +24,4 @@ class SimpleFactory (FactoryBase):
         return SimpleDenseModelGenerator(inputShape)
 
     def getDataCategoryVisitor(self) -> DataCategoryVisitorBase:
-        return SimpleDataCategoryVisitor()
+        return CategorizedDataVisitor()
