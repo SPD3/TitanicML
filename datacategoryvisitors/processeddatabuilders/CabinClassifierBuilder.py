@@ -11,7 +11,7 @@ class CabinClassifierBuilder (ProcessedDataBuilderBase):
         them into seperate bins"""
         for cabin in self.preprocessedData:
             self.initializeCabinMapping()
-            self.mapCabin()
+            self.mapCabin(cabin)
             self.processedData.append(self.currentCabinMapping)
 
     def initializeCabinMapping(self) -> None:

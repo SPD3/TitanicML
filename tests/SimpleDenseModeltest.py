@@ -5,6 +5,8 @@ import tensorflow as tf
 class SimpleDenseModeltest (unittest.TestCase):
 
     def test_createInputsLinkedToOutputs(self):
+        """Makes sure that all of the layers in a simple dense model generator 
+        are dense layers"""
         simpleDenseModel = SimpleDenseModelGenerator(6)
         simpleDenseModel.createInputsLinkedToOutputs()
         model = tf.keras.Model(inputs=simpleDenseModel.inputs, outputs=simpleDenseModel.outputs)

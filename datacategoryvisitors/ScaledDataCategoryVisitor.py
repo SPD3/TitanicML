@@ -19,7 +19,7 @@ from datacategoryvisitors.processeddatabuilders.DestroyDataBuilder \
     import DestroyDataBuilder
 from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
 
-class SimpleDataCategoryVisitor (DataCategoryVisitorBase):
+class ScaledDataCategoryVisitor (DataCategoryVisitorBase):
     """This data category visitor prefers to scale data for a ML 
     algorithm as opposed to putting the data into bins"""
 

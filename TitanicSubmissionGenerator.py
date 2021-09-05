@@ -2,6 +2,13 @@ import Main
 import pandas as pd
 import csv
 
+"""
+This is where a submission is generated for the titanic competition once a model
+has been trained. A trained model is loaded and then predictions are made on 
+test data provided by the contest. These predictions are then saved into a csv
+file to be submitted for grading.
+"""
+
 if( __name__ == "__main__"):
     factory = Main.factory
     checkpoint_path = Main.checkpoint_path
