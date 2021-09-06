@@ -103,3 +103,10 @@ class CategorizedDataVisitorTest (unittest.TestCase):
         passengers = self.categorizedDataVisitor.visitCabin(data)
         self.assertEquals(len(data), len(passengers))
         self.checkOneHotEncodingOfPassengers(passengers)
+
+    def testVisitEmbarked(self)  -> None:
+        """Makes sure that visitEmbarked() bins its data in one hot vectors"""
+        data = ["Q",  "Q", "C", "S"]
+        passengers = self.categorizedDataVisitor.visitEmbarked(data)
+        self.assertEquals(len(data), len(passengers))
+        self.checkOneHotEncodingOfPassengers(passengers)
