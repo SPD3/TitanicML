@@ -61,8 +61,8 @@ class CategorizedDataVisitor (DataCategoryVisitorBase):
         return builder.getProcessedData(ticket)
 
     def visitFare(self, fare:list[float]) -> list[list[float]]:
-        scaleDataBuilder = ScaleDataBuilder(1.0/512.0)
-        return scaleDataBuilder.getProcessedData(fare)
+        builder = DataCategorizerBuilder([12,25,50,100,200,500])
+        return builder.getProcessedData(fare)
     
     def visitCabin(self, cabin:list) -> list[list[float]]:
         builder = CabinClassifierBuilder()
