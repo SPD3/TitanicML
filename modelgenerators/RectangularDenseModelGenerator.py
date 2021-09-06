@@ -17,10 +17,11 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
         self.layerSize = layersize
         self.layers = layers
         self.epochs = 30
+        self.validation_split = 0.1
         self.inputShape = inputShape
         self.model = None
 
-    def getModel(self):
+    def getModel(self) -> tf.keras.Model:
         """Creates a model if one hasn't been made yet and returns the model"""
         if(self.model == None):
             self.createModel()
@@ -32,7 +33,7 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
         self.model = tf.keras.Model(inputs=self.inputs, outputs=self.outputs)
         self.compileModel()
 
-    def createInputsLinkedToOutputs(self):
+    def createInputsLinkedToOutputs(self) -> None:
         """Sets up the layers between the input and output layers"""
         self.inputs = tf.keras.layers.Input(shape=(self.inputShape))
         x = tf.keras.layers.Dense(self.layerSize, activation="relu")(self.inputs)
@@ -40,7 +41,7 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
             x = tf.keras.layers.Dense(self.layerSize, activation="relu")(x)
         self.outputs = tf.keras.layers.Dense(1, activation="sigmoid")(x)
     
-    def compileModel(self):
+    def compileModel(self) -> None:
         """Compiles the model with the adam optimizer."""
         self.model.compile(
             optimizer=tf.keras.optimizers.Adam(),
@@ -48,7 +49,7 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
             metrics=["accuracy"]
         )
 
-    def fitModel(self, X:np.ndarray, y:np.ndarray, checkpointPath:str):
+    def fitModel(self, X:np.ndarray, y:np.ndarray, checkpointPath:str) -> None:
         """Fits the model to training data and saves the model to the checkpoint 
         path. Has a validation split of 0.1."""
         if(self.model == None):
@@ -58,4 +59,4 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
                                                  save_weights_only=True,
                                                  verbose=1)
         
-        self.model.fit(X, y, epochs=self.epochs, validation_split=0.1, callbacks=[cp_callback])
+        self.model.fit(X, y, epochs=self.epochs, validation_split=self.validation_split, callbacks=[cp_callback])
