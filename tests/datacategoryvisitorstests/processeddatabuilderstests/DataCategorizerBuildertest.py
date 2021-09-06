@@ -18,6 +18,8 @@ class DataCategorizerBuilderTest (unittest.TestCase):
         self.assertEquals(2, self.dataCategorizerBuilder.getIndexOfBin(30))
 
     def testBuildProcessedData(self) -> None:
+        """Makes sure that buildProcessedData appends the correctly filled bins 
+        to processedData for the given values"""
         preprocessedData = [22, 42, 13, 40]
         self.dataCategorizerBuilder.preprocessedData = preprocessedData
         self.dataCategorizerBuilder.buildProcessedData()
