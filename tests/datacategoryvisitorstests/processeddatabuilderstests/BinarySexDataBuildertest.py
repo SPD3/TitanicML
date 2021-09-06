@@ -6,7 +6,7 @@ class BinarySexDataBuilderTest (unittest.TestCase):
     def setUp(self) -> None:
         self.ageClassifierBuilder = BinarySexDataBuilder()
 
-    def testBuildProcessedData(self):
+    def testBuildProcessedData(self) -> None:
         """Makes sure that buildProcessedData correctly categorizes males and 
         females in processedData"""
         preprocessedData = ["male","male","female","male","female"]
