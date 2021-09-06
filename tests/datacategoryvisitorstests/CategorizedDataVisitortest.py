@@ -3,6 +3,7 @@ import unittest
 import numpy as np
 
 class CategorizedDataVisitorTest (unittest.TestCase):
+    """Tests the CategorizedDataVisitor class"""
     def setUp(self) -> None:
         self.categorizedDataVisitor = CategorizedDataVisitor()
 

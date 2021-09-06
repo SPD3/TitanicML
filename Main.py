@@ -1,4 +1,4 @@
-from modelgenerators.SimpleDenseModelGenerator import SimpleDenseModelGenerator
+from modelgenerators.RectangularDenseModelGenerator import RectangularDenseModelGenerator
 from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
 from preprocessdata.DataPreProcessorWithVisitor import DataPreProcessorWithVisitor
 import pandas as pd
@@ -19,7 +19,7 @@ visitor = CategorizedDataVisitor()
 dataPreProcessor = DataPreProcessorWithVisitor(train_data, True, visitor)
 y, X = dataPreProcessor.getProcessedData()
 
-myModel = SimpleDenseModelGenerator(len(X[0]))
+myModel = RectangularDenseModelGenerator(len(X[0]))
 
 if( __name__ == "__main__"):
     

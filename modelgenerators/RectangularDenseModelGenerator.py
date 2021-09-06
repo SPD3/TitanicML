@@ -2,7 +2,7 @@ from modelgenerators.ModelGeneratorBase import ModelGeneratorBase
 import tensorflow as tf
 import numpy as np
 
-class SimpleDenseModelGenerator (ModelGeneratorBase):
+class RectangularDenseModelGenerator (ModelGeneratorBase):
     """Creates a NN with the same layersize for all layers specified"""
 
     def __init__(self, inputShape:int, layersize:int=512, layers:int=10) -> None:
