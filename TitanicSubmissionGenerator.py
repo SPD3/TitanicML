@@ -1,7 +1,7 @@
 from preprocessdata.DataPreProcessorWithVisitor import DataPreProcessorWithVisitor
-import Main
 import pandas as pd
 import csv
+from endtoendfactories.EndToEndFactoryV1 import EndToEndFactoryV1
 
 """
 This is where a submission is generated for the titanic competition once a model
@@ -11,19 +11,20 @@ file to be submitted for grading.
 """
 
 if( __name__ == "__main__"):
-    checkpoint_path = Main.checkpoint_path
-    submissionName = Main.name + "Submission.csv"
+    factory = EndToEndFactoryV1.getInstance()
 
     test_data = pd.read_csv("titanic/test.csv")
     test_data = test_data.to_numpy()
 
-    _, X = DataPreProcessorWithVisitor(test_data, False, Main.visitor).getProcessedData()
-    
-    model = Main.myModel.getModel()
-    model.load_weights(checkpoint_path)
+    _, X = factory.getPreProcessData(test_data, False).getProcessedData()
+
+    modelGenerator = factory.getModelGenerator(len(X[0]))
+    model = modelGenerator.getModel()
+    model.load_weights(modelGenerator.getCheckpointPath())
 
     predictions = model.predict(X)
 
+    submissionName = factory.getName() + "Submission"
     f = open("submissions/" + submissionName, "w")
     writer = csv.writer(f)
 

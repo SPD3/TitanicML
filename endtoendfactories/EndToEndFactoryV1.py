@@ -10,6 +10,10 @@ class EndToEndFactoryV1 (EndToEndFactoryBase):
     """First version of an EndToEndFactory, will increase in version number as 
     models are generated with higher and higher scores on the test set."""
 
+    def __init__(self) -> None:
+        self.name = "ModelV1"
+        self.checkpoint_path = "savedmodels/" + self.name + "cp.ckpt1"
+
     instance = None
     def getInstance():
         """Gets the single instance of this singleton"""
@@ -25,4 +29,8 @@ class EndToEndFactoryV1 (EndToEndFactoryBase):
 
     def getModelGenerator(self, inputShape:int) -> ModelGeneratorBase:
         """Gets a RectangularDenseModelGenerator"""
-        return RectangularDenseModelGenerator(inputShape)
+        return RectangularDenseModelGenerator(inputShape, self.checkpoint_path)
+
+    def getName(self) -> str:
+        """Gets the name of this factory"""
+        return self.name

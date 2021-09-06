@@ -12,3 +12,7 @@ class EndToEndFactoryBase (ABC):
     @abstractmethod
     def getModelGenerator(self, inputShape:int) -> ModelGeneratorBase:
         pass
+
+    @abstractmethod
+    def getName(self) -> str:
+        pass
