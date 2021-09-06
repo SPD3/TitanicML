@@ -5,7 +5,7 @@ import numpy as np
 class RectangularDenseModelGenerator (ModelGeneratorBase):
     """Creates a NN with the same layersize for all layers specified"""
 
-    def __init__(self, inputShape:int, checkpoint_path:str, layersize:int=512, layers:int=10) -> None:
+    def __init__(self, inputShape:int, name:str, layerSize:int=512, layers:int=10) -> None:
         """
         Arguments:
         -----------
@@ -13,8 +13,8 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
         layersize: the desired number of nodes for each layer
         layers: the desired number of layers between the input and sigmoid output layer
         """
-        super().__init__(inputShape,checkpoint_path)
-        self.layerSize = layersize
+        super().__init__(inputShape,name)
+        self.layerSize = layerSize
         self.layers = layers
         self.epochs = 30
         self.validation_split = 0.1
@@ -48,7 +48,7 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
             metrics=["accuracy"]
         )
 
-    def fitModel(self, X:np.ndarray, y:np.ndarray) -> None:
+    def fitModel(self, X:np.ndarray, y:np.ndarray) -> tf.keras.callbacks.History:
         """Fits the model to training data and saves the model to the checkpoint 
         path. Has a validation split of 0.1."""
         if(self.model == None):
@@ -58,4 +58,4 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
                                                  save_weights_only=True,
                                                  verbose=1)
         
-        self.model.fit(X, y, epochs=self.epochs, validation_split=self.validation_split, callbacks=[cp_callback])
+        return self.model.fit(X, y, epochs=self.epochs, validation_split=self.validation_split, callbacks=[cp_callback])

@@ -5,10 +5,11 @@ import tensorflow as tf
 class ModelGeneratorBase (ABC):
     """Base class for creating models NN models to process the titanic data"""
 
-    def __init__(self, inputShape:int, checkpoint_path:str) -> None:
+    def __init__(self, inputShape:int, name:str) -> None:
         super().__init__()
         self.inputShape = inputShape
-        self.checkpoint_path = checkpoint_path
+        self.name = name
+        self.checkpoint_path = "savedmodels/" + self.name + "cp.ckpt1"
 
     def getCheckpointPath(self) -> str:
         """Gets the path to this modelgenerator's save location"""
@@ -19,7 +20,7 @@ class ModelGeneratorBase (ABC):
         pass
 
     @abstractmethod
-    def fitModel(self, X:np.ndarray, y:np.ndarray, checkpointPath:str) -> None:
+    def fitModel(self, X:np.ndarray, y:np.ndarray) -> tf.keras.callbacks.History:
         pass
 
     @abstractmethod

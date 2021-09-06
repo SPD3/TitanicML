@@ -1,2 +1,2 @@
-model_checkpoint_path: "ModelV1cp.ckpt1"
-all_model_checkpoint_paths: "ModelV1cp.ckpt1"
+model_checkpoint_path: "ComparisonModelcp.ckpt1"
+all_model_checkpoint_paths: "ComparisonModelcp.ckpt1"

@@ -7,19 +7,19 @@ import numpy as np
 class RectangularDenseModelGeneratorTest (unittest.TestCase):
 
     def setUp(self) -> None:
-        name = "Test1"
-        self.checkpoint_path = "./savedmodels/" + name + "cp.ckpt1"
+        self.name = "Test1"
+        self.checkpoint_path = "./savedmodels/" + self.name + "cp.ckpt1"
 
     def testGetModel(self) -> None:
         """Makes sure that when a model is asked for it is created if one does 
         not already exist"""
-        simpleDenseModel = RectangularDenseModelGenerator(6, self.checkpoint_path)
+        simpleDenseModel = RectangularDenseModelGenerator(6, self.name)
         model = simpleDenseModel.getModel()
         self.assertTrue(issubclass(type(model), tf.keras.Model))
 
     def testCreateModel(self) -> None:
         """Makes sure that when a model is created each layer is a dense layer"""
-        simpleDenseModel = RectangularDenseModelGenerator(6, self.checkpoint_path)
+        simpleDenseModel = RectangularDenseModelGenerator(6, self.name)
         simpleDenseModel.createModel()
         for i in range(1,len(simpleDenseModel.model.layers)):
             self.assertTrue(issubclass(type(simpleDenseModel.model.layers[i]), tf.keras.layers.Dense))
@@ -27,7 +27,7 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
     def testCreateInputsLinkedToOutputs(self) -> None:
         """Makes sure that all of the layers in a simple dense model generator 
         are dense layers"""
-        simpleDenseModel = RectangularDenseModelGenerator(6, self.checkpoint_path)
+        simpleDenseModel = RectangularDenseModelGenerator(6, self.name)
         simpleDenseModel.createInputsLinkedToOutputs()
         model = tf.keras.Model(inputs=simpleDenseModel.inputs, outputs=simpleDenseModel.outputs)
         self.assertEquals(type(model.layers[0]), tf.keras.layers.InputLayer)
@@ -36,7 +36,7 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
     
     def testCompileModel(self) -> None:
         """Makes sure that when the model is compiled no exceptions are thrown"""
-        simpleDenseModel = RectangularDenseModelGenerator(6, self.checkpoint_path)
+        simpleDenseModel = RectangularDenseModelGenerator(6, self.name)
         simpleDenseModel.createInputsLinkedToOutputs()
         simpleDenseModel.model = tf.keras.Model(inputs=simpleDenseModel.inputs, outputs=simpleDenseModel.outputs)
         try:
@@ -71,7 +71,7 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         numberOfLayers = 5
         neuronsPerLayer = 100
         
-        simpleDenseModel = RectangularDenseModelGenerator(3,self.checkpoint_path, neuronsPerLayer, numberOfLayers)
+        simpleDenseModel = RectangularDenseModelGenerator(3,self.name, neuronsPerLayer, numberOfLayers)
         simpleDenseModel.fitModel(np.array(X), np.array(y))
         simpleDenseModel.validation_split = 0.0
         model = simpleDenseModel.getModel()
@@ -79,7 +79,7 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         for i in range(len(y)):
             self.assertAlmostEquals(predictions[i][0], y[i], delta=0.1)
 
-        newSimpleDenseModel = RectangularDenseModelGenerator(3,self.checkpoint_path, neuronsPerLayer, numberOfLayers)
+        newSimpleDenseModel = RectangularDenseModelGenerator(3,self.name, neuronsPerLayer, numberOfLayers)
         newModel = newSimpleDenseModel.getModel()
         newModel.load_weights(self.checkpoint_path)
         newPredictions = newModel.predict(np.array(X)).tolist()
