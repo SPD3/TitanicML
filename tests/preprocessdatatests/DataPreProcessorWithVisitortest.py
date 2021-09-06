@@ -1,4 +1,4 @@
-from datacategoryvisitors.SimpleDataCategoryVisitor import ScaledDataCategoryVisitor
+from datacategoryvisitors.ScaledDataCategoryVisitor import ScaledDataCategoryVisitor
 import unittest
 from preprocessdata.DataPreProcessorWithVisitor import DataPreProcessorWithVisitor
 import numpy as np
@@ -73,9 +73,11 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
         y, X = dataPreProcessorWithVisitor.getProcessedData()
         solutionY = [0,1,1]
         solutionX = [
-            [1.0, 1.0, 22.0/100.0, 1.0/8.0, 0.0, 7.25/512.0],
-            [1.0/3.0, 0.0, 38/100.0, 1.0/8.0, 0.0, 71.2833/512.0],
-            [1.0, 0.0, 26/100.0, 0.0, 0.0, 7.925/512.0]
+            [1.0,   1.0,0.0,0.0,0.0,0.0,0.0,     1.0, 22.0/80.0, 1.0/8.0, 0.0,  0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,    7.25/512.0,    1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,    1.0,0.0,0.0],
+            [1.0/3.0,   0.0,0.0,1.0,0.0,0.0,0.0,     0.0, 38/80.0, 1.0/8.0, 0.0,    0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,    71.2833/512.0, 0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,    0.0,1.0,0.0],
+            [1.0,    0.0,1.0,0.0,0.0,0.0,0.0,    0.0, 26/80.0, 0.0, 0.0,   0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,     7.925/512.0, 1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,      1.0,0.0,0.0]
         ]
+        for i in range(len(solutionX)):
+            for j in range(len(solutionX[i])):
+                self.assertAlmostEquals(X[i,j], solutionX[i][j], delta=0.001)
         self.assertEquals(solutionY, y.tolist())
-        self.assertEquals(solutionX, X.tolist())

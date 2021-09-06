@@ -1,5 +1,5 @@
 from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
-from typing import Dict, List
+from typing import Dict
 from preprocessdata.PreProcessDataBase import PreProcessDataBase
 import numpy as np
 

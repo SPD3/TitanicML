@@ -25,18 +25,20 @@ class NameClassifierBuilder (ProcessedDataBuilderBase):
     def initializeNameMapping(self) -> None:
         """Initializes a nameMapping with 5 bins"""
         self.currentNameMapping = []
-        for i in range(5):
+        for i in range(6):
             self.currentNameMapping.append(0.0)
     
     def mapTitle(self, title) -> None:
         """Maps a title to a bin"""
-        if(title in ['Don', 'Major', 'Capt', 'Jonkheer', 'Rev', 'Col']):
+        if(title in ['Don', 'Major', 'Capt', 'Jonkheer', 'Rev', 'Col', "Mr"]):
             self.currentNameMapping[0] = 1.0
-        elif(title in ['Countess', 'Mme']):
+        elif(title in ['Countess', 'Mme', 'Mlle', 'Ms', 'Miss']):
             self.currentNameMapping[1] = 1.0
-        elif(title in ['Mlle', 'Ms']):
+        elif(title in ['Mrs']):
             self.currentNameMapping[2] = 1.0
         elif(title in ['Dr']):
             self.currentNameMapping[3] = 1.0
-        else:
+        elif(title in ['Master']):
             self.currentNameMapping[4] = 1.0
+        else:
+            self.currentNameMapping[5] = 1.0

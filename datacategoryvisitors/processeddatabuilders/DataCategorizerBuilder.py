@@ -1,11 +1,10 @@
-from typing import List
 from datacategoryvisitors.processeddatabuilders.ProcessedDataBuilderBase \
     import ProcessedDataBuilderBase
 
 class DataCategorizerBuilder (ProcessedDataBuilderBase):
     """Categorizes preprocessed data into seperate bins specified by the user"""
 
-    def __init__(self, categories:List[float]) -> None:
+    def __init__(self, categories:list[float]) -> None:
         """
         Parameters
         ---------------

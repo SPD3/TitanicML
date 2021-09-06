@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import List
 
 class ProcessedDataBuilderBase (ABC):
     """Base class for processing data that initializes necessary variables for 
@@ -12,7 +11,7 @@ class ProcessedDataBuilderBase (ABC):
     def buildProcessedData(self) -> None:
         pass
 
-    def getProcessedData(self, preprocessedData:List) -> List:
+    def getProcessedData(self, preprocessedData:list) -> list:
         """
         Takes a list of data that has not been processed, builds processed data 
         based on this list and then returns this processed data
