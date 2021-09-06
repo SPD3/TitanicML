@@ -18,7 +18,7 @@ class AgeClassifierBuilderTest (unittest.TestCase):
     
     def testMapAge(self) -> None:
         """Makes sure that mapAge() maps various ages to the correct bin"""
-        def testNewAgeValue(age, solution):
+        def testNewAgeValue(age:float, solution:list[float]):
             self.ageClassifierBuilder.initializeAgeMapping()
             self.ageClassifierBuilder.mapAge(age)
             self.assertEquals(solution, self.ageClassifierBuilder.currentAgeMapping)

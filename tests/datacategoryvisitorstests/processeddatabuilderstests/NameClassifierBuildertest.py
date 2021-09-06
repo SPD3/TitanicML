@@ -26,7 +26,7 @@ class NameClassifierBuilderTest (unittest.TestCase):
 
     def testMapTitle(self) -> None:
         """Makes sure that mapTitle() maps various titles to the correct bin"""
-        def testNewTitle(name, solution):
+        def testNewTitle(name:str, solution:list[float]):
             self.nameClassifierBuilder.initializeNameMapping()
             title = self.nameClassifierBuilder.getTitle(name)
             self.nameClassifierBuilder.mapTitle(title)

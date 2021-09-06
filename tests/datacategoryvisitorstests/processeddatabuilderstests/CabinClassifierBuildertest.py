@@ -16,7 +16,7 @@ class CabinClassifierBuilderTest (unittest.TestCase):
 
     def testMapCabin(self) -> None:
         """Makes sure that mapCabin() maps various ages to the correct bin"""
-        def testNewCabinValue(cabin, solution):
+        def testNewCabinValue(cabin, solution:list[float]):
             self.cabinClassifierBuilder.initializeCabinMapping()
             self.cabinClassifierBuilder.mapCabin(cabin)
             self.assertEquals(solution, self.cabinClassifierBuilder.currentCabinMapping)

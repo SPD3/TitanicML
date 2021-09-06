@@ -18,7 +18,7 @@ class PortOfEmbarkationBuilderTest (unittest.TestCase):
 
     def testMapPort(self) -> None:
         """Makes sure that mapPort() maps various ages to the correct bin"""
-        def testNewPortValue(port, solution):
+        def testNewPortValue(port:str, solution:list[float]):
             self.portOfEmbarkationBuilder.initializeCurrentPortMapping()
             self.portOfEmbarkationBuilder.mapPort(port)
             self.assertEquals(solution, self.portOfEmbarkationBuilder.currentPortMapping)
