@@ -24,7 +24,7 @@ if( __name__ == "__main__"):
 
     predictions = model.predict(X)
 
-    submissionName = factory.getName() + "Submission"
+    submissionName = factory.getName() + "Submission.csv"
     f = open("submissions/" + submissionName, "w")
     writer = csv.writer(f)
 
