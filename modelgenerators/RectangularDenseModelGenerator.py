@@ -13,12 +13,11 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
         layersize: the desired number of nodes for each layer
         layers: the desired number of layers between the input and sigmoid output layer
         """
-        super().__init__()
+        super().__init__(inputShape)
         self.layerSize = layersize
         self.layers = layers
         self.epochs = 30
         self.validation_split = 0.1
-        self.inputShape = inputShape
         self.model = None
 
     def getModel(self) -> tf.keras.Model:

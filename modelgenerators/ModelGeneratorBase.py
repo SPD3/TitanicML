@@ -5,6 +5,10 @@ import tensorflow as tf
 class ModelGeneratorBase (ABC):
     """Base class for creating models NN models to process the titanic data"""
 
+    def __init__(self, inputShape:int) -> None:
+        super().__init__()
+        self.inputShape = inputShape
+
     @abstractmethod
     def createModel(self) -> None:
         pass
