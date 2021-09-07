@@ -11,18 +11,21 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         self.checkpoint_path = "./savedmodels/" + self.name + "cp.ckpt1"
 
     def testGetModel(self) -> None:
-        """Makes sure that when a model is asked for it is created if one does 
-        not already exist"""
+        """Makes sure that when a model is created, it can then be asked for"""
         simpleDenseModel = RectangularDenseModelGenerator(self.name)
-        model = simpleDenseModel.getModel(6)
+        model = simpleDenseModel.getModel()
+        self.assertEquals(model, None)
+
+        simpleDenseModel.createModel(6)
+        model = simpleDenseModel.getModel()
         self.assertTrue(issubclass(type(model), tf.keras.Model))
 
     def testCreateModel(self) -> None:
         """Makes sure that when a model is created each layer is a dense layer"""
         simpleDenseModel = RectangularDenseModelGenerator(self.name)
-        simpleDenseModel.createModel(6)
-        for i in range(1,len(simpleDenseModel.model.layers)):
-            self.assertTrue(issubclass(type(simpleDenseModel.model.layers[i]), tf.keras.layers.Dense))
+        model = simpleDenseModel.createModel(6)
+        for i in range(1,len(model.layers)):
+            self.assertTrue(issubclass(type(model.layers[i]), tf.keras.layers.Dense))
 
     def testCreateInputsLinkedToOutputs(self) -> None:
         """Makes sure that all of the layers in a simple dense model generator 
@@ -71,9 +74,9 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
             os.remove(filename)
 
         numberOfLayers = 5
-        neuronsPerLayer = 100
+        neuronsPerLayer = 500
         
-        simpleDenseModel = RectangularDenseModelGenerator(self.name, neuronsPerLayer, numberOfLayers)
+        simpleDenseModel = RectangularDenseModelGenerator(self.name, neuronsPerLayer, numberOfLayers, epochs=10, learningRate=1.0e-3)
         simpleDenseModel.fitModel(np.array(X), np.array(y))
         simpleDenseModel.validation_split = 0.0
         model = simpleDenseModel.getModel()
@@ -81,7 +84,8 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         for i in range(len(y)):
             self.assertAlmostEquals(predictions[i][0], y[i], delta=0.1)
 
-        newSimpleDenseModel = RectangularDenseModelGenerator(3,self.name, neuronsPerLayer, numberOfLayers)
+        newSimpleDenseModel = RectangularDenseModelGenerator(self.name, neuronsPerLayer, numberOfLayers)
+        newSimpleDenseModel.createModel(3)
         newModel = newSimpleDenseModel.getModel()
         newModel.load_weights(self.checkpoint_path)
         newPredictions = newModel.predict(np.array(X)).tolist()

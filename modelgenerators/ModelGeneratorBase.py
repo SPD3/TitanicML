@@ -5,9 +5,8 @@ import tensorflow as tf
 class ModelGeneratorBase (ABC):
     """Base class for creating models NN models to process the titanic data"""
 
-    def __init__(self, inputShape:int, name:str) -> None:
+    def __init__(self, name:str) -> None:
         super().__init__()
-        self.inputShape = inputShape
         self.name = name
         self.checkpoint_path = "savedmodels/" + self.name + "cp.ckpt1"
 
@@ -16,7 +15,7 @@ class ModelGeneratorBase (ABC):
         return self.checkpoint_path
 
     @abstractmethod
-    def createModel(self) -> None:
+    def createModel(self, inputShape:int) -> None:
         pass
 
     @abstractmethod

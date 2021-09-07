@@ -5,36 +5,32 @@ import numpy as np
 class RectangularDenseModelGenerator (ModelGeneratorBase):
     """Creates a NN with the same layersize for all layers specified"""
 
-    def __init__(self, inputShape:int, name:str, layerSize:int=512, layers:int=10) -> None:
+    def __init__(self, name:str, layerSize:int=512, layers:int=10, epochs:int=40, learningRate:float=5.0e-5) -> None:
         """
         Arguments:
         -----------
         inputShape: the size of the input tensor
         layersize: the desired number of nodes for each layer
         layers: the desired number of layers between the input and sigmoid output layer
+        epochs: the number of epochs to train for
+        learningRate: The learning rate applied per epoch
         """
-        super().__init__(inputShape,name)
+        super().__init__(name)
         self.layerSize = layerSize
         self.layers = layers
-        self.epochs = 40
+        self.epochs = epochs
         self.validation_split = 0.1
         self.model = None
-        self.learningRate = 5.0e-5
-        
-        #1.0e-5 fromlogits True, no activation
-        #1.0e-6, fromlogits False, sigmoid activation
+        self.learningRate = learningRate
+        self.inputShape = None
 
-    def getModel(self) -> tf.keras.Model:
-        """Creates a model if one hasn't been made yet and returns the model"""
-        if(self.model == None):
-            self.createModel()
-        return self.model
-
-    def createModel(self) -> None:
+    def createModel(self, inputShape:int) -> None:
         """Sets up connections between layers, creates and compiles a model"""
+        self.inputShape = inputShape
         self.createInputsLinkedToOutputs()
         self.model = tf.keras.Model(inputs=self.inputs, outputs=self.outputs)
         self.compileModel()
+        return self.model
 
     def createInputsLinkedToOutputs(self) -> None:
         """Sets up the layers between the input and output layers"""
@@ -51,12 +47,15 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
             loss=tf.keras.losses.BinaryCrossentropy(from_logits=False),
             metrics=["accuracy"]
         )
+    
+    def getModel(self):
+        return self.model
 
     def fitModel(self, X:np.ndarray, y:np.ndarray) -> tf.keras.callbacks.History:
         """Fits the model to training data and saves the model to the checkpoint 
         path. Has a validation split of 0.1."""
-        if(self.model == None):
-            self.createModel()
+        inputShape = len(X[0])
+        self.createModel(inputShape)
     
         cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=self.checkpoint_path,
                                                  save_weights_only=True,
