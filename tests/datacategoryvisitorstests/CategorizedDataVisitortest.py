@@ -111,3 +111,7 @@ class CategorizedDataVisitorTest (unittest.TestCase):
         passengers = self.categorizedDataVisitor.visitEmbarked(data)
         self.assertEquals(len(data), len(passengers))
         self.checkOneHotEncodingOfPassengers(passengers)
+
+    def testString(self) -> None:
+        """Tests the string representation of CategorizedDataVisitor"""
+        self.assertEquals(str(self.categorizedDataVisitor), "CatVis")

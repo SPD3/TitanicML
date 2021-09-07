@@ -87,3 +87,6 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
                 for value in self._categoryDictionary[key][i]:
                     passenger.append(value)
             self._X.append(passenger)
+
+    def __str__(self) -> str:
+        return "ProcWithVis"

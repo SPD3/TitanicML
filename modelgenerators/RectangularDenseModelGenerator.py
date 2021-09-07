@@ -63,3 +63,7 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
                                                  verbose=1)
         
         return self._model.fit(X, y,batch_size=len(X), epochs=self._epochs, validation_split=self._validation_split, callbacks=[cp_callback])
+
+    def __str__(self) -> str:
+        "RecL5N500"
+        return "RecL" + str(self._layers) + "N" + str(self._layerSize)

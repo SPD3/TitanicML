@@ -60,7 +60,7 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
         self._allModelCominationsIterator.first()
         listOfOutputs = []
         numOfLoops = 0
-        while(not self._allModelCominationsIterator()):
+        while(not self._allModelCominationsIterator.isDone()):
             currentOutput = self._allModelCominationsIterator.currentItem()
             self.checkOutputTypes(currentOutput)
             self.makeSureOutputIsUnique(self._allModelCominationsIterator(), currentOutput)

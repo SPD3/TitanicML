@@ -123,3 +123,7 @@ class ScaledDataCategoryVisitorTest (unittest.TestCase):
         passengers = self.scaledDataCategoryVisitor.visitEmbarked(data)
         self.assertEquals(len(data), len(passengers))
         self.checkOneHotEncodingOfPassengers(passengers)
+    
+    def testString(self) -> None:
+        """Tests the string representation of ScaledDataCategoryVisitor"""
+        self.assertEquals(str(self.scaledDataCategoryVisitor), "ScalVis")

@@ -69,3 +69,6 @@ class ScaledDataCategoryVisitor (DataCategoryVisitorBase):
     def visitEmbarked(self, embarked) -> list:
         builder = PortOfEmbarkationBuilder()
         return builder.getProcessedData(embarked)
+
+    def __str__(self) -> str:
+        return "ScalVis"

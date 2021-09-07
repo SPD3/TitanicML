@@ -148,6 +148,13 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
         self.assertEquals(solutionX, dataPreProcessorWithVisitor._X)
         self.assertEquals(solutionY, dataPreProcessorWithVisitor._y)
 
+    def testString(self) -> None:
+        """Tests the string representation of DataPreProcessorWithVisitor"""
+        data = [1,2,3]
+
+        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, None)
+        self.assertEquals(str(dataPreProcessorWithVisitor), "ProcWithVis")
+
 class DummyVisitor (DataCategoryVisitorBase):
     def __init__(self) -> None:
         self.categoryDictionary = {

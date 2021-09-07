@@ -71,3 +71,6 @@ class CategorizedDataVisitor (DataCategoryVisitorBase):
     def visitEmbarked(self, embarked:list[str]) -> list[list[float]]:
         builder = PortOfEmbarkationBuilder()
         return builder.getProcessedData(embarked)
+
+    def __str__(self) -> str:
+        return "CatVis"

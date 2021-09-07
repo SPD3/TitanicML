@@ -5,6 +5,7 @@ import os, glob
 import numpy as np
 
 class RectangularDenseModelGeneratorTest (unittest.TestCase):
+    """Tests for the RectangularDenseModelGenerator class"""
 
     def setUp(self) -> None:
         self.name = "Test1"
@@ -90,3 +91,10 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         newModel.load_weights(self.checkpoint_path)
         newPredictions = newModel.predict(np.array(X)).tolist()
         self.assertEquals(newPredictions, predictions)
+
+    def testString(self) -> None:
+        """Tests the string representation of RectangularDenseModelGenerator"""     
+        numberOfLayers = 5
+        neuronsPerLayer = 500
+        simpleDenseModel = RectangularDenseModelGenerator(self.name, neuronsPerLayer, numberOfLayers, epochs=10, learningRate=1.0e-3)
+        self.assertEquals(str(simpleDenseModel), "RecL5N500")
