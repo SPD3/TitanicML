@@ -157,7 +157,7 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
 
 class DummyVisitor (DataCategoryVisitorBase):
     def __init__(self) -> None:
-        self.categoryDictionary = {
+        self._categoryDictionary = {
             "PassengerId" : False,
             "Survived" : False,
             "Pclass" : False,
@@ -173,55 +173,55 @@ class DummyVisitor (DataCategoryVisitorBase):
         }
 
     def visitPassengerId(self, passengerId:list[int]) -> list[list[float]]:
-        self.categoryDictionary["PassengerId"] = True
+        self._categoryDictionary["PassengerId"] = True
         return [[]]
 
     def visitSurvived(self, survived:list[int]) -> list[list[float]]:
-        self.categoryDictionary["Survived"] = True
+        self._categoryDictionary["Survived"] = True
         return [[]]
 
     def visitPclass(self, pClass:list[int]) -> list[list[float]]:
-        self.categoryDictionary["Pclass"] = True
+        self._categoryDictionary["Pclass"] = True
         return [[]]
 
     def visitName(self, name:list[str]) -> list[list[float]]:
-        self.categoryDictionary["Name"] = True
+        self._categoryDictionary["Name"] = True
         return [[]]
 
     def visitSex(self, sex:list[str]) -> list[list[float]]:
-        self.categoryDictionary["Sex"] = True
+        self._categoryDictionary["Sex"] = True
         return [[]]
 
     def visitAge(self, age:list[float]) -> list[list[float]]:
-        self.categoryDictionary["Age"] = True
+        self._categoryDictionary["Age"] = True
         return [[]]
 
     def visitSibSp(self, sibSp:list[int]) -> list[list[float]]:
-        self.categoryDictionary["SibSp"] = True
+        self._categoryDictionary["SibSp"] = True
         return [[]]
 
     def visitParch(self, parch:list[int]) -> list[list[float]]:
-        self.categoryDictionary["Parch"] = True
+        self._categoryDictionary["Parch"] = True
         return [[]]
 
     def visitTicket(self, ticket:list) -> list[list[float]]:
-        self.categoryDictionary["Ticket"] = True
+        self._categoryDictionary["Ticket"] = True
         return [[]]
 
     def visitFare(self, fare:list[float]) -> list[list[float]]:
-        self.categoryDictionary["Fare"] = True
+        self._categoryDictionary["Fare"] = True
         return [[]]
 
     def visitCabin(self, cabin:list) -> list[list[float]]:
-        self.categoryDictionary["Cabin"] = True
+        self._categoryDictionary["Cabin"] = True
         return [[]]
 
     def visitEmbarked(self, embarked:list[str]) -> list[list[float]]:
-        self.categoryDictionary["Embarked"] = True
+        self._categoryDictionary["Embarked"] = True
         return [[]]
 
     def visitedAllCategories(self) -> bool:
-        for visitedCategory in self.categoryDictionary.values():
+        for visitedCategory in self._categoryDictionary.values():
             if(not visitedCategory):
                 return False
         return True

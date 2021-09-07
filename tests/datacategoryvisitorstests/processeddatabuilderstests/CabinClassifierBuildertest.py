@@ -4,22 +4,22 @@ from datacategoryvisitors.processeddatabuilders.CabinClassifierBuilder import Ca
 class CabinClassifierBuilderTest (unittest.TestCase):
 
     def setUp(self) -> None:
-        self.cabinClassifierBuilder = CabinClassifierBuilder()
+        self._cabinClassifierBuilder = CabinClassifierBuilder()
     
     def testInitializeCabinMapping(self) -> None:
         """Makes sure that initializeCabinMapping() creates a list 9 bins long 
         and is all 0s"""
-        self.cabinClassifierBuilder._initializeCabinMapping()
-        self.assertEquals(type(self.cabinClassifierBuilder._currentCabinMapping), list)
+        self._cabinClassifierBuilder._initializeCabinMapping()
+        self.assertEquals(type(self._cabinClassifierBuilder._currentCabinMapping), list)
         solution = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
-        self.assertEquals(solution, self.cabinClassifierBuilder._currentCabinMapping)
+        self.assertEquals(solution, self._cabinClassifierBuilder._currentCabinMapping)
 
     def testMapCabin(self) -> None:
         """Makes sure that mapCabin() maps various ages to the correct bin"""
         def testNewCabinValue(cabin, solution:list[float]):
-            self.cabinClassifierBuilder._initializeCabinMapping()
-            self.cabinClassifierBuilder._mapCabin(cabin)
-            self.assertEquals(solution, self.cabinClassifierBuilder._currentCabinMapping)
+            self._cabinClassifierBuilder._initializeCabinMapping()
+            self._cabinClassifierBuilder._mapCabin(cabin)
+            self.assertEquals(solution, self._cabinClassifierBuilder._currentCabinMapping)
 
         solution = [0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0]
         testNewCabinValue("C85", solution)
@@ -38,12 +38,12 @@ class CabinClassifierBuilderTest (unittest.TestCase):
         processedData"""
 
         preprocessedData = ["D47", "T1001", 3145, "X43"]
-        self.cabinClassifierBuilder._preprocessedData = preprocessedData
-        self.cabinClassifierBuilder._buildProcessedData()
+        self._cabinClassifierBuilder._preprocessedData = preprocessedData
+        self._cabinClassifierBuilder._buildProcessedData()
         solution = [
             [0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0],
             [0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0],
             [1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
             [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0]
         ]
-        self.assertEquals(solution, self.cabinClassifierBuilder._processedData)
+        self.assertEquals(solution, self._cabinClassifierBuilder._processedData)

@@ -6,22 +6,22 @@ from datacategoryvisitors.processeddatabuilders.PortOfEmbarkationBuilder import 
 class PortOfEmbarkationBuilderTest (unittest.TestCase):
     """Tests the PortOfEmbarkationBuilder class"""
     def setUp(self) -> None:
-        self.portOfEmbarkationBuilder = PortOfEmbarkationBuilder()
+        self._portOfEmbarkationBuilder = PortOfEmbarkationBuilder()
 
     def testInitializeAgeMapping(self) -> None:
         """Makes sure that initializeCurrentPortMapping() creates a list 3 bins
         long and is all 0s"""
-        self.portOfEmbarkationBuilder._initializeCurrentPortMapping()
-        self.assertEquals(type(self.portOfEmbarkationBuilder._currentPortMapping), list)
+        self._portOfEmbarkationBuilder._initializeCurrentPortMapping()
+        self.assertEquals(type(self._portOfEmbarkationBuilder._currentPortMapping), list)
         solution = [0.0,0.0,0.0]
-        self.assertEquals(solution, self.portOfEmbarkationBuilder._currentPortMapping)
+        self.assertEquals(solution, self._portOfEmbarkationBuilder._currentPortMapping)
 
     def testMapPort(self) -> None:
         """Makes sure that mapPort() maps various ages to the correct bin"""
         def testNewPortValue(port:str, solution:list[float]):
-            self.portOfEmbarkationBuilder._initializeCurrentPortMapping()
-            self.portOfEmbarkationBuilder._mapPort(port)
-            self.assertEquals(solution, self.portOfEmbarkationBuilder._currentPortMapping)
+            self._portOfEmbarkationBuilder._initializeCurrentPortMapping()
+            self._portOfEmbarkationBuilder._mapPort(port)
+            self.assertEquals(solution, self._portOfEmbarkationBuilder._currentPortMapping)
 
         solution = [0.0,1.0,0.0]
         testNewPortValue("C", solution)
@@ -36,12 +36,12 @@ class PortOfEmbarkationBuilderTest (unittest.TestCase):
         """Makes sure that for every port passed in it is binned and appended to 
         processedData"""
         preprocessedData = ["S", "Q", "Q", "C"]
-        self.portOfEmbarkationBuilder._preprocessedData = preprocessedData
-        self.portOfEmbarkationBuilder._buildProcessedData()
+        self._portOfEmbarkationBuilder._preprocessedData = preprocessedData
+        self._portOfEmbarkationBuilder._buildProcessedData()
         solution = [
             [1.0,0.0,0.0],
             [0.0,0.0,1.0],
             [0.0,0.0,1.0],
             [0.0,1.0,0.0]
         ]
-        self.assertEquals(solution, self.portOfEmbarkationBuilder._processedData)
+        self.assertEquals(solution, self._portOfEmbarkationBuilder._processedData)

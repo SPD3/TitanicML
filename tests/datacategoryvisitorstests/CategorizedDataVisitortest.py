@@ -5,23 +5,23 @@ import numpy as np
 class CategorizedDataVisitorTest (unittest.TestCase):
     """Tests the CategorizedDataVisitor class"""
     def setUp(self) -> None:
-        self.categorizedDataVisitor = CategorizedDataVisitor()
+        self._categorizedDataVisitor = CategorizedDataVisitor()
 
     def testVisitPassengerId(self) -> None:
         """Makes sure that visitPassengerId() destroys the passenger ID data"""
         data = [10, 55, 22, 84]
-        passengers = self.categorizedDataVisitor.visitPassengerId(data)
+        passengers = self._categorizedDataVisitor.visitPassengerId(data)
         solution = [[],[],[],[]]
         self.assertEquals(solution, passengers)
     
     def testVisitSurvived(self) -> None:
         """Makes sure that visitSurvived() does nothing to the survived data"""
         data = [1, 0, 1, 1]
-        passengers = self.categorizedDataVisitor.visitSurvived(data)
+        passengers = self._categorizedDataVisitor.visitSurvived(data)
         solution = [[1],[0],[1],[1]]
         self.assertEquals(solution, passengers)
 
-    def checkOneHotEncodingOfPassengers(self, passengers:list[list[int]]):
+    def _checkOneHotEncodingOfPassengers(self, passengers:list[list[int]]):
         """Checks that each passenger's encoding is the same length and that 
         each encoding is a one hot vector"""
         length = len(passengers[0])
@@ -45,73 +45,73 @@ class CategorizedDataVisitorTest (unittest.TestCase):
     def testVisitPclass(self) -> None:
         """Makes sure that visitPclass() bins its data in one hot vectors"""
         data = [1, 3, 2, 1]
-        passengers = self.categorizedDataVisitor.visitPclass(data)
+        passengers = self._categorizedDataVisitor.visitPclass(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitName(self) -> None:
         """Makes sure that visitName() bins its data in one hot vectors"""
         data = ["Mr. Jack", "Jackie Miss", "John Col James", "Nothing"]
-        passengers = self.categorizedDataVisitor.visitName(data)
+        passengers = self._categorizedDataVisitor.visitName(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitSex(self)  -> None:
         """Makes sure that visitSex() bins its data in one hot vectors"""
         data = ["female", "female", "female", "male"]
-        passengers = self.categorizedDataVisitor.visitSex(data)
+        passengers = self._categorizedDataVisitor.visitSex(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitAge(self)  -> None:
         """Makes sure that visitAge() bins its data in one hot vectors"""
         data = [0.55, 12, 78, 22]
-        passengers = self.categorizedDataVisitor.visitAge(data)
+        passengers = self._categorizedDataVisitor.visitAge(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitSibSp(self)  -> None:
         """Makes sure that visitSibSp() bins its data in one hot vectors"""
         data = [5, 0, 3, 2]
-        passengers = self.categorizedDataVisitor.visitSibSp(data)
+        passengers = self._categorizedDataVisitor.visitSibSp(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitParch(self)  -> None:
         """Makes sure that visitParch() bins its data in one hot vectors"""
         data = [4, 1, 0, 6]
-        passengers = self.categorizedDataVisitor.visitParch(data)
+        passengers = self._categorizedDataVisitor.visitParch(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitTicket(self)  -> None:
         """Makes sure that visitTicket() bins its data in one hot vectors"""
         data = [300000, "PP 4348", "A/5 21173", 151003]
-        passengers = self.categorizedDataVisitor.visitTicket(data)
+        passengers = self._categorizedDataVisitor.visitTicket(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitFare(self)  -> None:
         """Makes sure that visitFare() bins its data in one hot vectors"""
         data = [22.5,  35, 7, 400]
-        passengers = self.categorizedDataVisitor.visitFare(data)
+        passengers = self._categorizedDataVisitor.visitFare(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitCabin(self)  -> None:
         """Makes sure that visitCabin() bins its data in one hot vectors"""
         data = ["D36",  "C78", np.nan, "B57 B59 B63 B66"]
-        passengers = self.categorizedDataVisitor.visitCabin(data)
+        passengers = self._categorizedDataVisitor.visitCabin(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitEmbarked(self)  -> None:
         """Makes sure that visitEmbarked() bins its data in one hot vectors"""
         data = ["Q",  "Q", "C", "S"]
-        passengers = self.categorizedDataVisitor.visitEmbarked(data)
+        passengers = self._categorizedDataVisitor.visitEmbarked(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testString(self) -> None:
         """Tests the string representation of CategorizedDataVisitor"""
-        self.assertEquals(str(self.categorizedDataVisitor), "CatVis")
+        self.assertEquals(str(self._categorizedDataVisitor), "CatVis")

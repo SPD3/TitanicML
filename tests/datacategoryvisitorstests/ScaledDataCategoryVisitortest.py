@@ -5,24 +5,24 @@ import unittest
 class ScaledDataCategoryVisitorTest (unittest.TestCase):
     """Tests the ScaledDataCategoryVisitor class"""
     def setUp(self) -> None:
-        self.scaledDataCategoryVisitor = ScaledDataCategoryVisitor()
+        self._scaledDataCategoryVisitor = ScaledDataCategoryVisitor()
     
     def testVisitPassengerId(self):
         """Makes sure that passengerIds are destroyed in the 
         ScaledDataCategoryVisitor because they are useless information"""
         data = [1,2,3,4,5,6,7,8,9,10]
         solution = [[],[],[],[],[],[],[],[],[],[]]
-        passengers = self.scaledDataCategoryVisitor.visitPassengerId(data)
+        passengers = self._scaledDataCategoryVisitor.visitPassengerId(data)
         self.assertEquals(solution, passengers)
     
     def testVisitSurvived(self) -> None:
         """Makes sure that visitSurvived() does nothing to the survived data"""
         data = [1, 0, 1, 1]
-        passengers = self.scaledDataCategoryVisitor.visitSurvived(data)
+        passengers = self._scaledDataCategoryVisitor.visitSurvived(data)
         solution = [[1],[0],[1],[1]]
         self.assertEquals(solution, passengers)
 
-    def checkOneHotEncodingOfPassengers(self, passengers:list[list[int]]):
+    def _checkOneHotEncodingOfPassengers(self, passengers:list[list[int]]):
         """Checks that each passenger's encoding is the same length and that 
         each encoding is a one hot vector"""
         length = len(passengers[0])
@@ -57,73 +57,73 @@ class ScaledDataCategoryVisitorTest (unittest.TestCase):
     def testVisitPclass(self) -> None:
         """Makes sure that visitPclass() scales its data"""
         data = [1, 3, 2, 1]
-        passengers = self.scaledDataCategoryVisitor.visitPclass(data)
+        passengers = self._scaledDataCategoryVisitor.visitPclass(data)
         self.assertEquals(len(data), len(passengers))
         self.checkScaledEncodingOfPassengers(passengers)
 
     def testVisitName(self) -> None:
         """Makes sure that visitName() bins its data in one hot vectors"""
         data = ["Mr. Jack", "Jackie Miss", "John Col James", "Nothing"]
-        passengers = self.scaledDataCategoryVisitor.visitName(data)
+        passengers = self._scaledDataCategoryVisitor.visitName(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitSex(self)  -> None:
         """Makes sure that visitSex() bins its data in one hot vectors"""
         data = ["female", "female", "female", "male"]
-        passengers = self.scaledDataCategoryVisitor.visitSex(data)
+        passengers = self._scaledDataCategoryVisitor.visitSex(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitAge(self)  -> None:
         """Makes sure that visitAge() scales its data"""
         data = [0.55, 12, 78, 22]
-        passengers = self.scaledDataCategoryVisitor.visitAge(data)
+        passengers = self._scaledDataCategoryVisitor.visitAge(data)
         self.assertEquals(len(data), len(passengers))
         self.checkScaledEncodingOfPassengers(passengers)
 
     def testVisitSibSp(self)  -> None:
         """Makes sure that visitSibSp() scales its data"""
         data = [5, 0, 3, 2]
-        passengers = self.scaledDataCategoryVisitor.visitSibSp(data)
+        passengers = self._scaledDataCategoryVisitor.visitSibSp(data)
         self.assertEquals(len(data), len(passengers))
         self.checkScaledEncodingOfPassengers(passengers)
 
     def testVisitParch(self)  -> None:
         """Makes sure that visitParch() scales its data"""
         data = [4, 1, 0, 6]
-        passengers = self.scaledDataCategoryVisitor.visitParch(data)
+        passengers = self._scaledDataCategoryVisitor.visitParch(data)
         self.assertEquals(len(data), len(passengers))
         self.checkScaledEncodingOfPassengers(passengers)
 
     def testVisitTicket(self)  -> None:
         """Makes sure that visitTicket() bins its data in one hot vectors"""
         data = [300000, "PP 4348", "A/5 21173", 151003]
-        passengers = self.scaledDataCategoryVisitor.visitTicket(data)
+        passengers = self._scaledDataCategoryVisitor.visitTicket(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitFare(self)  -> None:
         """Makes sure that visitFare() scales its data"""
         data = [22.5,  35, 7, 400]
-        passengers = self.scaledDataCategoryVisitor.visitFare(data)
+        passengers = self._scaledDataCategoryVisitor.visitFare(data)
         self.assertEquals(len(data), len(passengers))
         self.checkScaledEncodingOfPassengers(passengers)
 
     def testVisitCabin(self)  -> None:
         """Makes sure that visitCabin() bins its data in one hot vectors"""
         data = ["D36",  "C78", np.nan, "B57 B59 B63 B66"]
-        passengers = self.scaledDataCategoryVisitor.visitCabin(data)
+        passengers = self._scaledDataCategoryVisitor.visitCabin(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
 
     def testVisitEmbarked(self)  -> None:
         """Makes sure that visitEmbarked() bins its data in one hot vectors"""
         data = ["Q",  "Q", "C", "S"]
-        passengers = self.scaledDataCategoryVisitor.visitEmbarked(data)
+        passengers = self._scaledDataCategoryVisitor.visitEmbarked(data)
         self.assertEquals(len(data), len(passengers))
-        self.checkOneHotEncodingOfPassengers(passengers)
+        self._checkOneHotEncodingOfPassengers(passengers)
     
     def testString(self) -> None:
         """Tests the string representation of ScaledDataCategoryVisitor"""
-        self.assertEquals(str(self.scaledDataCategoryVisitor), "ScalVis")
+        self.assertEquals(str(self._scaledDataCategoryVisitor), "ScalVis")

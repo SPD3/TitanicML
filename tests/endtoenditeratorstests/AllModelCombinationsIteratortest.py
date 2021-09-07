@@ -49,7 +49,7 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
         self.assertTrue(self._allModelCominationsIterator.isDone())
         self._allModelCominationsIterator.first()
 
-    def makeSureOutputIsUnique(self, listOfOutputs, newOutput):
+    def _makeSureOutputIsUnique(self, listOfOutputs, newOutput):
         """Makes sure that the new output is not the same as any of the previous
         outputs"""
         for output in listOfOutputs:
@@ -63,7 +63,7 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
         while(not self._allModelCominationsIterator.isDone()):
             currentOutput = self._allModelCominationsIterator.currentItem()
             self.checkOutputTypes(currentOutput)
-            self.makeSureOutputIsUnique(self._allModelCominationsIterator(), currentOutput)
+            self._makeSureOutputIsUnique(self._allModelCominationsIterator(), currentOutput)
             listOfOutputs.append(currentOutput)
             self.assertLessEqual(numOfLoops, 10, msg="Too many loops!")
             self._allModelCominationsIterator.next()
