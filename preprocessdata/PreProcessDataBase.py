@@ -5,7 +5,7 @@ class PreProcessDataBase (ABC):
     """Base class that defines operations to convert data from csv file to 
     processed data that a ML algorith can use"""
     def __init__(self, data:np.ndarray, dataIncludesLabels:bool) -> None:
-        super().__init__()
+        super()._init_()
         self._data = data
         self._dataIncludesLabels = dataIncludesLabels
         self._y = []

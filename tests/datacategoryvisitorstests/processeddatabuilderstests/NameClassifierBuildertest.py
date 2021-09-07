@@ -9,7 +9,7 @@ class NameClassifierBuilderTest (unittest.TestCase):
     def test_getTitle(self):
         """Makes sure that getTitle does find titles"""
         def checkNameAndTitle(name, titlesolution):
-            title = self.nameClassifierBuilder.__getTitle(name)
+            title = self.nameClassifierBuilder._getTitle(name)
             self.assertEquals(titlesolution, title)
 
         checkNameAndTitle("Mrs. ldajfhgp", "Mrs")
@@ -19,18 +19,18 @@ class NameClassifierBuilderTest (unittest.TestCase):
     def testInitializeNameMapping(self) -> None:
         """Makes sure that initializeNameMapping() creates a list 6 bins long 
         and is all 0s"""
-        self.nameClassifierBuilder.__initializeNameMapping()
-        self.assertEquals(type(self.nameClassifierBuilder.__currentNameMapping), list)
+        self.nameClassifierBuilder._initializeNameMapping()
+        self.assertEquals(type(self.nameClassifierBuilder._currentNameMapping), list)
         solution = [0.0,0.0,0.0,0.0,0.0,0.0]
-        self.assertEquals(solution, self.nameClassifierBuilder.__currentNameMapping)
+        self.assertEquals(solution, self.nameClassifierBuilder._currentNameMapping)
 
     def testMapTitle(self) -> None:
         """Makes sure that mapTitle() maps various titles to the correct bin"""
         def testNewTitle(name:str, solution:list[float]):
-            self.nameClassifierBuilder.__initializeNameMapping()
-            title = self.nameClassifierBuilder.__getTitle(name)
-            self.nameClassifierBuilder.__mapTitle(title)
-            self.assertEquals(solution, self.nameClassifierBuilder.__currentNameMapping)
+            self.nameClassifierBuilder._initializeNameMapping()
+            title = self.nameClassifierBuilder._getTitle(name)
+            self.nameClassifierBuilder._mapTitle(title)
+            self.assertEquals(solution, self.nameClassifierBuilder._currentNameMapping)
 
         solution = [1.0,0.0,0.0,0.0,0.0,0.0]
         testNewTitle("jslghaldfaCollgja lgn awfggad", solution)

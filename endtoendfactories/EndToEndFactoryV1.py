@@ -12,14 +12,14 @@ class EndToEndFactoryV1 (EndToEndFactoryBase):
     """
 
     def __init__(self) -> None:
-        self.__name = "ModelV1"
+        self._name = "ModelV1"
 
-    __instance = None
+    _instance = None
     def getInstance():
         """Gets the single instance of this singleton"""
-        if(EndToEndFactoryV1.__instance == None):
-            EndToEndFactoryV1.__instance = EndToEndFactoryV1()
-        return EndToEndFactoryV1.__instance
+        if(EndToEndFactoryV1._instance == None):
+            EndToEndFactoryV1._instance = EndToEndFactoryV1()
+        return EndToEndFactoryV1._instance
 
     def getPreProcessData(self, data:np.ndarray, dataIncludesLabels:bool) -> PreProcessDataBase:
         """Gets a dataPreprocessorWithVisitor with a CategorizedDataVisitor"""
@@ -29,8 +29,8 @@ class EndToEndFactoryV1 (EndToEndFactoryBase):
 
     def getModelGenerator(self, inputShape:int) -> ModelGeneratorBase:
         """Gets a RectangularDenseModelGenerator"""
-        return RectangularDenseModelGenerator(inputShape, self.__name)
+        return RectangularDenseModelGenerator(inputShape, self._name)
 
     def getName(self) -> str:
         """Gets the name of this factory"""
-        return self.__name
+        return self._name

@@ -53,7 +53,7 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             [3,1,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
         ]
         dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, ScaledDataCategoryVisitor())
-        dataPreProcessorWithVisitor.__putDataIntoCategories()
+        dataPreProcessorWithVisitor._putDataIntoCategories()
         solution = {
             "PassengerId" : [1,2,3],
             "Survived" : [0,1,1],
@@ -80,7 +80,7 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             [3,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
         ]
         dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, False, ScaledDataCategoryVisitor())
-        dataPreProcessorWithVisitor.__putDataIntoCategories()
+        dataPreProcessorWithVisitor._putDataIntoCategories()
         solution = {
             "PassengerId" : [1,2,3],
             "Survived" : [],
@@ -107,7 +107,7 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             [3,1,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
         ]
         dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, visitor)
-        dataPreProcessorWithVisitor.__visitAllDataCategories()
+        dataPreProcessorWithVisitor._visitAllDataCategories()
         self.assertTrue(visitor.visitedAllCategories())
     
     def testArrangeDataPerPassengerInXAndY(self):
@@ -129,7 +129,7 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
 
         dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, None)
         dataPreProcessorWithVisitor._categoryDictionary = categoryDictionary
-        dataPreProcessorWithVisitor.__arrangeDataPerPassengerInXAndY()
+        dataPreProcessorWithVisitor._arrangeDataPerPassengerInXAndY()
         solutionX = [
             [1,3,"One", "male", 22, 1,0,"T1",5,np.nan,"S",2,3],
             [2,1,"Two", "female", 38, 1,0,"T2",50,"C85","C",4,5],

@@ -7,36 +7,36 @@ class SimpleDataPreProcessor (PreProcessDataBase):
     DataPreProcessorWithVisitor Should be used instead"""
 
     def __init__(self, data:np.ndarray, dataIncludesLabels:bool=True) -> None:
-        super().__init__(data, dataIncludesLabels)
+        super()._init_(data, dataIncludesLabels)
         self._dataIsProcessed = False
 
     def getProcessedData(self) -> tuple[np.ndarray, np.ndarray]:
         """Processed the data if it has not been yet and then returns y and X"""
         if(not self._dataIsProcessed):
-            self.__processData()
+            self._processData()
         return np.array(self._y), np.array(self._X)
 
-    def __processData(self) -> None:
+    def _processData(self) -> None:
         """Processes the data. Eliminates useless data, and relabels useful data
          in ways that a ML algorithm can use"""
-        self.__eliminateFirstColumnInTrainData()
+        self._eliminateFirstColumnInTrainData()
         if(self._dataIncludesLabels):
-            self.__seperateLabelsFromData()
+            self._seperateLabelsFromData()
         else:
-            self.__createXAndMockLabels()
-        self.__scaleValuesInX()
+            self._createXAndMockLabels()
+        self._scaleValuesInX()
         self.elinateUneccessaryValuesInX()
         self.replaceNans()
         self._dataIsProcessed = True
 
-    def __eliminateFirstColumnInTrainData(self) -> None:
+    def _eliminateFirstColumnInTrainData(self) -> None:
         """Eliminates the first column in self.data"""
         newData = []
         for line in self._data:
             newData.append(line[1:])
         self._data = newData
 
-    def __seperateLabelsFromData(self) -> None:
+    def _seperateLabelsFromData(self) -> None:
         """Assigns y to be the first column of self.data and X to be the rest 
         of self.data"""
         self._y = []
@@ -45,29 +45,29 @@ class SimpleDataPreProcessor (PreProcessDataBase):
             self._y.append(line[0])
             self._X.append(line[1:])
     
-    def __createXAndMockLabels(self) -> None:
+    def _createXAndMockLabels(self) -> None:
         """Creates X and y so that if test data is passed in which doesn't have 
         labels, all of the other operations will still work"""
         self._X = self._data
         self._y = None
 
-    def __scaleValuesInX(self) -> None:
+    def _scaleValuesInX(self) -> None:
         """Scales the values in X that can be scaled"""
-        self.__scalePClass()
-        self.__binarySex()
-        self.__scaleAge()
-        self.__scaleSibSp()
-        self.__scaleParch()
-        self.__scaleFare()
+        self._scalePClass()
+        self._binarySex()
+        self._scaleAge()
+        self._scaleSibSp()
+        self._scaleParch()
+        self._scaleFare()
 
     def elinateUneccessaryValuesInX(self) -> None:
         """Eliminates the values in X that are not useful"""
-        self.__eliminateName()
-        self.__eliminateTicketNumber()
-        self.__removeLastColumn()
-        self.__removeLastColumn()
+        self._eliminateName()
+        self._eliminateTicketNumber()
+        self._removeLastColumn()
+        self._removeLastColumn()
 
-    def __scaleIndex(self, index:int, amount:float) -> None: 
+    def _scaleIndex(self, index:int, amount:float) -> None: 
         """Scales the values in a column in X specified by index by amount"""
         newX = []
         for passenger in self._X:
@@ -75,11 +75,11 @@ class SimpleDataPreProcessor (PreProcessDataBase):
             newX.append(passenger)
         self._X = newX
     
-    def __scalePClass(self) -> None:
+    def _scalePClass(self) -> None:
         """Scales the pClass column"""
-        self.__scaleIndex(0, 1.0/3.0)
+        self._scaleIndex(0, 1.0/3.0)
 
-    def __binarySex(self) -> None:
+    def _binarySex(self) -> None:
         """Makes the sex column consist of 0's and 1's instead of strings"""
         newX = []
         sexIndex = 2
@@ -91,23 +91,23 @@ class SimpleDataPreProcessor (PreProcessDataBase):
             newX.append(passenger)
         self._X = newX
 
-    def __scaleAge(self) -> None:
+    def _scaleAge(self) -> None:
         """Scales the age column"""
-        self.__scaleIndex(3, 1.0/100.0)
+        self._scaleIndex(3, 1.0/100.0)
 
-    def __scaleSibSp(self) -> None:
+    def _scaleSibSp(self) -> None:
         """Scales the SibSp column"""
-        self.__scaleIndex(4, 1.0/8.0)
+        self._scaleIndex(4, 1.0/8.0)
 
-    def __scaleParch(self) -> None:
+    def _scaleParch(self) -> None:
         """Scales the Parch column"""
-        self.__scaleIndex(5, 1.0/6.0)
+        self._scaleIndex(5, 1.0/6.0)
 
-    def __scaleFare(self) -> None:
+    def _scaleFare(self) -> None:
         """Scales the Fare column"""
-        self.__scaleIndex(7, 1.0/512.0)
+        self._scaleIndex(7, 1.0/512.0)
 
-    def __eliminateName(self) -> None:
+    def _eliminateName(self) -> None:
         """Eliminates the name column from X"""
         newX = []
         for passenger in self._X:
@@ -119,7 +119,7 @@ class SimpleDataPreProcessor (PreProcessDataBase):
             newX.append(newPassenger)
         self._X = newX
 
-    def __eliminateTicketNumber(self) -> None:
+    def _eliminateTicketNumber(self) -> None:
         """Eliminates the Ticket number column from X"""
         newX = []
         for passenger in self._X:
@@ -134,7 +134,7 @@ class SimpleDataPreProcessor (PreProcessDataBase):
             
         self._X = newX
 
-    def __removeLastColumn(self) -> None:
+    def _removeLastColumn(self) -> None:
         """Eliminates the last column from X"""
         newX = []
         for passenger in self._X:

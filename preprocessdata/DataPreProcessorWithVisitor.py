@@ -8,7 +8,7 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
     process the data and prepare it for an ML algorithm"""
     
     def __init__(self, data:np.ndarray, dataIncludesLabels:bool, dataCategoryVisitor:DataCategoryVisitorBase) -> None:
-        super().__init__(data, dataIncludesLabels)
+        super()._init_(data, dataIncludesLabels)
         self._categoryDictionary = {
             "PassengerId" : [],
             "Survived" : [],
@@ -35,13 +35,13 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
         """Processes the data if it has not yet done so and then returns 
         y and X"""
         if(not self._hasProcessedData):
-            self.__putDataIntoCategories()
-            self.__visitAllDataCategories()
-            self.__arrangeDataPerPassengerInXAndY()
+            self._putDataIntoCategories()
+            self._visitAllDataCategories()
+            self._arrangeDataPerPassengerInXAndY()
             self._hasProcessedData = True
         return np.array(self._y), np.array(self._X)
 
-    def __putDataIntoCategories(self) -> None:
+    def _putDataIntoCategories(self) -> None:
         """Takes the data for each passenger and places it into the right 
         categories"""
         for passenger in self._data:
@@ -52,7 +52,7 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
                 self._categoryDictionary[key].append(passenger[passengerValueIndex])
                 passengerValueIndex+= 1
 
-    def __visitAllDataCategories(self) -> None:
+    def _visitAllDataCategories(self) -> None:
         """Visits all of the data categories and reassigns categoryDictionary 
         accordingly"""
         self._categoryDictionary["PassengerId"] = self._dataCategoryVisitor.visitPassengerId(self._categoryDictionary["PassengerId"])
@@ -68,7 +68,7 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
         self._categoryDictionary["Cabin"] = self._dataCategoryVisitor.visitCabin(self._categoryDictionary["Cabin"])
         self._categoryDictionary["Embarked"] = self._dataCategoryVisitor.visitEmbarked(self._categoryDictionary["Embarked"])
 
-    def __arrangeDataPerPassengerInXAndY(self) -> None:
+    def _arrangeDataPerPassengerInXAndY(self) -> None:
         """Arranges the data from categoryDictionary into X and y such that it 
         can be passed to the client in a format that can be easily used by an 
         ML algorithm"""

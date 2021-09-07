@@ -11,18 +11,18 @@ class TicketClassifierBuilderTest (unittest.TestCase):
     def testInitializeCurrentTicketMapping(self) -> None:
         """Makes sure that initializeCurrentTicketMapping() creates a list 13 
         bins long and is all 0s"""
-        self.ticketClassifierBuilder.__initializeCurrentTicketMapping()
-        self.assertEquals(type(self.ticketClassifierBuilder.__currentTicketMapping), list)
+        self.ticketClassifierBuilder._initializeCurrentTicketMapping()
+        self.assertEquals(type(self.ticketClassifierBuilder._currentTicketMapping), list)
         solution = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
-        self.assertEquals(solution, self.ticketClassifierBuilder.__currentTicketMapping)
+        self.assertEquals(solution, self.ticketClassifierBuilder._currentTicketMapping)
 
     def testMapTicketBasedOnNumber(self) -> None:
         """Makes sure that mapTicketBasedOnNumber() maps various tickets that 
         are only numbers to the correct bin"""
         def testNewTicketValue(ticket:float, solution:list[float]):
-            self.ticketClassifierBuilder.__initializeCurrentTicketMapping()
-            self.ticketClassifierBuilder.__mapTicketBasedOnNumber(ticket)
-            self.assertEquals(solution, self.ticketClassifierBuilder.__currentTicketMapping)
+            self.ticketClassifierBuilder._initializeCurrentTicketMapping()
+            self.ticketClassifierBuilder._mapTicketBasedOnNumber(ticket)
+            self.assertEquals(solution, self.ticketClassifierBuilder._currentTicketMapping)
 
         solution =  [1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
         testNewTicketValue(30000, solution)
@@ -37,9 +37,9 @@ class TicketClassifierBuilderTest (unittest.TestCase):
         """Makes sure that mapTicketBasedOnLetters() maps various tickets that 
         have letters in them to the correct bin"""
         def testNewTicketValue(ticket:str, solution:list[float]):
-            self.ticketClassifierBuilder.__initializeCurrentTicketMapping()
-            self.ticketClassifierBuilder.__mapTicketBasedOnLetters(ticket)
-            self.assertEquals(solution, self.ticketClassifierBuilder.__currentTicketMapping)
+            self.ticketClassifierBuilder._initializeCurrentTicketMapping()
+            self.ticketClassifierBuilder._mapTicketBasedOnLetters(ticket)
+            self.assertEquals(solution, self.ticketClassifierBuilder._currentTicketMapping)
 
         solution =  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0]
         testNewTicketValue("A/5 43402", solution)

@@ -11,6 +11,6 @@ class BinarySexDataBuilderTest (unittest.TestCase):
         females in processedData"""
         preprocessedData = ["male","male","female","male","female"]
         self.ageClassifierBuilder._preprocessedData = preprocessedData
-        self.ageClassifierBuilder.__buildProcessedData()
+        self.ageClassifierBuilder._buildProcessedData()
         solution = [[1.0],[1.0],[0.0],[1.0],[0.0]]
         self.assertEquals(solution, self.ageClassifierBuilder._processedData)

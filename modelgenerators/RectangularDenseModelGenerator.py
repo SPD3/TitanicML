@@ -15,42 +15,42 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
         epochs: the number of epochs to train for
         learningRate: The learning rate applied per epoch
         """
-        super().__init__(name)
-        self.__layerSize = layerSize
-        self.__layers = layers
-        self.__epochs = epochs
-        self.__validation_split = 0.1
-        self.__model = None
-        self.__learningRate = learningRate
-        self.__inputShape = None
+        super()._init_(name)
+        self._layerSize = layerSize
+        self._layers = layers
+        self._epochs = epochs
+        self._validation_split = 0.1
+        self._model = None
+        self._learningRate = learningRate
+        self._inputShape = None
 
     def createModel(self, inputShape:int) -> tf.keras.Model:
         """Sets up connections between layers, creates and compiles a model"""
-        self.__inputShape = inputShape
-        self.__createInputsLinkedToOutputs()
-        self.__model = tf.keras.Model(inputs=self.__inputs, outputs=self.__outputs)
-        self.__compileModel()
-        return self.__model
+        self._inputShape = inputShape
+        self._createInputsLinkedToOutputs()
+        self._model = tf.keras.Model(inputs=self._inputs, outputs=self._outputs)
+        self._compileModel()
+        return self._model
 
-    def __createInputsLinkedToOutputs(self) -> None:
+    def _createInputsLinkedToOutputs(self) -> None:
         """Sets up the layers between the input and output layers"""
-        self.__inputs = tf.keras.layers.Input(shape=(self.__inputShape))
-        x = tf.keras.layers.Dense(self.__layerSize, activation="relu")(self.__inputs)
-        for i in range(self.__layers - 1):
-            x = tf.keras.layers.Dense(self.__layerSize, activation="relu")(x)
-        self.__outputs = tf.keras.layers.Dense(1, activation="sigmoid")(x)
+        self._inputs = tf.keras.layers.Input(shape=(self._inputShape))
+        x = tf.keras.layers.Dense(self._layerSize, activation="relu")(self._inputs)
+        for i in range(self._layers - 1):
+            x = tf.keras.layers.Dense(self._layerSize, activation="relu")(x)
+        self._outputs = tf.keras.layers.Dense(1, activation="sigmoid")(x)
     
-    def __compileModel(self) -> None:
+    def _compileModel(self) -> None:
         """Compiles the model with the adam optimizer."""
-        self.__model.compile(
-            optimizer=tf.keras.optimizers.Adam(self.__learningRate),
+        self._model.compile(
+            optimizer=tf.keras.optimizers.Adam(self._learningRate),
             loss=tf.keras.losses.BinaryCrossentropy(from_logits=False),
             metrics=["accuracy"]
         )
     
     def getModel(self) -> tf.keras.Model:
         """Gets the current Model"""
-        return self.__model
+        return self._model
 
     def fitModel(self, X:np.ndarray, y:np.ndarray) -> tf.keras.callbacks.History:
         """Fits the model to training data and saves the model to the checkpoint 
@@ -62,4 +62,4 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
                                                  save_weights_only=True,
                                                  verbose=1)
         
-        return self.__model.fit(X, y,batch_size=len(X), epochs=self.__epochs, validation_split=self.__validation_split, callbacks=[cp_callback])
+        return self._model.fit(X, y,batch_size=len(X), epochs=self._epochs, validation_split=self._validation_split, callbacks=[cp_callback])

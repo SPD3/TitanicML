@@ -10,7 +10,7 @@ class SimpleDataPreProcessorTest (unittest.TestCase):
         column in data"""
         data = [[1,2,3], [4,5,6], [7,8,9]]
         simpleDataPreProcessor = SimpleDataPreProcessor(data)
-        simpleDataPreProcessor.__eliminateFirstColumnInTrainData()
+        simpleDataPreProcessor._eliminateFirstColumnInTrainData()
         solution = [[2,3], [5,6], [8,9]]
         self.assertEqual(simpleDataPreProcessor._data, solution)
 
@@ -19,7 +19,7 @@ class SimpleDataPreProcessorTest (unittest.TestCase):
         from the rest and assigns them to y and X respectively"""
         data = [[1,2,3], [4,5,6], [7,8,9]]
         simpleDataPreProcessor = SimpleDataPreProcessor(data)
-        simpleDataPreProcessor.__seperateLabelsFromData()
+        simpleDataPreProcessor._seperateLabelsFromData()
         solutionX = [[2,3], [5,6], [8,9]]
         solutionY = [1,4,7]
         self.assertEqual(simpleDataPreProcessor._X, solutionX)
@@ -31,7 +31,7 @@ class SimpleDataPreProcessorTest (unittest.TestCase):
         data = [[1,2,3], [4,5,6], [7,8,9]]
         simpleDataPreProcessor = SimpleDataPreProcessor(data)
         simpleDataPreProcessor._X = data
-        simpleDataPreProcessor.__scaleIndex(2, 1.0/9.0)
+        simpleDataPreProcessor._scaleIndex(2, 1.0/9.0)
         solution = [[1,2,1.0/3.0], [4,5,2.0/3.0], [7,8,1.0]]
         self.assertEqual(simpleDataPreProcessor._X, solution)
 
@@ -41,7 +41,7 @@ class SimpleDataPreProcessorTest (unittest.TestCase):
         data = [[1,2,"male"], [4,5,"female"], [7,8,"male"]]
         simpleDataPreProcessor = SimpleDataPreProcessor(data)
         simpleDataPreProcessor._X = data
-        simpleDataPreProcessor.__binarySex()
+        simpleDataPreProcessor._binarySex()
         solution = [[1,2,1.0], [4,5,0.0], [7,8,1.0]]
         self.assertEqual(simpleDataPreProcessor._X, solution)
 
@@ -50,7 +50,7 @@ class SimpleDataPreProcessorTest (unittest.TestCase):
         data = [[1,"Rachael",3], [4,"Lily",6], [7,"John",9]]
         simpleDataPreProcessor = SimpleDataPreProcessor(data)
         simpleDataPreProcessor._X = data
-        simpleDataPreProcessor.__eliminateName()
+        simpleDataPreProcessor._eliminateName()
         solution = [[1,3], [4,6], [7,9]]
         self.assertEqual(simpleDataPreProcessor._X, solution)
 
@@ -64,7 +64,7 @@ class SimpleDataPreProcessorTest (unittest.TestCase):
         ]
         simpleDataPreProcessor = SimpleDataPreProcessor(data)
         simpleDataPreProcessor._X = data
-        simpleDataPreProcessor.__eliminateTicketNumber()
+        simpleDataPreProcessor._eliminateTicketNumber()
         solution = [    
             [1,2,3,4,5,6,7,8], 
             [1.1,2.2,3.3,4.2,5.7,6.6,7.4,8.1], 
@@ -77,7 +77,7 @@ class SimpleDataPreProcessorTest (unittest.TestCase):
         data = [[1,2,3], [4,5,6], [7,8,9]]
         simpleDataPreProcessor = SimpleDataPreProcessor(data)
         simpleDataPreProcessor._X = data
-        simpleDataPreProcessor.__removeLastColumn()
+        simpleDataPreProcessor._removeLastColumn()
         solution = [[1,2], [4,5], [7,8]]
         self.assertEqual(simpleDataPreProcessor._X, solution)
 

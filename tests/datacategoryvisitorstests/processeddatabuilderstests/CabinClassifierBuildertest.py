@@ -9,17 +9,17 @@ class CabinClassifierBuilderTest (unittest.TestCase):
     def testInitializeCabinMapping(self) -> None:
         """Makes sure that initializeCabinMapping() creates a list 9 bins long 
         and is all 0s"""
-        self.cabinClassifierBuilder.__initializeCabinMapping()
-        self.assertEquals(type(self.cabinClassifierBuilder.__currentCabinMapping), list)
+        self.cabinClassifierBuilder._initializeCabinMapping()
+        self.assertEquals(type(self.cabinClassifierBuilder._currentCabinMapping), list)
         solution = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
-        self.assertEquals(solution, self.cabinClassifierBuilder.__currentCabinMapping)
+        self.assertEquals(solution, self.cabinClassifierBuilder._currentCabinMapping)
 
     def testMapCabin(self) -> None:
         """Makes sure that mapCabin() maps various ages to the correct bin"""
         def testNewCabinValue(cabin, solution:list[float]):
-            self.cabinClassifierBuilder.__initializeCabinMapping()
-            self.cabinClassifierBuilder.__mapCabin(cabin)
-            self.assertEquals(solution, self.cabinClassifierBuilder.__currentCabinMapping)
+            self.cabinClassifierBuilder._initializeCabinMapping()
+            self.cabinClassifierBuilder._mapCabin(cabin)
+            self.assertEquals(solution, self.cabinClassifierBuilder._currentCabinMapping)
 
         solution = [0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0]
         testNewCabinValue("C85", solution)

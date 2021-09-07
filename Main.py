@@ -77,7 +77,7 @@ def compareAllModels(models:list[Tuple], trainData:np.ndarray)-> None:
         modelNumber = modelNumber + 1
     saveModelData(names, histories)
 
-if( __name__ == "__main__"):
+if( __name__ == "_main_"):
     train_data = pd.read_csv("titanic/train.csv")
     train_data = train_data.to_numpy()
 

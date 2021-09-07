@@ -6,8 +6,8 @@ class ScaleDataBuilder (ProcessedDataBuilderBase):
     """Takes a list of data and returns that data scaled by a specified 
     scaleFactor"""
     def __init__(self, scaleFactor : float) -> None:
-        super().__init__()
-        self.__scaleFactor = scaleFactor
+        super()._init_()
+        self._scaleFactor = scaleFactor
 
     def _buildProcessedData(self) -> None:
         """Scales the data for each passenger by the specified scaleFactor, 
@@ -17,4 +17,4 @@ class ScaleDataBuilder (ProcessedDataBuilderBase):
             if(np.isnan(data)):
                 self._processedData.append([0.0])
             else:
-                self._processedData.append([data * self.__scaleFactor])
+                self._processedData.append([data * self._scaleFactor])

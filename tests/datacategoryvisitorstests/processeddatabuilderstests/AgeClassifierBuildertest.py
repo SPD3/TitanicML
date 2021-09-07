@@ -11,17 +11,17 @@ class AgeClassifierBuilderTest (unittest.TestCase):
     def testInitializeAgeMapping(self) -> None:
         """Makes sure that initializeAgeMapping() creates a list 11 bins long 
         and is all 0s"""
-        self.ageClassifierBuilder.__initializeAgeMapping()
-        self.assertEquals(type(self.ageClassifierBuilder.__currentAgeMapping), list)
+        self.ageClassifierBuilder._AgeClassifierBuilder_initializeAgeMapping()
+        self.assertEquals(type(self.ageClassifierBuilder._currentAgeMapping), list)
         solution = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
-        self.assertEquals(solution, self.ageClassifierBuilder.__currentAgeMapping)
+        self.assertEquals(solution, self.ageClassifierBuilder._currentAgeMapping)
     
     def testMapAge(self) -> None:
         """Makes sure that mapAge() maps various ages to the correct bin"""
         def testNewAgeValue(age:float, solution:list[float]):
-            self.ageClassifierBuilder.__initializeAgeMapping()
-            self.ageClassifierBuilder.__mapAge(age)
-            self.assertEquals(solution, self.ageClassifierBuilder.__currentAgeMapping)
+            self.ageClassifierBuilder._initializeAgeMapping()
+            self.ageClassifierBuilder._mapAge(age)
+            self.assertEquals(solution, self.ageClassifierBuilder._currentAgeMapping)
 
         solution = [0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
         testNewAgeValue(5, solution)

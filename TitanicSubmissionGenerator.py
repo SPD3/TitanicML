@@ -10,7 +10,7 @@ test data provided by the contest. These predictions are then saved into a csv
 file to be submitted for grading.
 """
 
-if( __name__ == "__main__"):
+if( __name__ == "_main_"):
     factory = EndToEndFactoryV1.getInstance()
 
     test_data = pd.read_csv("titanic/test.csv")

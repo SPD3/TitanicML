@@ -8,19 +8,19 @@ class PortOfEmbarkationBuilder (ProcessedDataBuilderBase):
         """Creates assigns and appends a port mapping for each passenger to the 
         processed data."""
         for port in self._preprocessedData:
-            self.__initializeCurrentPortMapping()
-            self.__mapPort(port)
-            self._processedData.append(self.__currentPortMapping)
+            self._initializeCurrentPortMapping()
+            self._mapPort(port)
+            self._processedData.append(self._currentPortMapping)
     
-    def __initializeCurrentPortMapping(self) -> None:
+    def _initializeCurrentPortMapping(self) -> None:
         """Creates the current port mapping with three bins."""
-        self.__currentPortMapping = [0,0,0]
+        self._currentPortMapping = [0,0,0]
     
-    def __mapPort(self, port: str) -> None:
+    def _mapPort(self, port: str) -> None:
         """Maps the port to a specific bin in currentPortMapping."""
         if(port == "S"):
-            self.__currentPortMapping[0] = 1.0
+            self._currentPortMapping[0] = 1.0
         elif(port == "C"):
-            self.__currentPortMapping[1] = 1.0
+            self._currentPortMapping[1] = 1.0
         else:
-            self.__currentPortMapping[2] = 1.0
+            self._currentPortMapping[2] = 1.0
