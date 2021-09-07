@@ -6,10 +6,10 @@ class PreProcessDataBase (ABC):
     processed data that a ML algorith can use"""
     def __init__(self, data:np.ndarray, dataIncludesLabels:bool) -> None:
         super().__init__()
-        self.data = data
-        self.dataIncludesLabels = dataIncludesLabels
-        self.y = []
-        self.X = []
+        self._data = data
+        self._dataIncludesLabels = dataIncludesLabels
+        self._y = []
+        self._X = []
     
     @abstractmethod
     def getProcessedData(self) -> tuple[np.ndarray, np.ndarray]:

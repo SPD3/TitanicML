@@ -7,15 +7,15 @@ class ModelGeneratorBase (ABC):
 
     def __init__(self, name:str) -> None:
         super().__init__()
-        self.name = name
-        self.checkpoint_path = "savedmodels/" + self.name + "cp.ckpt1"
+        self._name = name
+        self._checkpoint_path = "savedmodels/" + self._name + "cp.ckpt1"
 
     def getCheckpointPath(self) -> str:
         """Gets the path to this modelgenerator's save location"""
-        return self.checkpoint_path
+        return self._checkpoint_path
 
     @abstractmethod
-    def createModel(self, inputShape:int) -> None:
+    def createModel(self, inputShape:int) -> tf.keras.Model:
         pass
 
     @abstractmethod

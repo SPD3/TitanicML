@@ -53,7 +53,7 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             [3,1,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
         ]
         dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, ScaledDataCategoryVisitor())
-        dataPreProcessorWithVisitor.putDataIntoCategories()
+        dataPreProcessorWithVisitor.__putDataIntoCategories()
         solution = {
             "PassengerId" : [1,2,3],
             "Survived" : [0,1,1],
@@ -80,7 +80,7 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             [3,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
         ]
         dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, False, ScaledDataCategoryVisitor())
-        dataPreProcessorWithVisitor.putDataIntoCategories()
+        dataPreProcessorWithVisitor.__putDataIntoCategories()
         solution = {
             "PassengerId" : [1,2,3],
             "Survived" : [],
@@ -107,7 +107,7 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             [3,1,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
         ]
         dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, visitor)
-        dataPreProcessorWithVisitor.visitAllDataCategories()
+        dataPreProcessorWithVisitor.__visitAllDataCategories()
         self.assertTrue(visitor.visitedAllCategories())
     
     def testArrangeDataPerPassengerInXAndY(self):
@@ -128,17 +128,17 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
         data = [1,2,3]
 
         dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, None)
-        dataPreProcessorWithVisitor.categoryDictionary = categoryDictionary
-        dataPreProcessorWithVisitor.arrangeDataPerPassengerInXAndY()
+        dataPreProcessorWithVisitor._categoryDictionary = categoryDictionary
+        dataPreProcessorWithVisitor.__arrangeDataPerPassengerInXAndY()
         solutionX = [
             [1,3,"One", "male", 22, 1,0,"T1",5,np.nan,"S",2,3],
             [2,1,"Two", "female", 38, 1,0,"T2",50,"C85","C",4,5],
             [3,3,"Three", "female", 26, 0,0,"T3",300,np.nan,"S",7,8]
         ]
         solutionY = [1,0,1]
-        dataPreProcessorWithVisitor.X
-        self.assertEquals(solutionX, dataPreProcessorWithVisitor.X)
-        self.assertEquals(solutionY, dataPreProcessorWithVisitor.y)
+        dataPreProcessorWithVisitor._X
+        self.assertEquals(solutionX, dataPreProcessorWithVisitor._X)
+        self.assertEquals(solutionY, dataPreProcessorWithVisitor._y)
 
 class DummyVisitor (DataCategoryVisitorBase):
     def __init__(self) -> None:

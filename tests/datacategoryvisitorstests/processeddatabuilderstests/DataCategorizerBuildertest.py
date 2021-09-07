@@ -12,21 +12,21 @@ class DataCategorizerBuilderTest (unittest.TestCase):
     def testGetIndexOfBin(self) -> None:
         """Makes sure that getIndexOfBin() returns the correct bin index given a
         particular value to be binned"""
-        self.assertEquals(0, self.dataCategorizerBuilder.getIndexOfBin(3))
-        self.assertEquals(4, self.dataCategorizerBuilder.getIndexOfBin(45))
-        self.assertEquals(4, self.dataCategorizerBuilder.getIndexOfBin(55))
-        self.assertEquals(2, self.dataCategorizerBuilder.getIndexOfBin(30))
+        self.assertEquals(0, self.dataCategorizerBuilder.__getIndexOfBin(3))
+        self.assertEquals(4, self.dataCategorizerBuilder.__getIndexOfBin(45))
+        self.assertEquals(4, self.dataCategorizerBuilder.__getIndexOfBin(55))
+        self.assertEquals(2, self.dataCategorizerBuilder.__getIndexOfBin(30))
 
     def testBuildProcessedData(self) -> None:
         """Makes sure that buildProcessedData appends the correctly filled bins 
         to processedData for the given values"""
         preprocessedData = [22, 42, 13, 40]
-        self.dataCategorizerBuilder.preprocessedData = preprocessedData
-        self.dataCategorizerBuilder.buildProcessedData()
+        self.dataCategorizerBuilder._preprocessedData = preprocessedData
+        self.dataCategorizerBuilder.__buildProcessedData()
         solution = [
             [0.0,0.0,1.0,0.0,0.0],
             [0.0,0.0,0.0,0.0,1.0],
             [0.0,1.0,0.0,0.0,0.0],
             [0.0,0.0,0.0,1.0,0.0]
         ]
-        self.assertEquals(solution, self.dataCategorizerBuilder.processedData)
+        self.assertEquals(solution, self.dataCategorizerBuilder._processedData)

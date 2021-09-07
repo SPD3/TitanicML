@@ -5,10 +5,10 @@ class ProcessedDataBuilderBase (ABC):
     the children classes"""
 
     def __init__(self) -> None:
-        self.processedData = []
+        self._processedData = []
 
     @abstractmethod
-    def buildProcessedData(self) -> None:
+    def __buildProcessedData(self) -> None:
         pass
 
     def getProcessedData(self, preprocessedData:list) -> list:
@@ -24,6 +24,6 @@ class ProcessedDataBuilderBase (ABC):
         returns: a list of the processed data in which each element is a list 
         that corresponds to a single passenger
         """
-        self.preprocessedData = preprocessedData
-        self.buildProcessedData()
-        return self.processedData
+        self._preprocessedData = preprocessedData
+        self.__buildProcessedData()
+        return self._processedData

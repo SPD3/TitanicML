@@ -11,17 +11,17 @@ class AgeClassifierBuilderTest (unittest.TestCase):
     def testInitializeAgeMapping(self) -> None:
         """Makes sure that initializeAgeMapping() creates a list 11 bins long 
         and is all 0s"""
-        self.ageClassifierBuilder.initializeAgeMapping()
-        self.assertEquals(type(self.ageClassifierBuilder.currentAgeMapping), list)
+        self.ageClassifierBuilder.__initializeAgeMapping()
+        self.assertEquals(type(self.ageClassifierBuilder._currentAgeMapping), list)
         solution = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
-        self.assertEquals(solution, self.ageClassifierBuilder.currentAgeMapping)
+        self.assertEquals(solution, self.ageClassifierBuilder._currentAgeMapping)
     
     def testMapAge(self) -> None:
         """Makes sure that mapAge() maps various ages to the correct bin"""
         def testNewAgeValue(age:float, solution:list[float]):
-            self.ageClassifierBuilder.initializeAgeMapping()
-            self.ageClassifierBuilder.mapAge(age)
-            self.assertEquals(solution, self.ageClassifierBuilder.currentAgeMapping)
+            self.ageClassifierBuilder.__initializeAgeMapping()
+            self.ageClassifierBuilder.__mapAge(age)
+            self.assertEquals(solution, self.ageClassifierBuilder._currentAgeMapping)
 
         solution = [0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
         testNewAgeValue(5, solution)
@@ -39,13 +39,13 @@ class AgeClassifierBuilderTest (unittest.TestCase):
         """Makes sure that for every age passed in it is binned and appended to 
         processedData"""
         preprocessedData = [7.0, 56.0, np.nan, 512.0]
-        self.ageClassifierBuilder.preprocessedData = preprocessedData
-        self.ageClassifierBuilder.buildProcessedData()
+        self.ageClassifierBuilder._preprocessedData = preprocessedData
+        self.ageClassifierBuilder.__buildProcessedData()
         solution = [
             [0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
             [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0],
             [1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
             [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0]
         ]
-        self.assertEquals(solution, self.ageClassifierBuilder.processedData)
+        self.assertEquals(solution, self.ageClassifierBuilder._processedData)
     

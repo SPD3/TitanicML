@@ -11,12 +11,12 @@ class NoModificationsToDataBuilderTest (unittest.TestCase):
         """Makes sure that the content of preprecessedData stays the same and 
         that it's format is only changed in processedData to be a list of lists"""
         preprocessedData = [1.0, "Goodbye", 1234, [1,2,3,4]]
-        self.noModificationsToDataBuilder.preprocessedData = preprocessedData
-        self.noModificationsToDataBuilder.buildProcessedData()
+        self.noModificationsToDataBuilder._preprocessedData = preprocessedData
+        self.noModificationsToDataBuilder.__buildProcessedData()
         solution = [
             [1.0],
             ["Goodbye"],
             [1234],
             [[1,2,3,4]]
         ]
-        self.assertEquals(solution, self.noModificationsToDataBuilder.processedData)
+        self.assertEquals(solution, self.noModificationsToDataBuilder._processedData)

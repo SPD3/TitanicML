@@ -10,11 +10,11 @@ class EndToEndFactoryV1 (EndToEndFactoryBase):
     """First version of an EndToEndFactory, will increase in version number as 
     models are generated with higher and higher scores on the test set.
     
-    Test Set Score: 0.73923
+    
     """
 
     def __init__(self) -> None:
-        self.name = "ModelV1"
+        self._name = "ModelV1"
 
     instance = None
     def getInstance():
@@ -31,8 +31,8 @@ class EndToEndFactoryV1 (EndToEndFactoryBase):
 
     def getModelGenerator(self, inputShape:int) -> ModelGeneratorBase:
         """Gets a RectangularDenseModelGenerator"""
-        return RectangularDenseModelGenerator(inputShape, self.name)
+        return RectangularDenseModelGenerator(inputShape, self._name)
 
     def getName(self) -> str:
         """Gets the name of this factory"""
-        return self.name
+        return self._name

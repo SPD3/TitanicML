@@ -11,17 +11,17 @@ class PortOfEmbarkationBuilderTest (unittest.TestCase):
     def testInitializeAgeMapping(self) -> None:
         """Makes sure that initializeCurrentPortMapping() creates a list 3 bins
         long and is all 0s"""
-        self.portOfEmbarkationBuilder.initializeCurrentPortMapping()
-        self.assertEquals(type(self.portOfEmbarkationBuilder.currentPortMapping), list)
+        self.portOfEmbarkationBuilder.__initializeCurrentPortMapping()
+        self.assertEquals(type(self.portOfEmbarkationBuilder._currentPortMapping), list)
         solution = [0.0,0.0,0.0]
-        self.assertEquals(solution, self.portOfEmbarkationBuilder.currentPortMapping)
+        self.assertEquals(solution, self.portOfEmbarkationBuilder._currentPortMapping)
 
     def testMapPort(self) -> None:
         """Makes sure that mapPort() maps various ages to the correct bin"""
         def testNewPortValue(port:str, solution:list[float]):
-            self.portOfEmbarkationBuilder.initializeCurrentPortMapping()
-            self.portOfEmbarkationBuilder.mapPort(port)
-            self.assertEquals(solution, self.portOfEmbarkationBuilder.currentPortMapping)
+            self.portOfEmbarkationBuilder.__initializeCurrentPortMapping()
+            self.portOfEmbarkationBuilder.__mapPort(port)
+            self.assertEquals(solution, self.portOfEmbarkationBuilder._currentPortMapping)
 
         solution = [0.0,1.0,0.0]
         testNewPortValue("C", solution)
@@ -36,12 +36,12 @@ class PortOfEmbarkationBuilderTest (unittest.TestCase):
         """Makes sure that for every port passed in it is binned and appended to 
         processedData"""
         preprocessedData = ["S", "Q", "Q", "C"]
-        self.portOfEmbarkationBuilder.preprocessedData = preprocessedData
-        self.portOfEmbarkationBuilder.buildProcessedData()
+        self.portOfEmbarkationBuilder._preprocessedData = preprocessedData
+        self.portOfEmbarkationBuilder.__buildProcessedData()
         solution = [
             [1.0,0.0,0.0],
             [0.0,0.0,1.0],
             [0.0,0.0,1.0],
             [0.0,1.0,0.0]
         ]
-        self.assertEquals(solution, self.portOfEmbarkationBuilder.processedData)
+        self.assertEquals(solution, self.portOfEmbarkationBuilder._processedData)

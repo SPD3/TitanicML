@@ -4,23 +4,23 @@ from datacategoryvisitors.processeddatabuilders.ProcessedDataBuilderBase \
 class PortOfEmbarkationBuilder (ProcessedDataBuilderBase):
     """Categorizes the port of embakation for each passenger."""
 
-    def buildProcessedData(self) -> None:
+    def __buildProcessedData(self) -> None:
         """Creates assigns and appends a port mapping for each passenger to the 
         processed data."""
-        for port in self.preprocessedData:
-            self.initializeCurrentPortMapping()
-            self.mapPort(port)
-            self.processedData.append(self.currentPortMapping)
+        for port in self._preprocessedData:
+            self.__initializeCurrentPortMapping()
+            self.__mapPort(port)
+            self._processedData.append(self._currentPortMapping)
     
-    def initializeCurrentPortMapping(self) -> None:
+    def __initializeCurrentPortMapping(self) -> None:
         """Creates the current port mapping with three bins."""
-        self.currentPortMapping = [0,0,0]
+        self._currentPortMapping = [0,0,0]
     
-    def mapPort(self, port: str) -> None:
+    def __mapPort(self, port: str) -> None:
         """Maps the port to a specific bin in currentPortMapping."""
         if(port == "S"):
-            self.currentPortMapping[0] = 1.0
+            self._currentPortMapping[0] = 1.0
         elif(port == "C"):
-            self.currentPortMapping[1] = 1.0
+            self._currentPortMapping[1] = 1.0
         else:
-            self.currentPortMapping[2] = 1.0
+            self._currentPortMapping[2] = 1.0

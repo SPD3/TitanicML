@@ -14,7 +14,7 @@ class ProcessedDataBuilderBaseTest (unittest.TestCase):
         preprocessedData = ["Hello" , "World"]
         processedData = self.dummyProcessedDataBuilder.getProcessedData(preprocessedData)
         self.assertEquals(solutionProcessedData, processedData)
-        self.assertEquals(preprocessedData, self.dummyProcessedDataBuilder.preprocessedData)
+        self.assertEquals(preprocessedData, self.dummyProcessedDataBuilder._preprocessedData)
 
 class DummyProcessedDataBuilder (ProcessedDataBuilderBase):
     """Dummy ProcessedDataBuilder that just always builds the same processed 

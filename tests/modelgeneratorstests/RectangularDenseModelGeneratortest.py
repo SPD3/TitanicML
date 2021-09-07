@@ -31,9 +31,9 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         """Makes sure that all of the layers in a simple dense model generator 
         are dense layers"""
         simpleDenseModel = RectangularDenseModelGenerator(self.name)
-        simpleDenseModel.inputShape = 6
-        simpleDenseModel.createInputsLinkedToOutputs()
-        model = tf.keras.Model(inputs=simpleDenseModel.inputs, outputs=simpleDenseModel.outputs)
+        simpleDenseModel._inputShape = 6
+        simpleDenseModel.__createInputsLinkedToOutputs()
+        model = tf.keras.Model(inputs=simpleDenseModel._inputs, outputs=simpleDenseModel._outputs)
         self.assertEquals(type(model.layers[0]), tf.keras.layers.InputLayer)
         for i in range(1,len(model.layers)):
             self.assertTrue(issubclass(type(model.layers[i]), tf.keras.layers.Dense))
@@ -41,11 +41,11 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
     def testCompileModel(self) -> None:
         """Makes sure that when the model is compiled no exceptions are thrown"""
         simpleDenseModel = RectangularDenseModelGenerator(self.name)
-        simpleDenseModel.inputShape = 6
-        simpleDenseModel.createInputsLinkedToOutputs()
-        simpleDenseModel.model = tf.keras.Model(inputs=simpleDenseModel.inputs, outputs=simpleDenseModel.outputs)
+        simpleDenseModel._inputShape = 6
+        simpleDenseModel.__createInputsLinkedToOutputs()
+        simpleDenseModel._model = tf.keras.Model(inputs=simpleDenseModel._inputs, outputs=simpleDenseModel._outputs)
         try:
-            simpleDenseModel.compileModel()
+            simpleDenseModel.__compileModel()
         except:
             self.fail("Compile model threw an exception")
             
@@ -78,7 +78,7 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         
         simpleDenseModel = RectangularDenseModelGenerator(self.name, neuronsPerLayer, numberOfLayers, epochs=10, learningRate=1.0e-3)
         simpleDenseModel.fitModel(np.array(X), np.array(y))
-        simpleDenseModel.validation_split = 0.0
+        simpleDenseModel._validation_split = 0.0
         model = simpleDenseModel.getModel()
         predictions = model.predict(np.array(X)).tolist()
         for i in range(len(y)):

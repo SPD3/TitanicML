@@ -6,38 +6,38 @@ class CabinClassifierBuilder (ProcessedDataBuilderBase):
     """This processed data builder looks through the cabins for each passenger
     and maps them into different cabin bins."""
 
-    def buildProcessedData(self) -> None:
+    def __buildProcessedData(self) -> None:
         """Goes through all of the cabins for each passenger and categorizes 
         them into seperate bins"""
-        for cabin in self.preprocessedData:
-            self.initializeCabinMapping()
-            self.mapCabin(cabin)
-            self.processedData.append(self.currentCabinMapping)
+        for cabin in self._preprocessedData:
+            self.__initializeCabinMapping()
+            self.__mapCabin(cabin)
+            self._processedData.append(self._currentCabinMapping)
 
-    def initializeCabinMapping(self) -> None:
+    def __initializeCabinMapping(self) -> None:
         """Initializes a passengers mapping with 9 bins."""
-        self.currentCabinMapping = []
+        self._currentCabinMapping = []
         for i in range(9):
-            self.currentCabinMapping.append(0.0)
+            self._currentCabinMapping.append(0.0)
 
-    def mapCabin(self, cabin) -> None:
+    def __mapCabin(self, cabin) -> None:
         """Assigns a cabin value to a specific 
         bin based on letters inside the cabin value."""
         if(not type(cabin) == str):
-            self.currentCabinMapping[0] = 1.0
+            self._currentCabinMapping[0] = 1.0
         elif "A" in cabin:
-            self.currentCabinMapping[1] = 1.0
+            self._currentCabinMapping[1] = 1.0
         elif "B" in cabin:
-            self.currentCabinMapping[2] = 1.0
+            self._currentCabinMapping[2] = 1.0
         elif "C" in cabin:
-            self.currentCabinMapping[3] = 1.0
+            self._currentCabinMapping[3] = 1.0
         elif "D" in cabin:
-            self.currentCabinMapping[4] = 1.0
+            self._currentCabinMapping[4] = 1.0
         elif "E" in cabin:
-            self.currentCabinMapping[5] = 1.0
+            self._currentCabinMapping[5] = 1.0
         elif "F" in cabin:
-            self.currentCabinMapping[6] = 1.0
+            self._currentCabinMapping[6] = 1.0
         elif "T" in cabin:
-            self.currentCabinMapping[7] = 1.0
+            self._currentCabinMapping[7] = 1.0
         else:
-            self.currentCabinMapping[8] = 1.0
+            self._currentCabinMapping[8] = 1.0

@@ -9,7 +9,7 @@ class NameClassifierBuilderTest (unittest.TestCase):
     def test_getTitle(self):
         """Makes sure that getTitle does find titles"""
         def checkNameAndTitle(name, titlesolution):
-            title = self.nameClassifierBuilder.getTitle(name)
+            title = self.nameClassifierBuilder.__getTitle(name)
             self.assertEquals(titlesolution, title)
 
         checkNameAndTitle("Mrs. ldajfhgp", "Mrs")
@@ -19,18 +19,18 @@ class NameClassifierBuilderTest (unittest.TestCase):
     def testInitializeNameMapping(self) -> None:
         """Makes sure that initializeNameMapping() creates a list 6 bins long 
         and is all 0s"""
-        self.nameClassifierBuilder.initializeNameMapping()
-        self.assertEquals(type(self.nameClassifierBuilder.currentNameMapping), list)
+        self.nameClassifierBuilder.__initializeNameMapping()
+        self.assertEquals(type(self.nameClassifierBuilder._currentNameMapping), list)
         solution = [0.0,0.0,0.0,0.0,0.0,0.0]
-        self.assertEquals(solution, self.nameClassifierBuilder.currentNameMapping)
+        self.assertEquals(solution, self.nameClassifierBuilder._currentNameMapping)
 
     def testMapTitle(self) -> None:
         """Makes sure that mapTitle() maps various titles to the correct bin"""
         def testNewTitle(name:str, solution:list[float]):
-            self.nameClassifierBuilder.initializeNameMapping()
-            title = self.nameClassifierBuilder.getTitle(name)
-            self.nameClassifierBuilder.mapTitle(title)
-            self.assertEquals(solution, self.nameClassifierBuilder.currentNameMapping)
+            self.nameClassifierBuilder.__initializeNameMapping()
+            title = self.nameClassifierBuilder.__getTitle(name)
+            self.nameClassifierBuilder.__mapTitle(title)
+            self.assertEquals(solution, self.nameClassifierBuilder._currentNameMapping)
 
         solution = [1.0,0.0,0.0,0.0,0.0,0.0]
         testNewTitle("jslghaldfaCollgja lgn awfggad", solution)
@@ -45,12 +45,12 @@ class NameClassifierBuilderTest (unittest.TestCase):
         """Makes sure that for every name passed in it's title is binned and 
         appended to processedData"""
         preprocessedData = ["jglskajgCaptgakljd", "MissMissMissMiss", "Don akgjdflagjkl", "aafdfdDr"]
-        self.nameClassifierBuilder.preprocessedData = preprocessedData
-        self.nameClassifierBuilder.buildProcessedData()
+        self.nameClassifierBuilder._preprocessedData = preprocessedData
+        self.nameClassifierBuilder.__buildProcessedData()
         solution = [
             [1.0,0.0,0.0,0.0,0.0,0.0],
             [0.0,1.0,0.0,0.0,0.0,0.0],
             [1.0,0.0,0.0,0.0,0.0,0.0],
             [0.0,0.0,0.0,1.0,0.0,0.0]
         ]
-        self.assertEquals(solution, self.nameClassifierBuilder.processedData)
+        self.assertEquals(solution, self.nameClassifierBuilder._processedData)

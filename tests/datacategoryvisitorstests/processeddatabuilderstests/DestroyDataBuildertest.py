@@ -12,7 +12,7 @@ class DestroyDataBuilderTest (unittest.TestCase):
         """Makes sure that no matter the data passed in, destroyDataBuilder will
         give back a list of empty lists"""
         preprocessedData = [1.0, 32, "Hello World", [[[]]]]
-        self.destroyDataBuilder.preprocessedData = preprocessedData
-        self.destroyDataBuilder.buildProcessedData()
+        self.destroyDataBuilder._preprocessedData = preprocessedData
+        self.destroyDataBuilder.__buildProcessedData()
         solution = [[],[],[],[]]
-        self.assertEquals(solution, self.destroyDataBuilder.processedData)
+        self.assertEquals(solution, self.destroyDataBuilder._processedData)

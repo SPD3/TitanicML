@@ -9,17 +9,17 @@ class CabinClassifierBuilderTest (unittest.TestCase):
     def testInitializeCabinMapping(self) -> None:
         """Makes sure that initializeCabinMapping() creates a list 9 bins long 
         and is all 0s"""
-        self.cabinClassifierBuilder.initializeCabinMapping()
-        self.assertEquals(type(self.cabinClassifierBuilder.currentCabinMapping), list)
+        self.cabinClassifierBuilder.__initializeCabinMapping()
+        self.assertEquals(type(self.cabinClassifierBuilder._currentCabinMapping), list)
         solution = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
-        self.assertEquals(solution, self.cabinClassifierBuilder.currentCabinMapping)
+        self.assertEquals(solution, self.cabinClassifierBuilder._currentCabinMapping)
 
     def testMapCabin(self) -> None:
         """Makes sure that mapCabin() maps various ages to the correct bin"""
         def testNewCabinValue(cabin, solution:list[float]):
-            self.cabinClassifierBuilder.initializeCabinMapping()
-            self.cabinClassifierBuilder.mapCabin(cabin)
-            self.assertEquals(solution, self.cabinClassifierBuilder.currentCabinMapping)
+            self.cabinClassifierBuilder.__initializeCabinMapping()
+            self.cabinClassifierBuilder.__mapCabin(cabin)
+            self.assertEquals(solution, self.cabinClassifierBuilder._currentCabinMapping)
 
         solution = [0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0]
         testNewCabinValue("C85", solution)
@@ -38,12 +38,12 @@ class CabinClassifierBuilderTest (unittest.TestCase):
         processedData"""
 
         preprocessedData = ["D47", "T1001", 3145, "X43"]
-        self.cabinClassifierBuilder.preprocessedData = preprocessedData
-        self.cabinClassifierBuilder.buildProcessedData()
+        self.cabinClassifierBuilder._preprocessedData = preprocessedData
+        self.cabinClassifierBuilder.__buildProcessedData()
         solution = [
             [0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0],
             [0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0],
             [1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
             [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0]
         ]
-        self.assertEquals(solution, self.cabinClassifierBuilder.processedData)
+        self.assertEquals(solution, self.cabinClassifierBuilder._processedData)
