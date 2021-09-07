@@ -15,6 +15,6 @@ class ScaleDataBuilderTest (unittest.TestCase):
 
         preprocessedData = [1.0, 82, 53, 1024]
         self.scaleDataBuilder._preprocessedData = preprocessedData
-        self.scaleDataBuilder.__buildProcessedData()
+        self.scaleDataBuilder._buildProcessedData()
         solution = [[0.5], [41], [26.5], [512]]
         self.assertEquals(solution, self.scaleDataBuilder._processedData)

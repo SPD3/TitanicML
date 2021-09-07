@@ -8,7 +8,7 @@ class ProcessedDataBuilderBase (ABC):
         self._processedData = []
 
     @abstractmethod
-    def __buildProcessedData(self) -> None:
+    def _buildProcessedData(self) -> None:
         pass
 
     def getProcessedData(self, preprocessedData:list) -> list:
@@ -25,5 +25,5 @@ class ProcessedDataBuilderBase (ABC):
         that corresponds to a single passenger
         """
         self._preprocessedData = preprocessedData
-        self.__buildProcessedData()
+        self._buildProcessedData()
         return self._processedData

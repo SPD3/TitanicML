@@ -11,13 +11,13 @@ class DataCategorizerBuilder (ProcessedDataBuilderBase):
         categories : an ordered list of the highest value for each category
         """
         super().__init__()
-        self._categories = categories
+        self.__categories = categories
 
-    def __buildProcessedData(self) -> None:
+    def _buildProcessedData(self) -> None:
         """Goes through all the values for each passenger in preprocessed data 
         and assigns them to a category """
         for value in self._preprocessedData:
-            currentData = [0] * len(self._categories)
+            currentData = [0] * len(self.__categories)
             i = self.__getIndexOfBin(value)
             currentData[i] = 1.0
             self._processedData.append(currentData)
@@ -25,7 +25,7 @@ class DataCategorizerBuilder (ProcessedDataBuilderBase):
     def __getIndexOfBin(self, value: float) -> int:
         """Looks for the first category in which the value falls below 
         the categories cut off and returns this index"""
-        for i in range(len(self._categories)):
-            if value <= self._categories[i]:
+        for i in range(len(self.__categories)):
+            if value <= self.__categories[i]:
                 break
         return i

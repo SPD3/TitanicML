@@ -9,19 +9,17 @@ from preprocessdata.PreProcessDataBase import PreProcessDataBase
 class EndToEndFactoryV1 (EndToEndFactoryBase):
     """First version of an EndToEndFactory, will increase in version number as 
     models are generated with higher and higher scores on the test set.
-    
-    
     """
 
     def __init__(self) -> None:
-        self._name = "ModelV1"
+        self.__name = "ModelV1"
 
-    instance = None
+    __instance = None
     def getInstance():
         """Gets the single instance of this singleton"""
-        if(EndToEndFactoryV1.instance == None):
-            EndToEndFactoryV1.instance = EndToEndFactoryV1()
-        return EndToEndFactoryV1.instance
+        if(EndToEndFactoryV1.__instance == None):
+            EndToEndFactoryV1.__instance = EndToEndFactoryV1()
+        return EndToEndFactoryV1.__instance
 
     def getPreProcessData(self, data:np.ndarray, dataIncludesLabels:bool) -> PreProcessDataBase:
         """Gets a dataPreprocessorWithVisitor with a CategorizedDataVisitor"""
@@ -31,8 +29,8 @@ class EndToEndFactoryV1 (EndToEndFactoryBase):
 
     def getModelGenerator(self, inputShape:int) -> ModelGeneratorBase:
         """Gets a RectangularDenseModelGenerator"""
-        return RectangularDenseModelGenerator(inputShape, self._name)
+        return RectangularDenseModelGenerator(inputShape, self.__name)
 
     def getName(self) -> str:
         """Gets the name of this factory"""
-        return self._name
+        return self.__name

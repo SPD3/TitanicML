@@ -16,12 +16,15 @@ class ModelGeneratorBase (ABC):
 
     @abstractmethod
     def createModel(self, inputShape:int) -> tf.keras.Model:
+        """Creates and returns a new model"""
         pass
 
     @abstractmethod
     def fitModel(self, X:np.ndarray, y:np.ndarray) -> tf.keras.callbacks.History:
+        """Fits a model to the training set and labels"""
         pass
 
     @abstractmethod
     def getModel(self) -> tf.keras.Model:
+        """Gets the current model"""
         pass

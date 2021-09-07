@@ -31,9 +31,9 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         """Makes sure that all of the layers in a simple dense model generator 
         are dense layers"""
         simpleDenseModel = RectangularDenseModelGenerator(self.name)
-        simpleDenseModel._inputShape = 6
+        simpleDenseModel.__inputShape = 6
         simpleDenseModel.__createInputsLinkedToOutputs()
-        model = tf.keras.Model(inputs=simpleDenseModel._inputs, outputs=simpleDenseModel._outputs)
+        model = tf.keras.Model(inputs=simpleDenseModel.__inputs, outputs=simpleDenseModel.__outputs)
         self.assertEquals(type(model.layers[0]), tf.keras.layers.InputLayer)
         for i in range(1,len(model.layers)):
             self.assertTrue(issubclass(type(model.layers[i]), tf.keras.layers.Dense))
@@ -41,9 +41,9 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
     def testCompileModel(self) -> None:
         """Makes sure that when the model is compiled no exceptions are thrown"""
         simpleDenseModel = RectangularDenseModelGenerator(self.name)
-        simpleDenseModel._inputShape = 6
+        simpleDenseModel.__inputShape = 6
         simpleDenseModel.__createInputsLinkedToOutputs()
-        simpleDenseModel._model = tf.keras.Model(inputs=simpleDenseModel._inputs, outputs=simpleDenseModel._outputs)
+        simpleDenseModel.__model = tf.keras.Model(inputs=simpleDenseModel.__inputs, outputs=simpleDenseModel.__outputs)
         try:
             simpleDenseModel.__compileModel()
         except:
@@ -78,7 +78,7 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         
         simpleDenseModel = RectangularDenseModelGenerator(self.name, neuronsPerLayer, numberOfLayers, epochs=10, learningRate=1.0e-3)
         simpleDenseModel.fitModel(np.array(X), np.array(y))
-        simpleDenseModel._validation_split = 0.0
+        simpleDenseModel.__validation_split = 0.0
         model = simpleDenseModel.getModel()
         predictions = model.predict(np.array(X)).tolist()
         for i in range(len(y)):

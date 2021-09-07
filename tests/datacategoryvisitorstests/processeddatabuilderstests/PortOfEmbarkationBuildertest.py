@@ -12,16 +12,16 @@ class PortOfEmbarkationBuilderTest (unittest.TestCase):
         """Makes sure that initializeCurrentPortMapping() creates a list 3 bins
         long and is all 0s"""
         self.portOfEmbarkationBuilder.__initializeCurrentPortMapping()
-        self.assertEquals(type(self.portOfEmbarkationBuilder._currentPortMapping), list)
+        self.assertEquals(type(self.portOfEmbarkationBuilder.__currentPortMapping), list)
         solution = [0.0,0.0,0.0]
-        self.assertEquals(solution, self.portOfEmbarkationBuilder._currentPortMapping)
+        self.assertEquals(solution, self.portOfEmbarkationBuilder.__currentPortMapping)
 
     def testMapPort(self) -> None:
         """Makes sure that mapPort() maps various ages to the correct bin"""
         def testNewPortValue(port:str, solution:list[float]):
             self.portOfEmbarkationBuilder.__initializeCurrentPortMapping()
             self.portOfEmbarkationBuilder.__mapPort(port)
-            self.assertEquals(solution, self.portOfEmbarkationBuilder._currentPortMapping)
+            self.assertEquals(solution, self.portOfEmbarkationBuilder.__currentPortMapping)
 
         solution = [0.0,1.0,0.0]
         testNewPortValue("C", solution)
@@ -37,7 +37,7 @@ class PortOfEmbarkationBuilderTest (unittest.TestCase):
         processedData"""
         preprocessedData = ["S", "Q", "Q", "C"]
         self.portOfEmbarkationBuilder._preprocessedData = preprocessedData
-        self.portOfEmbarkationBuilder.__buildProcessedData()
+        self.portOfEmbarkationBuilder._buildProcessedData()
         solution = [
             [1.0,0.0,0.0],
             [0.0,0.0,1.0],

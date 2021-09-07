@@ -22,7 +22,7 @@ class DataCategorizerBuilderTest (unittest.TestCase):
         to processedData for the given values"""
         preprocessedData = [22, 42, 13, 40]
         self.dataCategorizerBuilder._preprocessedData = preprocessedData
-        self.dataCategorizerBuilder.__buildProcessedData()
+        self.dataCategorizerBuilder._buildProcessedData()
         solution = [
             [0.0,0.0,1.0,0.0,0.0],
             [0.0,0.0,0.0,0.0,1.0],

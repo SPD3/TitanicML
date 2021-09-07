@@ -12,9 +12,9 @@ class TicketClassifierBuilderTest (unittest.TestCase):
         """Makes sure that initializeCurrentTicketMapping() creates a list 13 
         bins long and is all 0s"""
         self.ticketClassifierBuilder.__initializeCurrentTicketMapping()
-        self.assertEquals(type(self.ticketClassifierBuilder._currentTicketMapping), list)
+        self.assertEquals(type(self.ticketClassifierBuilder.__currentTicketMapping), list)
         solution = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
-        self.assertEquals(solution, self.ticketClassifierBuilder._currentTicketMapping)
+        self.assertEquals(solution, self.ticketClassifierBuilder.__currentTicketMapping)
 
     def testMapTicketBasedOnNumber(self) -> None:
         """Makes sure that mapTicketBasedOnNumber() maps various tickets that 
@@ -22,7 +22,7 @@ class TicketClassifierBuilderTest (unittest.TestCase):
         def testNewTicketValue(ticket:float, solution:list[float]):
             self.ticketClassifierBuilder.__initializeCurrentTicketMapping()
             self.ticketClassifierBuilder.__mapTicketBasedOnNumber(ticket)
-            self.assertEquals(solution, self.ticketClassifierBuilder._currentTicketMapping)
+            self.assertEquals(solution, self.ticketClassifierBuilder.__currentTicketMapping)
 
         solution =  [1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
         testNewTicketValue(30000, solution)
@@ -39,7 +39,7 @@ class TicketClassifierBuilderTest (unittest.TestCase):
         def testNewTicketValue(ticket:str, solution:list[float]):
             self.ticketClassifierBuilder.__initializeCurrentTicketMapping()
             self.ticketClassifierBuilder.__mapTicketBasedOnLetters(ticket)
-            self.assertEquals(solution, self.ticketClassifierBuilder._currentTicketMapping)
+            self.assertEquals(solution, self.ticketClassifierBuilder.__currentTicketMapping)
 
         solution =  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0]
         testNewTicketValue("A/5 43402", solution)
@@ -58,7 +58,7 @@ class TicketClassifierBuilderTest (unittest.TestCase):
         to processedData"""
         preprocessedData = [175000, "PARIS 42", "JJ 55", 5000]
         self.ticketClassifierBuilder._preprocessedData = preprocessedData
-        self.ticketClassifierBuilder.__buildProcessedData()
+        self.ticketClassifierBuilder._buildProcessedData()
         solution = [
             [0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
             [0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],

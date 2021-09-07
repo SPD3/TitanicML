@@ -20,9 +20,9 @@ class NameClassifierBuilderTest (unittest.TestCase):
         """Makes sure that initializeNameMapping() creates a list 6 bins long 
         and is all 0s"""
         self.nameClassifierBuilder.__initializeNameMapping()
-        self.assertEquals(type(self.nameClassifierBuilder._currentNameMapping), list)
+        self.assertEquals(type(self.nameClassifierBuilder.__currentNameMapping), list)
         solution = [0.0,0.0,0.0,0.0,0.0,0.0]
-        self.assertEquals(solution, self.nameClassifierBuilder._currentNameMapping)
+        self.assertEquals(solution, self.nameClassifierBuilder.__currentNameMapping)
 
     def testMapTitle(self) -> None:
         """Makes sure that mapTitle() maps various titles to the correct bin"""
@@ -30,7 +30,7 @@ class NameClassifierBuilderTest (unittest.TestCase):
             self.nameClassifierBuilder.__initializeNameMapping()
             title = self.nameClassifierBuilder.__getTitle(name)
             self.nameClassifierBuilder.__mapTitle(title)
-            self.assertEquals(solution, self.nameClassifierBuilder._currentNameMapping)
+            self.assertEquals(solution, self.nameClassifierBuilder.__currentNameMapping)
 
         solution = [1.0,0.0,0.0,0.0,0.0,0.0]
         testNewTitle("jslghaldfaCollgja lgn awfggad", solution)
@@ -46,7 +46,7 @@ class NameClassifierBuilderTest (unittest.TestCase):
         appended to processedData"""
         preprocessedData = ["jglskajgCaptgakljd", "MissMissMissMiss", "Don akgjdflagjkl", "aafdfdDr"]
         self.nameClassifierBuilder._preprocessedData = preprocessedData
-        self.nameClassifierBuilder.__buildProcessedData()
+        self.nameClassifierBuilder._buildProcessedData()
         solution = [
             [1.0,0.0,0.0,0.0,0.0,0.0],
             [0.0,1.0,0.0,0.0,0.0,0.0],

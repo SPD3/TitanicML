@@ -12,7 +12,7 @@ class NoModificationsToDataBuilderTest (unittest.TestCase):
         that it's format is only changed in processedData to be a list of lists"""
         preprocessedData = [1.0, "Goodbye", 1234, [1,2,3,4]]
         self.noModificationsToDataBuilder._preprocessedData = preprocessedData
-        self.noModificationsToDataBuilder.__buildProcessedData()
+        self.noModificationsToDataBuilder._buildProcessedData()
         solution = [
             [1.0],
             ["Goodbye"],

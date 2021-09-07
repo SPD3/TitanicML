@@ -13,6 +13,6 @@ class DestroyDataBuilderTest (unittest.TestCase):
         give back a list of empty lists"""
         preprocessedData = [1.0, 32, "Hello World", [[[]]]]
         self.destroyDataBuilder._preprocessedData = preprocessedData
-        self.destroyDataBuilder.__buildProcessedData()
+        self.destroyDataBuilder._buildProcessedData()
         solution = [[],[],[],[]]
         self.assertEquals(solution, self.destroyDataBuilder._processedData)
