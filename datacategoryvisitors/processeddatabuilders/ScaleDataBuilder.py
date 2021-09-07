@@ -6,7 +6,7 @@ class ScaleDataBuilder (ProcessedDataBuilderBase):
     """Takes a list of data and returns that data scaled by a specified 
     scaleFactor"""
     def __init__(self, scaleFactor : float) -> None:
-        super()._init_()
+        super().__init__()
         self._scaleFactor = scaleFactor
 
     def _buildProcessedData(self) -> None:

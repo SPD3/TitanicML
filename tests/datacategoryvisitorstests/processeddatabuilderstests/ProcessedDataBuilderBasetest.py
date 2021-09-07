@@ -19,5 +19,5 @@ class ProcessedDataBuilderBaseTest (unittest.TestCase):
 class DummyProcessedDataBuilder (ProcessedDataBuilderBase):
     """Dummy ProcessedDataBuilder that just always builds the same processed 
     data"""
-    def buildProcessedData(self) -> None:
-        self.processedData = [1.0,2.0,3.0,4.0,5.0]
+    def _buildProcessedData(self) -> None:
+        self._processedData = [1.0,2.0,3.0,4.0,5.0]

@@ -5,8 +5,8 @@ import unittest
 
 class EndToEndFactoryV1Test (unittest.TestCase):
     """Tests the EndToEndFactoryV1 class"""
-
     def testGetPreProcessData(self) -> None:
+
         """Makes sure this end to end factory gives back a 
         DataPreprocessorWithVisitor"""
         data = [
@@ -18,5 +18,5 @@ class EndToEndFactoryV1Test (unittest.TestCase):
 
     def testGetModelGenerator(self) -> None:
         """Makes sure this end to end factory gives back a RectangularDenseModelGenerator"""
-        modelGenerator = EndToEndFactoryV1.getInstance().getModelGenerator(6)
+        modelGenerator = EndToEndFactoryV1.getInstance().getModelGenerator()
         self.assertTrue(issubclass(type(modelGenerator), RectangularDenseModelGenerator))

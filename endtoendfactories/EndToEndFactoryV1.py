@@ -27,9 +27,9 @@ class EndToEndFactoryV1 (EndToEndFactoryBase):
         dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, dataIncludesLabels,categorizedDataVisitor)
         return dataPreProcessorWithVisitor
 
-    def getModelGenerator(self, inputShape:int) -> ModelGeneratorBase:
+    def getModelGenerator(self) -> ModelGeneratorBase:
         """Gets a RectangularDenseModelGenerator"""
-        return RectangularDenseModelGenerator(inputShape, self._name)
+        return RectangularDenseModelGenerator(self._name)
 
     def getName(self) -> str:
         """Gets the name of this factory"""

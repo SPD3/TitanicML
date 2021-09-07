@@ -15,7 +15,7 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
         epochs: the number of epochs to train for
         learningRate: The learning rate applied per epoch
         """
-        super()._init_(name)
+        super().__init__(name)
         self._layerSize = layerSize
         self._layers = layers
         self._epochs = epochs

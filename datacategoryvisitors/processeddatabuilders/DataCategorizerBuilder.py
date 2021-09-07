@@ -10,7 +10,7 @@ class DataCategorizerBuilder (ProcessedDataBuilderBase):
         ---------------
         categories : an ordered list of the highest value for each category
         """
-        super()._init_()
+        super().__init__()
         self._categories = categories
 
     def _buildProcessedData(self) -> None:

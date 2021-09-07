@@ -8,7 +8,7 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
     process the data and prepare it for an ML algorithm"""
     
     def __init__(self, data:np.ndarray, dataIncludesLabels:bool, dataCategoryVisitor:DataCategoryVisitorBase) -> None:
-        super()._init_(data, dataIncludesLabels)
+        super().__init__(data, dataIncludesLabels)
         self._categoryDictionary = {
             "PassengerId" : [],
             "Survived" : [],

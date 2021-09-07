@@ -6,7 +6,7 @@ class ModelGeneratorBase (ABC):
     """Base class for creating models NN models to process the titanic data"""
 
     def __init__(self, name:str) -> None:
-        super()._init_()
+        super().__init__()
         self._name = name
         self._checkpoint_path = "savedmodels/" + self._name + "cp.ckpt1"
 

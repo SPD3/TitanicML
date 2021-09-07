@@ -7,7 +7,7 @@ class SimpleDataPreProcessor (PreProcessDataBase):
     DataPreProcessorWithVisitor Should be used instead"""
 
     def __init__(self, data:np.ndarray, dataIncludesLabels:bool=True) -> None:
-        super()._init_(data, dataIncludesLabels)
+        super().__init__(data, dataIncludesLabels)
         self._dataIsProcessed = False
 
     def getProcessedData(self) -> tuple[np.ndarray, np.ndarray]:

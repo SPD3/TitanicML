@@ -11,7 +11,7 @@ class AgeClassifierBuilderTest (unittest.TestCase):
     def testInitializeAgeMapping(self) -> None:
         """Makes sure that initializeAgeMapping() creates a list 11 bins long 
         and is all 0s"""
-        self.ageClassifierBuilder._AgeClassifierBuilder_initializeAgeMapping()
+        self.ageClassifierBuilder._initializeAgeMapping()
         self.assertEquals(type(self.ageClassifierBuilder._currentAgeMapping), list)
         solution = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
         self.assertEquals(solution, self.ageClassifierBuilder._currentAgeMapping)
