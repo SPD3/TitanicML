@@ -16,9 +16,13 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
         super().__init__(inputShape,name)
         self.layerSize = layerSize
         self.layers = layers
-        self.epochs = 30
+        self.epochs = 40
         self.validation_split = 0.1
         self.model = None
+        self.learningRate = 5.0e-5
+        
+        #1.0e-5 fromlogits True, no activation
+        #1.0e-6, fromlogits False, sigmoid activation
 
     def getModel(self) -> tf.keras.Model:
         """Creates a model if one hasn't been made yet and returns the model"""
@@ -43,7 +47,7 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
     def compileModel(self) -> None:
         """Compiles the model with the adam optimizer."""
         self.model.compile(
-            optimizer=tf.keras.optimizers.Adam(),
+            optimizer=tf.keras.optimizers.Adam(self.learningRate),
             loss=tf.keras.losses.BinaryCrossentropy(from_logits=False),
             metrics=["accuracy"]
         )
@@ -58,4 +62,4 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
                                                  save_weights_only=True,
                                                  verbose=1)
         
-        return self.model.fit(X, y, epochs=self.epochs, validation_split=self.validation_split, callbacks=[cp_callback])
+        return self.model.fit(X, y,batch_size=len(X), epochs=self.epochs, validation_split=self.validation_split, callbacks=[cp_callback])
