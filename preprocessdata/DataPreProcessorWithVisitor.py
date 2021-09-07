@@ -1,3 +1,4 @@
+from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
 from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
 from typing import Dict
 from preprocessdata.PreProcessDataBase import PreProcessDataBase
@@ -7,7 +8,7 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
     """Takes a DataCategoryVisitorBase and visits all the columns in the data to 
     process the data and prepare it for an ML algorithm"""
     
-    def __init__(self, data:np.ndarray, dataIncludesLabels:bool, dataCategoryVisitor:DataCategoryVisitorBase) -> None:
+    def __init__(self, data:np.ndarray, dataIncludesLabels:bool, dataCategoryVisitor:DataCategoryVisitorBase=CategorizedDataVisitor()) -> None:
         super().__init__(data, dataIncludesLabels)
         self._categoryDictionary = {
             "PassengerId" : [],
@@ -24,6 +25,10 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
             "Embarked" : [],
         }
         self._hasProcessedData = False
+        self._dataCategoryVisitor = dataCategoryVisitor
+
+    def setDataCategoryVisitor(self, dataCategoryVisitor):
+        """Sets the _dataCategoryVisitor to _dataCategoryVisitor"""
         self._dataCategoryVisitor = dataCategoryVisitor
 
     def getCategoryDictionary(self) -> Dict:

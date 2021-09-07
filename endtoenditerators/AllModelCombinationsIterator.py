@@ -19,5 +19,5 @@ class AllModelCombinationsIterator (EndToEndIteratorBase):
         pass
 
     def currentItem(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
-        """Tells when the iteration is finished"""
+        """Gets the current item"""
         pass

@@ -1,3 +1,4 @@
+from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
 from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
 from datacategoryvisitors.ScaledDataCategoryVisitor import ScaledDataCategoryVisitor
 import unittest
@@ -6,6 +7,13 @@ import numpy as np
 
 class DataPreProcessorWithVisitorTest (unittest.TestCase):
     """Test for the DataPreProcessorWithVisitor class"""
+
+    def testSetDataCategoryVisitor(self):
+        data = [[]]
+        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, ScaledDataCategoryVisitor())
+        self.assertEquals(type(dataPreProcessorWithVisitor._dataCategoryVisitor), ScaledDataCategoryVisitor)
+        dataPreProcessorWithVisitor.setDataCategoryVisitor(CategorizedDataVisitor())
+        self.assertEquals(type(dataPreProcessorWithVisitor._dataCategoryVisitor), CategorizedDataVisitor)
 
     def testGetCategoryDictionary(self) -> None:
         """Makes sure that the category dictionary is generate with the
