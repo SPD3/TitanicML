@@ -171,6 +171,8 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
         self.assertFalse(dataPreProcessorWithVisitor._hasProcessedData)
         for list in dataPreProcessorWithVisitor.getCategoryDictionary().values():
             self.assertEquals(list, [])
+        self.assertEquals(dataPreProcessorWithVisitor._X,  [])
+        self.assertEquals(dataPreProcessorWithVisitor._y, [])
 
 
 class DummyVisitor (DataCategoryVisitorBase):
