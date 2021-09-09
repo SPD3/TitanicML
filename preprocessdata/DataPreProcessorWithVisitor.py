@@ -10,6 +10,13 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
     
     def __init__(self, data:list[list], dataIncludesLabels:bool, dataCategoryVisitor:DataCategoryVisitorBase=CategorizedDataVisitor()) -> None:
         super().__init__(data, dataIncludesLabels)
+        self._resetData()
+        self._dataCategoryVisitor = dataCategoryVisitor
+
+    def _resetData(self) -> None:
+        """Resets the data so that the next call to getProcessedData() 
+        regenerates the processed data"""
+        self._hasProcessedData = False
         self._categoryDictionary = {
             "PassengerId" : [],
             "Survived" : [],
@@ -24,18 +31,12 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
             "Cabin" : [],
             "Embarked" : [],
         }
-        self._hasProcessedData = False
-        self._dataCategoryVisitor = dataCategoryVisitor
 
-    def _resetData(self) -> None:
-        """Resets the data so that the next call to getProcessedData() 
-        regenerates the processed data"""
-        pass
 
     def setDataCategoryVisitor(self, dataCategoryVisitor):
         """Sets the _dataCategoryVisitor to _dataCategoryVisitor"""
         self._dataCategoryVisitor = dataCategoryVisitor
-        self._hasProcessedData = False
+        self._resetData()
 
     def getCategoryDictionary(self) -> Dict:
         """Gets the category dictionary which has entries for each section of 
