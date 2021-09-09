@@ -31,7 +31,8 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
             "Cabin" : [],
             "Embarked" : [],
         }
-
+        self._X = []
+        self._y = []
 
     def setDataCategoryVisitor(self, dataCategoryVisitor):
         """Sets the _dataCategoryVisitor to _dataCategoryVisitor"""
