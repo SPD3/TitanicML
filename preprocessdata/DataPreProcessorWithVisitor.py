@@ -8,7 +8,7 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
     """Takes a DataCategoryVisitorBase and visits all the columns in the data to 
     process the data and prepare it for an ML algorithm"""
     
-    def __init__(self, data:np.ndarray, dataIncludesLabels:bool, dataCategoryVisitor:DataCategoryVisitorBase=CategorizedDataVisitor()) -> None:
+    def __init__(self, data:list[list], dataIncludesLabels:bool, dataCategoryVisitor:DataCategoryVisitorBase=CategorizedDataVisitor()) -> None:
         super().__init__(data, dataIncludesLabels)
         self._categoryDictionary = {
             "PassengerId" : [],
@@ -27,9 +27,15 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
         self._hasProcessedData = False
         self._dataCategoryVisitor = dataCategoryVisitor
 
+    def _resetData(self) -> None:
+        """Resets the data so that the next call to getProcessedData() 
+        regenerates the processed data"""
+        pass
+
     def setDataCategoryVisitor(self, dataCategoryVisitor):
         """Sets the _dataCategoryVisitor to _dataCategoryVisitor"""
         self._dataCategoryVisitor = dataCategoryVisitor
+        self._hasProcessedData = False
 
     def getCategoryDictionary(self) -> Dict:
         """Gets the category dictionary which has entries for each section of 

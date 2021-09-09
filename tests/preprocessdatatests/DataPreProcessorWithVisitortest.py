@@ -155,6 +155,24 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
         dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, None)
         self.assertEquals(str(dataPreProcessorWithVisitor), "ProcWithVis")
 
+    def testResetData(self) -> None:
+        """Tests to see if the member variables are reset correctly within 
+        DataPreProcessorWithVisitor when reset is called so that subsequent 
+        calls to getting the processed data will reprocess data"""
+        visitor = ScaledDataCategoryVisitor()
+        data = [
+            [1,0,3,"Braund, Mr. Owen Harris","male",22,1,0,"A/5 21171",7.25,np.nan,"S"],
+            [2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)","female",38,1,0,"PC 17599",71.2833,"C85","C"],
+            [3,1,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
+        ]
+        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, visitor)
+        dataPreProcessorWithVisitor.getProcessedData()
+        dataPreProcessorWithVisitor._resetData()
+        self.assertFalse(dataPreProcessorWithVisitor._hasProcessedData)
+        for list in dataPreProcessorWithVisitor.getCategoryDictionary().values():
+            self.assertEquals(list, [])
+
+
 class DummyVisitor (DataCategoryVisitorBase):
     def __init__(self) -> None:
         self._categoryDictionary = {

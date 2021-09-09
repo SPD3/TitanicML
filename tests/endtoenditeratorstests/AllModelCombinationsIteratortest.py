@@ -1,3 +1,4 @@
+from modelgenerators.ModelGeneratorBase import ModelGeneratorBase
 from endtoenditerators.AllModelCombinationsIterator import AllModelCombinationsIterator
 from modelgenerators.RectangularDenseModelGenerator import RectangularDenseModelGenerator
 import unittest
@@ -11,7 +12,12 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
 
     def setUp(self) -> None:
         """Sets up all of the model combinations"""
-        data = [[1,2,3],[4,5,6]]
+        data = [
+            [1,0,3,"Braund, Mr. Owen Harris","male",22,1,0,"A/5 21171",7.25,np.nan,"S"],
+            [2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)","female",38,1,0,"PC 17599",71.2833,"C85","C"],
+            [3,1,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
+        ]
+        
         self._dataCategoryVisitors = [
             ScaledDataCategoryVisitor(),
             CategorizedDataVisitor()
@@ -36,11 +42,14 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
     def testFirst(self):
         """Makes sure that the first item is of the type expected and resets 
         the iteration back to the first item"""
+        
         output = self._allModelCominationsIterator.first()
         self.checkOutputTypes(output)
         currentItem = self._allModelCominationsIterator.currentItem()
-        self.assertEquals(output, currentItem)
-
+        self.assertEquals(output[0].tolist(), currentItem[0].tolist())
+        self.assertEquals(output[1].tolist(), currentItem[1].tolist())
+        self.assertEquals(output[2], currentItem[2])
+        
     def testIsDone(self):
         """Makes sure isDone returns true """
         for i in range(6):
@@ -49,11 +58,22 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
         self.assertTrue(self._allModelCominationsIterator.isDone())
         self._allModelCominationsIterator.first()
 
-    def _makeSureOutputIsUnique(self, listOfOutputs, newOutput):
+    def _makeSureOutputIsUnique(self, listOfOutputs:list[tuple[np.ndarray, np.ndarray, ModelGeneratorBase]], newOutput:tuple[np.ndarray, np.ndarray, ModelGeneratorBase]):
         """Makes sure that the new output is not the same as any of the previous
         outputs"""
         for output in listOfOutputs:
-            self.assertNotEquals(output, newOutput)
+            outputX = output[1].tolist()
+            outputY = output[0].tolist()
+            outputModelGenerator = output[2]
+            newOutputX = newOutput[1].tolist()
+            newOutputY = newOutput[0].tolist()
+            newOutputModelGenerator = newOutput[2]
+
+            sameX = outputX == newOutputX
+            sameY = outputY == newOutputY
+            sameModelGenerator = outputModelGenerator == newOutputModelGenerator
+
+            self.assertFalse(sameX and sameY and sameModelGenerator, msg="One of the new outputs was not unique relative to the previous outputs.")
 
     def testNextAndCurrentItem(self):
         """Tests the normal flow of the iterator"""
@@ -63,9 +83,10 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
         while(not self._allModelCominationsIterator.isDone()):
             currentOutput = self._allModelCominationsIterator.currentItem()
             self.checkOutputTypes(currentOutput)
-            self._makeSureOutputIsUnique(self._allModelCominationsIterator(), currentOutput)
+            self._makeSureOutputIsUnique(listOfOutputs, currentOutput)
             listOfOutputs.append(currentOutput)
             self.assertLessEqual(numOfLoops, 10, msg="Too many loops!")
+            
             self._allModelCominationsIterator.next()
             numOfLoops += 1
             
