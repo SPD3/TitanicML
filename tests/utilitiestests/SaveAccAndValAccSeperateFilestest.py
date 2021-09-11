@@ -31,10 +31,70 @@ class SaveAccAndValAccSeperateFilesTest (unittest.TestCase):
         }
         self.assertEquals(self.saveAccAndValAccSeperateFiles._filesWithLinesToSave, solution)
 
+    def testAddNameToFirstLine(self):
+        """Tests the addNameToFirstLine method"""
+        myList = [
+            ["1", "2"],
+            [1, 2],
+            [1, 2],
+            [1, 2],
+        ]
+        self.saveAccAndValAccSeperateFiles._addNameToFirstLine("John", myList)
+        solution = [
+            ["1", "2", "John"],
+            [1, 2],
+            [1, 2],
+            [1, 2],
+        ]
+        self.assertEquals(myList, solution)
+
+    def testSetUpEpochLines(self):
+        self.saveAccAndValAccSeperateFiles._filesWithLinesToSave = {
+            "AccuracyComparison": [
+                ["Epoch"]
+            ],
+            "ValAccuracyComparison": [
+                ["Epoch"]
+            ],
+        }
+        self.saveAccAndValAccSeperateFiles._setUpEpochLines()
+        solution = {
+            "AccuracyComparison": [
+                ["Epoch"],
+                [1],
+                [2],
+                [3]
+            ],
+            "ValAccuracyComparison": [
+                ["Epoch"],
+                [1],
+                [2],
+                [3]
+            ],
+        }
+        self.assertEquals(self.saveAccAndValAccSeperateFiles._filesWithLinesToSave, solution)
+
+    def testAddMetricToLines(self):
+        metric = [1,2,3,4]
+        lines = [
+            [5],
+            [6],
+            [7],
+            [8]
+        ]
+        self.saveAccAndValAccSeperateFiles._addMetricToLines(metric, lines)
+        solution = [
+            [5,1],
+            [6,2],
+            [7,3],
+            [8,4]
+        ]
+        self.assertEquals(lines, solution)
+
 class MockHistory (tf.keras.callbacks.History):
     """A mock keras history class to easily allow creation of history objects"""
 
-    def __init__(self, acc, valAcc):
+    def __init__(self, acc:list[float], valAcc:list[float]):
         super().__init__()
         self.history["accuracy"] = acc
-        self.history["accuracy"] = valAcc
+        self.history["val_accuracy"] = valAcc
