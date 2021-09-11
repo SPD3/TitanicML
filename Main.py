@@ -1,3 +1,4 @@
+from utilities.savehistories.SaveMetricsSeperateFiles import SaveMetricsSeperateFiles
 from endtoenditerators.AllModelCombinationsIterator import AllModelCombinationsIterator
 from modelgenerators.RectangularDenseModelGenerator import RectangularDenseModelGenerator
 from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
@@ -21,10 +22,10 @@ if( __name__ == "__main__"):
     
     dataCategoryVisitors = [
         #ScaledDataCategoryVisitor(),
-        CategorizedDataVisitor()
+        CategorizedDataVisitor(),
     ]
     dataProcessorsWithVisitors = [
-        DataProcessorWithVisitor(train_data, True)
+        DataProcessorWithVisitor(train_data, True),
     ]
     modelGenerators = [
         RectangularDenseModelGenerator(layerSize=512, layers=20),
@@ -34,11 +35,17 @@ if( __name__ == "__main__"):
     ]
 
     allModelCombinationsIterator = AllModelCombinationsIterator(dataCategoryVisitors, dataProcessorsWithVisitors, modelGenerators)
-    saveAccAndValAccSeperateFiles = SaveAccAndValAccSeperateFiles("Models")
+    metrics = [
+        ("Loss", ["loss"]),
+        ("Val_loss", ["val_loss"]),
+        ("Accuracy", ["accuracy"]),
+        ("Val_Accuracy", ["val_accuracy"]),
+    ]
+    saveMetricsSeperateFiles = SaveMetricsSeperateFiles(metrics, "ModelsComparison")
     for y, X, modelGenerator, name in allModelCombinationsIterator:
         history = modelGenerator.fitModel(X, y)
-        saveAccAndValAccSeperateFiles.addHistory(history, name)
-    saveAccAndValAccSeperateFiles.saveAddedHistories()
+        saveMetricsSeperateFiles.addHistory(history, name)
+    saveMetricsSeperateFiles.saveAddedHistories()
 
     print("All Done")
 

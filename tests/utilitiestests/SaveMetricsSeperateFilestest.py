@@ -14,7 +14,7 @@ class SaveMetricsSeperateFilesTest (unittest.TestCase):
             ("Acc", ["accuracy"]),
             ("ValAcc", ["val_accuracy"])
         ]
-        self.saveMetricsSeperateFiles = SaveMetricsSeperateFiles(metrics)
+        self.saveMetricsSeperateFiles = SaveMetricsSeperateFiles(metrics, "name")
         history1 = MockHistory([0.6, 0.7, 0.8], [0.6, 0.71, 0.79])
         history2 = MockHistory([0.2, 0.3, 0.6], [0.2, 0.3, 0.2])
         history3 = MockHistory([0.9, 0.9, 0.91], [0.6, 0.6, 0.64])
@@ -27,19 +27,19 @@ class SaveMetricsSeperateFilesTest (unittest.TestCase):
         correctly for the data passed in so that a csv file can be created"""
         self.saveMetricsSeperateFiles._createFilesWithLinesToSaveDict()
         solution = {
-            "Acc_and_ValAcc" : [
+            "nameAcc_and_ValAcc" : [
                 ["Epoch", "hist1accuracy", "hist1val_accuracy", "hist2accuracy", "hist2val_accuracy", "hist3accuracy", "hist3val_accuracy",],
                 [1, 0.6, 0.6, 0.2, 0.2, 0.9, 0.6],
                 [2, 0.7, 0.71, 0.3, 0.3, 0.9, 0.6],
                 [3 ,0.8, 0.79, 0.6, 0.2, 0.91, 0.64]
             ],
-            "Acc" : [
+            "nameAcc" : [
                 ["Epoch", "hist1accuracy", "hist2accuracy", "hist3accuracy"],
                 [1, 0.6, 0.2, 0.9],
                 [2, 0.7, 0.3, 0.9],
                 [3 ,0.8, 0.6, 0.91]
             ],
-            "ValAcc" : [
+            "nameValAcc" : [
                 ["Epoch", "hist1val_accuracy", "hist2val_accuracy", "hist3val_accuracy"],
                 [1, 0.6, 0.2, 0.6],
                 [2, 0.71, 0.3, 0.6],

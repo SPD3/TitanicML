@@ -17,15 +17,15 @@ class SaveMetricsSeperateFiles (SaveHistoriesBase):
         """
         self._filesWithLinesToSave = {}
         for fileName, metrics in self.fileMetrics:
-            self._filesWithLinesToSave[fileName] = [["Epoch"]]
+            self._filesWithLinesToSave[self.name + fileName] = [["Epoch"]]
 
         self._setUpEpochLines()
 
         for history, name in self.histories:
             for fileName, metrics in self.fileMetrics:
                 for metric in metrics:
-                    self._addNameToFirstLine(name + metric, self._filesWithLinesToSave[fileName])
-                    self._addMetricToLines(history.history[metric], self._filesWithLinesToSave[fileName][1:])
+                    self._addNameToFirstLine(name + metric, self._filesWithLinesToSave[self.name + fileName])
+                    self._addMetricToLines(history.history[metric], self._filesWithLinesToSave[self.name + fileName][1:])
 
         
     def _addNameToFirstLine(self, name:str, list:list[list]) -> None:
