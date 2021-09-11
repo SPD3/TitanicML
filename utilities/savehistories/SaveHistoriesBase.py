@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 import csv
 
+import tensorflow as tf
+
 class SaveHistoriesBase (ABC):
     """Base class defining structure of classes that will take in model 
     histories and save them away in csv files to evaluate"""
@@ -9,9 +11,9 @@ class SaveHistoriesBase (ABC):
         self.histories = []
         self._filesWithLinesToSave = {}
 
-    def addHistory(self, history) -> None:
+    def addHistory(self, history:tf.keras.callbacks.History, nameOfHistory:str) -> None:
         """Adds the history to a list of other histories"""
-        self.histories.append(history)
+        self.histories.append((history, nameOfHistory))
 
     def saveAddedHistories(self) -> None:
         """Takes all of the histories that have been added up to this point and 
