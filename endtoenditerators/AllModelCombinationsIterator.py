@@ -53,12 +53,3 @@ class AllModelCombinationsIterator (EndToEndIteratorBase):
         dataCategoryVisitor = self._dataCategoryVisitors[dataCategoryVisitorsIndex]
         dataProcessorWithVisitor.setDataCategoryVisitor(dataCategoryVisitor)
         return dataProcessorWithVisitor.getProcessedData()
-
-    def __iter__(self):
-        self._first()
-        return self
-
-    def __next__(self):
-        if(self._isDone()):
-            raise StopIteration
-        return self._next()

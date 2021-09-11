@@ -17,22 +17,33 @@ class EndToEndIteratorBase(ABC):
         
 
     @abstractmethod
-    def first(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
+    def _first(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
         """Gets the first X, Y, ModelGeneratorBase set and resets the iteration"""
         pass
 
     @abstractmethod
-    def next(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
+    def _next(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
         """Increments the iterator and gets the next X, Y, ModelGeneratorBase 
         set"""
         pass
 
     @abstractmethod
-    def isDone(self) -> bool:
+    def _isDone(self) -> bool:
         """Tells when the iteration is finished"""
         pass
 
     @abstractmethod
-    def currentItem(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
+    def _currentItem(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
         """Tells when the iteration is finished"""
         pass
+
+    def __iter__(self):
+        """Python specific iteration method to support loops"""
+        self._first()
+        return self
+
+    def __next__(self):
+        """Python specific next method to support loops"""
+        if(self._isDone()):
+            raise StopIteration
+        return self._next()

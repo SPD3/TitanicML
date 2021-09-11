@@ -90,7 +90,16 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
             self._allModelCominationsIterator._next()
             numOfLoops += 1
             
-        
+    def testPythonInterationLoops(self):
+        listOfOutputs = []
+        numOfLoops = 0
+        for currentOutput in self._allModelCominationsIterator:
+            self.checkOutputTypes(currentOutput)
+            self._makeSureOutputIsUnique(listOfOutputs, currentOutput)
+            listOfOutputs.append(currentOutput)
+            self.assertLessEqual(numOfLoops, 10, msg="Too many loops!")
+            
+            numOfLoops += 1
 
 
 
