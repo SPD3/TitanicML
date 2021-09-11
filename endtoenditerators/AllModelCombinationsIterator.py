@@ -14,23 +14,23 @@ class AllModelCombinationsIterator (EndToEndIteratorBase):
         self._maxIndex = len(dataCategoryVisitors) * len(dataProcessorsWithVisitor) * len(modelGenerators)
         self._currentIndex = 0
     
-    def first(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
+    def _first(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
         """Gets the first X, Y, ModelGeneratorBase set, and resets the 
         iteration"""
         self._currentIndex = 0
-        return self.currentItem()
+        return self._currentItem()
 
-    def next(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
+    def _next(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
         """Increments the iterator and gets the next X, Y, ModelGeneratorBase 
         set"""
         self._currentIndex += 1
-        return self.currentItem()
+        return self._currentItem()
 
-    def isDone(self) -> bool:
+    def _isDone(self) -> bool:
         """Tells when the iteration is finished"""
         return (self._currentIndex >= self._maxIndex)
 
-    def currentItem(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
+    def _currentItem(self) -> Tuple[np.ndarray, np.ndarray, ModelGeneratorBase]:
         """Gets the current item"""
         dataCategoryVisitorsIndex, dataProcessorsIndex, modelGeneratorsIndex = self._getIndeciesOfCurrentItem()
         y, X = self._getYandX(dataCategoryVisitorsIndex, dataProcessorsIndex)
@@ -53,3 +53,12 @@ class AllModelCombinationsIterator (EndToEndIteratorBase):
         dataCategoryVisitor = self._dataCategoryVisitors[dataCategoryVisitorsIndex]
         dataProcessorWithVisitor.setDataCategoryVisitor(dataCategoryVisitor)
         return dataProcessorWithVisitor.getProcessedData()
+
+    def __iter__(self):
+        self._first()
+        return self
+
+    def __next__(self):
+        if(self._isDone()):
+            raise StopIteration
+        return self._next()

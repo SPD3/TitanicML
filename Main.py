@@ -95,6 +95,8 @@ if( __name__ == "__main__"):
         RectangularDenseModelGenerator(layerSize=1024, layers=10)
     ]
 
-    iterator = AllModelCombinationsIterator(dataCategoryVisitors, dataProcessorsWithVisitors, modelGenerators)
+    allModelCombinationsIterator = AllModelCombinationsIterator(dataCategoryVisitors, dataProcessorsWithVisitors, modelGenerators)
+    for y, X, modelGenerator in allModelCombinationsIterator:
+        history = modelGenerator.fitModel(X, y)
     print("All Done")
 

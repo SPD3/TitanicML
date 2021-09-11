@@ -43,9 +43,9 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
         """Makes sure that the first item is of the type expected and resets 
         the iteration back to the first item"""
         
-        output = self._allModelCominationsIterator.first()
+        output = self._allModelCominationsIterator._first()
         self.checkOutputTypes(output)
-        currentItem = self._allModelCominationsIterator.currentItem()
+        currentItem = self._allModelCominationsIterator._currentItem()
         self.assertEquals(output[0].tolist(), currentItem[0].tolist())
         self.assertEquals(output[1].tolist(), currentItem[1].tolist())
         self.assertEquals(output[2], currentItem[2])
@@ -53,10 +53,10 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
     def testIsDone(self):
         """Makes sure isDone returns true """
         for i in range(6):
-            self.assertFalse(self._allModelCominationsIterator.isDone())
-            self._allModelCominationsIterator.next()
-        self.assertTrue(self._allModelCominationsIterator.isDone())
-        self._allModelCominationsIterator.first()
+            self.assertFalse(self._allModelCominationsIterator._isDone())
+            self._allModelCominationsIterator._next()
+        self.assertTrue(self._allModelCominationsIterator._isDone())
+        self._allModelCominationsIterator._first()
 
     def _makeSureOutputIsUnique(self, listOfOutputs:list[tuple[np.ndarray, np.ndarray, ModelGeneratorBase]], newOutput:tuple[np.ndarray, np.ndarray, ModelGeneratorBase]):
         """Makes sure that the new output is not the same as any of the previous
@@ -77,17 +77,17 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
 
     def testNextAndCurrentItem(self):
         """Tests the normal flow of the iterator"""
-        self._allModelCominationsIterator.first()
+        self._allModelCominationsIterator._first()
         listOfOutputs = []
         numOfLoops = 0
-        while(not self._allModelCominationsIterator.isDone()):
-            currentOutput = self._allModelCominationsIterator.currentItem()
+        while(not self._allModelCominationsIterator._isDone()):
+            currentOutput = self._allModelCominationsIterator._currentItem()
             self.checkOutputTypes(currentOutput)
             self._makeSureOutputIsUnique(listOfOutputs, currentOutput)
             listOfOutputs.append(currentOutput)
             self.assertLessEqual(numOfLoops, 10, msg="Too many loops!")
             
-            self._allModelCominationsIterator.next()
+            self._allModelCominationsIterator._next()
             numOfLoops += 1
             
         
