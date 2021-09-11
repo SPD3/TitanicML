@@ -78,8 +78,8 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         neuronsPerLayer = 500
         
         simpleDenseModel = RectangularDenseModelGenerator(self._name, neuronsPerLayer, numberOfLayers, epochs=10, learningRate=1.0e-3)
-        simpleDenseModel.fitModel(np.array(X), np.array(y))
         simpleDenseModel._validation_split = 0.0
+        simpleDenseModel.fitModel(np.array(X), np.array(y))
         model = simpleDenseModel.getModel()
         predictions = model.predict(np.array(X)).tolist()
         for i in range(len(y)):
@@ -98,3 +98,36 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         neuronsPerLayer = 500
         simpleDenseModel = RectangularDenseModelGenerator(self._name, neuronsPerLayer, numberOfLayers, epochs=10, learningRate=1.0e-3)
         self.assertEquals(str(simpleDenseModel), "RecL5N500")
+
+    def testModelGeneratorInitWithoutName(self) -> None:
+        """Makes sure that a modelGenerator can be created without a name and 
+        still operates correctly"""
+        X = [
+            [1,1,0],
+            [1,0,1],
+            [1,0,0],
+            [0,1,1],
+            [0,0,1],
+            [1,1,0],
+            [1,0,1],
+            [1,0,0],
+            [0,1,1],
+            [0,0,1],
+            [1,1,0],
+            [1,0,1],
+            [1,0,0],
+            [0,1,1],
+            [0,0,1],
+        ]
+        y = [1,1,1,0,0,1,1,1,0,0,1,1,1,0,0]
+
+        numberOfLayers = 5
+        neuronsPerLayer = 500
+        
+        simpleDenseModel = RectangularDenseModelGenerator(layerSize=neuronsPerLayer, layers=numberOfLayers, epochs=10, learningRate=1.0e-3)
+        simpleDenseModel._validation_split = 0.0
+        simpleDenseModel.fitModel(np.array(X), np.array(y))
+        model = simpleDenseModel.getModel()
+        predictions = model.predict(np.array(X)).tolist()
+        for i in range(len(y)):
+            self.assertAlmostEquals(predictions[i][0], y[i], delta=0.1)
