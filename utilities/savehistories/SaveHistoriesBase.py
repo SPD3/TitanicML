@@ -7,9 +7,10 @@ class SaveHistoriesBase (ABC):
     """Base class defining structure of classes that will take in model 
     histories and save them away in csv files to evaluate"""
 
-    def __init__(self) -> None:
+    def __init__(self, name:str) -> None:
         self.histories = []
         self._filesWithLinesToSave = {}
+        self.name = name
 
     def addHistory(self, history:tf.keras.callbacks.History, nameOfHistory:str) -> None:
         """Adds the history to a list of other histories"""

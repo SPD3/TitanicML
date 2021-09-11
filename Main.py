@@ -20,19 +20,21 @@ if( __name__ == "__main__"):
     train_data = train_data.to_numpy().tolist()
     
     dataCategoryVisitors = [
-        ScaledDataCategoryVisitor(),
+        #ScaledDataCategoryVisitor(),
         CategorizedDataVisitor()
     ]
     dataProcessorsWithVisitors = [
         DataPreProcessorWithVisitor(train_data, True)
     ]
     modelGenerators = [
-        RectangularDenseModelGenerator(),
-        RectangularDenseModelGenerator(layerSize=1024, layers=10)
+        RectangularDenseModelGenerator(layerSize=512, layers=20),
+        RectangularDenseModelGenerator(layerSize=1024, layers=10),
+        RectangularDenseModelGenerator(layerSize=2048, layers=5),
+        RectangularDenseModelGenerator(layerSize=4096, layers=2),
     ]
 
     allModelCombinationsIterator = AllModelCombinationsIterator(dataCategoryVisitors, dataProcessorsWithVisitors, modelGenerators)
-    saveAccAndValAccSeperateFiles = SaveAccAndValAccSeperateFiles()
+    saveAccAndValAccSeperateFiles = SaveAccAndValAccSeperateFiles("Models")
     for y, X, modelGenerator, name in allModelCombinationsIterator:
         history = modelGenerator.fitModel(X, y)
         saveAccAndValAccSeperateFiles.addHistory(history, name)

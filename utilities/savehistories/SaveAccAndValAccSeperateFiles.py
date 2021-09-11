@@ -2,6 +2,9 @@ from utilities.savehistories.SaveHistoriesBase import SaveHistoriesBase
 
 class SaveAccAndValAccSeperateFiles (SaveHistoriesBase):
 
+    def __init__(self, name:str="") -> None:
+        super().__init__(name)
+
     def _createFilesWithLinesToSaveDict(self) -> None:
         """Creates the _filesWithLinesToSave dictionary. Every key in the 
         dictionary is name of the file to be saved, and every value associated 
@@ -11,10 +14,10 @@ class SaveAccAndValAccSeperateFiles (SaveHistoriesBase):
         accuracy, and then creates all the lines to go into those files
         """
         self._filesWithLinesToSave = {
-            "AccuracyComparison": [
+            self.name + "AccuracyComparison": [
                 ["Epoch"]
             ],
-            "ValAccuracyComparison": [
+            self.name + "ValAccuracyComparison": [
                 ["Epoch"]
             ],
         }
@@ -23,11 +26,12 @@ class SaveAccAndValAccSeperateFiles (SaveHistoriesBase):
 
         
         for history, name in self.histories:
-            self._addNameToFirstLine(name, self._filesWithLinesToSave["AccuracyComparison"])
-            self._addNameToFirstLine(name, self._filesWithLinesToSave["ValAccuracyComparison"])
+            for fileName in self._filesWithLinesToSave.keys():
+                self._addNameToFirstLine(name, self._filesWithLinesToSave[fileName])
 
-            self._addMetricToLines(history.history["accuracy"], self._filesWithLinesToSave["AccuracyComparison"][1:])
-            self._addMetricToLines(history.history["val_accuracy"], self._filesWithLinesToSave["ValAccuracyComparison"][1:])
+            metricsCorrespondingToFileNames = ["accuracy", "val_accuracy"]
+            for metricName, fileName in zip(metricsCorrespondingToFileNames, self._filesWithLinesToSave.keys()):
+                self._addMetricToLines(history.history[metricName], self._filesWithLinesToSave[fileName][1:])
 
         
     def _addNameToFirstLine(self, name:str, list:list[list]) -> None:
@@ -38,8 +42,8 @@ class SaveAccAndValAccSeperateFiles (SaveHistoriesBase):
     def _setUpEpochLines(self):
         epochs = len(self.histories[0][0].history["val_accuracy"])
         for i in range(epochs):
-            self._filesWithLinesToSave["AccuracyComparison"].append([i+1])
-            self._filesWithLinesToSave["ValAccuracyComparison"].append([i+1])
+            for fileName in self._filesWithLinesToSave.keys():
+                self._filesWithLinesToSave[fileName].append([i+1])
 
     def _addMetricToLines(self, metric:list[float], lines:list[list[float]]):
         epoch = 1
