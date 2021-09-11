@@ -98,5 +98,6 @@ if( __name__ == "__main__"):
     allModelCombinationsIterator = AllModelCombinationsIterator(dataCategoryVisitors, dataProcessorsWithVisitors, modelGenerators)
     for y, X, modelGenerator in allModelCombinationsIterator:
         history = modelGenerator.fitModel(X, y)
+        
     print("All Done")
 
