@@ -8,7 +8,9 @@ class ModelGeneratorBase (ABC):
     def __init__(self, name:str) -> None:
         super().__init__()
         self._name = name
-        self._checkpoint_path = "savedmodels/" + self._name + "cp.ckpt1"
+        self._checkpoint_path = None
+        if(not self._name == None):
+            self._checkpoint_path = "savedmodels/" + self._name + "cp.ckpt1"
 
     def getCheckpointPath(self) -> str:
         """Gets the path to this modelgenerator's save location"""

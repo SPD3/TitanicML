@@ -1,5 +1,4 @@
 from preprocessdata.PreProcessDataBase import PreProcessDataBase
-import pandas as pd
 import numpy as np
 
 class SimpleDataPreProcessor (PreProcessDataBase):

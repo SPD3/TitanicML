@@ -1,3 +1,4 @@
+from endtoenditerators.AllModelCombinationsIterator import AllModelCombinationsIterator
 from typing import Tuple
 from modelgenerators.RectangularDenseModelGenerator import RectangularDenseModelGenerator
 from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
@@ -77,25 +78,23 @@ def compareAllModels(models:list[Tuple], trainData:np.ndarray)-> None:
         modelNumber = modelNumber + 1
     saveModelData(names, histories)
 
-if( __name__ == "_main_"):
+if( __name__ == "__main__"):
+    print("Starting")
     train_data = pd.read_csv("titanic/train.csv")
-    train_data = train_data.to_numpy()
-
-    factory = EndToEndFactoryV1.getInstance()
-    dataPreProcessor = factory.getPreProcessData(train_data, True)
-    y, X = dataPreProcessor.getProcessedData()
-
+    train_data = train_data.to_numpy().tolist()
+    
     dataCategoryVisitors = [
         ScaledDataCategoryVisitor(),
         CategorizedDataVisitor()
     ]
-    modelSizes = [
-        (256, 40),
-        (512, 20),
-        (1024, 10),
-        (2056, 5),
+    dataProcessorsWithVisitors = [
+        DataPreProcessorWithVisitor(train_data, True)
     ]
-    models = getListOfAllModels(dataCategoryVisitors, modelSizes, train_data)
-    compareAllModels(models, train_data)
+    modelGenerators = [
+        RectangularDenseModelGenerator(),
+        RectangularDenseModelGenerator(layerSize=1024, layers=10)
+    ]
+
+    iterator = AllModelCombinationsIterator(dataCategoryVisitors, dataProcessorsWithVisitors, modelGenerators)
     print("All Done")
 

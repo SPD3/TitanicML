@@ -1,5 +1,5 @@
+from preprocessdata import SimpleDataPreProcessor
 import unittest
-from preprocessdata.SimpleDataPreProcessor import SimpleDataPreProcessor
 import numpy as np
 
 class SimpleDataPreProcessorTest (unittest.TestCase):

@@ -5,11 +5,11 @@ import numpy as np
 class RectangularDenseModelGenerator (ModelGeneratorBase):
     """Creates a NN with the same layersize for all layers specified"""
 
-    def __init__(self, name:str, layerSize:int=512, layers:int=10, epochs:int=40, learningRate:float=5.0e-5) -> None:
+    def __init__(self, name:str=None, layerSize:int=512, layers:int=10, epochs:int=40, learningRate:float=5.0e-5) -> None:
         """
         Arguments:
         -----------
-        inputShape: the size of the input tensor
+        name: the name of the model to identify it when saved. If not name is provided the model will not save.
         layersize: the desired number of nodes for each layer
         layers: the desired number of layers between the input and sigmoid output layer
         epochs: the number of epochs to train for
@@ -57,13 +57,13 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
         path."""
         inputShape = len(X[0])
         self.createModel(inputShape)
-    
-        cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=self._checkpoint_path,
-                                                 save_weights_only=True,
-                                                 verbose=1)
+        callbacks = []
+        if(not self._checkpoint_path == None):
+            callbacks = [tf.keras.callbacks.ModelCheckpoint(filepath=self._checkpoint_path,
+                                                    save_weights_only=True,
+                                                    verbose=1)]
         
-        return self._model.fit(X, y,batch_size=len(X), epochs=self._epochs, validation_split=self._validation_split, callbacks=[cp_callback])
+        return self._model.fit(X, y,batch_size=len(X), epochs=self._epochs, validation_split=self._validation_split, callbacks=[callbacks])
 
     def __str__(self) -> str:
-        "RecL5N500"
         return "RecL" + str(self._layers) + "N" + str(self._layerSize)
