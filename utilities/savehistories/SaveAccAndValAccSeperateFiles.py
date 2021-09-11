@@ -1,6 +1,7 @@
 from utilities.savehistories.SaveHistoriesBase import SaveHistoriesBase
 
 class SaveAccAndValAccSeperateFiles (SaveHistoriesBase):
+    """A class to save the accuracy and validation accuracy of various models """
 
     def __init__(self, name:str="") -> None:
         super().__init__(name)
@@ -40,12 +41,16 @@ class SaveAccAndValAccSeperateFiles (SaveHistoriesBase):
         list[0].append(name)
 
     def _setUpEpochLines(self):
+        """Adds all of the epoch numbers for the histories to the two categories
+         to be logged"""
         epochs = len(self.histories[0][0].history["val_accuracy"])
         for i in range(epochs):
             for fileName in self._filesWithLinesToSave.keys():
                 self._filesWithLinesToSave[fileName].append([i+1])
 
     def _addMetricToLines(self, metric:list[float], lines:list[list[float]]):
+        """Takes a list of numbers that make up a metric and add them to the 
+        epochs the correspond to within the lines argument"""
         epoch = 1
         for line in lines:
             line.append(metric[epoch-1])

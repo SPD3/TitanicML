@@ -3,7 +3,7 @@ from endtoenditerators.AllModelCombinationsIterator import AllModelCombinationsI
 from modelgenerators.RectangularDenseModelGenerator import RectangularDenseModelGenerator
 import unittest
 from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
-from preprocessdata.DataPreProcessorWithVisitor import DataPreProcessorWithVisitor
+from dataprocessors.DataProcessorWithVisitor import DataProcessorWithVisitor
 from datacategoryvisitors.ScaledDataCategoryVisitor import ScaledDataCategoryVisitor
 import numpy as np
 
@@ -28,7 +28,7 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
             RectangularDenseModelGenerator("Test model", 2056, 3)
         ]
         self._dataProcessors = [
-            DataPreProcessorWithVisitor(data, True),
+            DataProcessorWithVisitor(data, True),
         ]
         self._allModelCominationsIterator = AllModelCombinationsIterator(self._dataCategoryVisitors, self._dataProcessors, self._modelGenerators)
 

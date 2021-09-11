@@ -28,7 +28,7 @@ class NameClassifierBuilder (ProcessedDataBuilderBase):
         for i in range(6):
             self._currentNameMapping.append(0.0)
     
-    def _mapTitle(self, title) -> None:
+    def _mapTitle(self, title:str) -> None:
         """Maps a title to a bin"""
         if(title in ['Don', 'Major', 'Capt', 'Jonkheer', 'Rev', 'Col', "Mr"]):
             self._currentNameMapping[0] = 1.0

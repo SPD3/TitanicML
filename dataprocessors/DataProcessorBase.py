@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import numpy as np
 
-class PreProcessDataBase (ABC):
+class DataProcessorBase (ABC):
     """Base class that defines operations to convert data from csv file to 
     processed data that a ML algorith can use"""
     def __init__(self, data:list[list], dataIncludesLabels:bool) -> None:

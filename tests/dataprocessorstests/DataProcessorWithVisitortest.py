@@ -2,27 +2,27 @@ from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
 from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
 from datacategoryvisitors.ScaledDataCategoryVisitor import ScaledDataCategoryVisitor
 import unittest
-from preprocessdata.DataPreProcessorWithVisitor import DataPreProcessorWithVisitor
+from dataprocessors.DataProcessorWithVisitor import DataProcessorWithVisitor
 import numpy as np
 
-class DataPreProcessorWithVisitorTest (unittest.TestCase):
-    """Test for the DataPreProcessorWithVisitor class"""
+class DataProcessorWithVisitorTest (unittest.TestCase):
+    """Test for the DataProcessorWithVisitor class"""
 
     def testSetDataCategoryVisitor(self):
         data = [[]]
-        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, ScaledDataCategoryVisitor())
-        self.assertEquals(type(dataPreProcessorWithVisitor._dataCategoryVisitor), ScaledDataCategoryVisitor)
-        dataPreProcessorWithVisitor.setDataCategoryVisitor(CategorizedDataVisitor())
-        self.assertEquals(type(dataPreProcessorWithVisitor._dataCategoryVisitor), CategorizedDataVisitor)
+        dataProcessorWithVisitor = DataProcessorWithVisitor(data, True, ScaledDataCategoryVisitor())
+        self.assertEquals(type(dataProcessorWithVisitor._dataCategoryVisitor), ScaledDataCategoryVisitor)
+        dataProcessorWithVisitor.setDataCategoryVisitor(CategorizedDataVisitor())
+        self.assertEquals(type(dataProcessorWithVisitor._dataCategoryVisitor), CategorizedDataVisitor)
 
     def testGetCategoryDictionary(self) -> None:
         """Makes sure that the category dictionary is generate with the
         correct keys"""
         data = [[]]
-        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, ScaledDataCategoryVisitor())
+        dataProcessorWithVisitor = DataProcessorWithVisitor(data, True, ScaledDataCategoryVisitor())
         solution = ["PassengerId", "Survived", "Pclass", "Name", "Sex", "Age",
             "SibSp", "Parch", "Ticket", "Fare", "Cabin", "Embarked"]
-        keys = dataPreProcessorWithVisitor.getCategoryDictionary().keys()
+        keys = dataProcessorWithVisitor.getCategoryDictionary().keys()
         self.assertEquals(len(keys), len(solution))
         index = 0
         for key in keys:
@@ -39,8 +39,8 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             [3,1,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
         ]
         
-        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, ScaledDataCategoryVisitor())
-        y, X = dataPreProcessorWithVisitor.getProcessedData()
+        dataProcessorWithVisitor = DataProcessorWithVisitor(data, True, ScaledDataCategoryVisitor())
+        y, X = dataProcessorWithVisitor.getProcessedData()
         solutionY = [0,1,1]
         solutionX = [
             [1.0,   1.0,0.0,0.0,0.0,0.0,0.0,     1.0, 22.0/80.0, 1.0/8.0, 0.0,  0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,    7.25/512.0,    1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,    1.0,0.0,0.0],
@@ -60,8 +60,8 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             [2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)","female",38,1,0,"PC 17599",71.2833,"C85","C"],
             [3,1,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
         ]
-        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, ScaledDataCategoryVisitor())
-        dataPreProcessorWithVisitor._putDataIntoCategories()
+        dataProcessorWithVisitor = DataProcessorWithVisitor(data, True, ScaledDataCategoryVisitor())
+        dataProcessorWithVisitor._putDataIntoCategories()
         solution = {
             "PassengerId" : [1,2,3],
             "Survived" : [0,1,1],
@@ -76,7 +76,7 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             "Cabin" : [np.nan, "C85", np.nan],
             "Embarked" : ["S", "C", "S"],
         }
-        self.assertEquals(dataPreProcessorWithVisitor.getCategoryDictionary(), solution)
+        self.assertEquals(dataProcessorWithVisitor.getCategoryDictionary(), solution)
     
     def testPutDataIntoCategoriesWithoutLabels(self) -> None:
         """Tests to makes sure that the putDataIntoCategories() seperates the 
@@ -87,8 +87,8 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             [2,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)","female",38,1,0,"PC 17599",71.2833,"C85","C"],
             [3,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
         ]
-        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, False, ScaledDataCategoryVisitor())
-        dataPreProcessorWithVisitor._putDataIntoCategories()
+        dataProcessorWithVisitor = DataProcessorWithVisitor(data, False, ScaledDataCategoryVisitor())
+        dataProcessorWithVisitor._putDataIntoCategories()
         solution = {
             "PassengerId" : [1,2,3],
             "Survived" : [],
@@ -103,7 +103,7 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             "Cabin" : [np.nan, "C85", np.nan],
             "Embarked" : ["S", "C", "S"],
         }
-        categoryDictionary = dataPreProcessorWithVisitor.getCategoryDictionary()
+        categoryDictionary = dataProcessorWithVisitor.getCategoryDictionary()
         self.assertEquals(categoryDictionary, solution)
 
     def testVisitAllDataCategories(self):
@@ -114,11 +114,13 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             [2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)","female",38,1,0,"PC 17599",71.2833,"C85","C"],
             [3,1,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
         ]
-        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, visitor)
-        dataPreProcessorWithVisitor._visitAllDataCategories()
+        dataProcessorWithVisitor = DataProcessorWithVisitor(data, True, visitor)
+        dataProcessorWithVisitor._visitAllDataCategories()
         self.assertTrue(visitor.visitedAllCategories())
     
     def testArrangeDataPerPassengerInXAndY(self):
+        """Makes sure that _arrangeDataPerPassengerInXAndY() converts the 
+        category dictionary into X and y lists"""
         categoryDictionary = {
             "PassengerId" : [[1],[2],[3]],
             "Survived" : [[1],[0],[1]],
@@ -135,29 +137,29 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
         }
         data = [1,2,3]
 
-        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, None)
-        dataPreProcessorWithVisitor._categoryDictionary = categoryDictionary
-        dataPreProcessorWithVisitor._arrangeDataPerPassengerInXAndY()
+        dataProcessorWithVisitor = DataProcessorWithVisitor(data, True, None)
+        dataProcessorWithVisitor._categoryDictionary = categoryDictionary
+        dataProcessorWithVisitor._arrangeDataPerPassengerInXAndY()
         solutionX = [
             [1,3,"One", "male", 22, 1,0,"T1",5,np.nan,"S",2,3],
             [2,1,"Two", "female", 38, 1,0,"T2",50,"C85","C",4,5],
             [3,3,"Three", "female", 26, 0,0,"T3",300,np.nan,"S",7,8]
         ]
         solutionY = [1,0,1]
-        dataPreProcessorWithVisitor._X
-        self.assertEquals(solutionX, dataPreProcessorWithVisitor._X)
-        self.assertEquals(solutionY, dataPreProcessorWithVisitor._y)
+        dataProcessorWithVisitor._X
+        self.assertEquals(solutionX, dataProcessorWithVisitor._X)
+        self.assertEquals(solutionY, dataProcessorWithVisitor._y)
 
     def testString(self) -> None:
-        """Tests the string representation of DataPreProcessorWithVisitor"""
+        """Tests the string representation of DataProcessorWithVisitor"""
         data = [1,2,3]
 
-        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, None)
-        self.assertEquals(str(dataPreProcessorWithVisitor), "ProcWithVis")
+        dataProcessorWithVisitor = DataProcessorWithVisitor(data, True, None)
+        self.assertEquals(str(dataProcessorWithVisitor), "ProcWithVis")
 
     def testResetData(self) -> None:
         """Tests to see if the member variables are reset correctly within 
-        DataPreProcessorWithVisitor when reset is called so that subsequent 
+        DataProcessorWithVisitor when reset is called so that subsequent 
         calls to getting the processed data will reprocess data"""
         visitor = ScaledDataCategoryVisitor()
         data = [
@@ -165,17 +167,19 @@ class DataPreProcessorWithVisitorTest (unittest.TestCase):
             [2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)","female",38,1,0,"PC 17599",71.2833,"C85","C"],
             [3,1,3,"Heikkinen, Miss. Laina","female",26,0,0,"STON/O2. 3101282",7.925,np.nan,"S"]
         ]
-        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, True, visitor)
-        dataPreProcessorWithVisitor.getProcessedData()
-        dataPreProcessorWithVisitor._resetData()
-        self.assertFalse(dataPreProcessorWithVisitor._hasProcessedData)
-        for list in dataPreProcessorWithVisitor.getCategoryDictionary().values():
+        dataProcessorWithVisitor = DataProcessorWithVisitor(data, True, visitor)
+        dataProcessorWithVisitor.getProcessedData()
+        dataProcessorWithVisitor._resetData()
+        self.assertFalse(dataProcessorWithVisitor._hasProcessedData)
+        for list in dataProcessorWithVisitor.getCategoryDictionary().values():
             self.assertEquals(list, [])
-        self.assertEquals(dataPreProcessorWithVisitor._X, [])
-        self.assertEquals(dataPreProcessorWithVisitor._y, [])
+        self.assertEquals(dataProcessorWithVisitor._X, [])
+        self.assertEquals(dataProcessorWithVisitor._y, [])
 
 
 class DummyVisitor (DataCategoryVisitorBase):
+    """A dummy visitor class that just keeps track of which categories have been
+     visited"""
     def __init__(self) -> None:
         self._categoryDictionary = {
             "PassengerId" : False,

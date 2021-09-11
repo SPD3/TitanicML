@@ -1,4 +1,4 @@
-from preprocessdata.DataPreProcessorWithVisitor import DataPreProcessorWithVisitor
+from dataprocessors.DataProcessorWithVisitor import DataProcessorWithVisitor
 from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
 from typing import Tuple
 from endtoenditerators.EndToEndIteratorBase import EndToEndIteratorBase
@@ -6,8 +6,12 @@ from modelgenerators.ModelGeneratorBase import ModelGeneratorBase
 import numpy as np
 
 class AllModelCombinationsIterator (EndToEndIteratorBase):
+    """An iterator that takes in lists of data category visitors, data 
+    processors with visitors, and model generators and then combines each item 
+    of each list with each other to compare them against one another."""
+
     def __init__(self, dataCategoryVisitors:list[DataCategoryVisitorBase], 
-        dataProcessorsWithVisitor:list[DataPreProcessorWithVisitor], modelGenerators:list[ModelGeneratorBase]) -> None:
+        dataProcessorsWithVisitor:list[DataProcessorWithVisitor], modelGenerators:list[ModelGeneratorBase]) -> None:
         
         super().__init__(dataCategoryVisitors, dataProcessorsWithVisitor, modelGenerators)
         self._maxIndex = len(dataCategoryVisitors) * len(dataProcessorsWithVisitor) * len(modelGenerators)
@@ -58,6 +62,7 @@ class AllModelCombinationsIterator (EndToEndIteratorBase):
         return dataProcessorWithVisitor.getProcessedData()
 
     def _getName(self):
+        """Creates and returns the name of the current indicies objects"""
         dataCategoryVisitorsIndex, dataProcessorsIndex, modelGeneratorsIndex = self._getIndeciesOfCurrentItem()
         name = str(self._dataCategoryVisitors[dataCategoryVisitorsIndex]) + "_" + \
             str(self._dataProcessors[dataProcessorsIndex]) + "_" + \

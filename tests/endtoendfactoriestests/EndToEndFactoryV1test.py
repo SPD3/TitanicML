@@ -1,6 +1,6 @@
 from modelgenerators.RectangularDenseModelGenerator import RectangularDenseModelGenerator
 from endtoendfactories.EndToEndFactoryV1 import EndToEndFactoryV1
-from preprocessdata.DataPreProcessorWithVisitor import DataPreProcessorWithVisitor
+from dataprocessors.DataProcessorWithVisitor import DataProcessorWithVisitor
 import unittest
 
 class EndToEndFactoryV1Test (unittest.TestCase):
@@ -14,7 +14,7 @@ class EndToEndFactoryV1Test (unittest.TestCase):
             [5,6,7,False]
         ]
         preProcessData = EndToEndFactoryV1.getInstance().getPreProcessData(data, True)
-        self.assertTrue(issubclass(type(preProcessData), DataPreProcessorWithVisitor))
+        self.assertTrue(issubclass(type(preProcessData), DataProcessorWithVisitor))
 
     def testGetModelGenerator(self) -> None:
         """Makes sure this end to end factory gives back a RectangularDenseModelGenerator"""

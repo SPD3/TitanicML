@@ -10,7 +10,7 @@ class TicketClassifierBuilder (ProcessedDataBuilderBase):
             self._initializeCurrentTicketMapping()
             try:
                 self._mapTicketBasedOnNumber(ticket)
-            except:
+            except ValueError:
                 # This means the ticket is not just a number, it has letters 
                 # in it
                 self._mapTicketBasedOnLetters(ticket)

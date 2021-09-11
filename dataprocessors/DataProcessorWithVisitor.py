@@ -1,10 +1,10 @@
 from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
 from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
 from typing import Dict
-from preprocessdata.PreProcessDataBase import PreProcessDataBase
+from dataprocessors.DataProcessorBase import DataProcessorBase
 import numpy as np
 
-class DataPreProcessorWithVisitor (PreProcessDataBase):
+class DataProcessorWithVisitor (DataProcessorBase):
     """Takes a DataCategoryVisitorBase and visits all the columns in the data to 
     process the data and prepare it for an ML algorithm"""
     
@@ -34,12 +34,12 @@ class DataPreProcessorWithVisitor (PreProcessDataBase):
         self._X = []
         self._y = []
 
-    def setDataCategoryVisitor(self, dataCategoryVisitor):
+    def setDataCategoryVisitor(self, dataCategoryVisitor:DataCategoryVisitorBase):
         """Sets the _dataCategoryVisitor to _dataCategoryVisitor"""
         self._dataCategoryVisitor = dataCategoryVisitor
         self._resetData()
 
-    def getCategoryDictionary(self) -> Dict:
+    def getCategoryDictionary(self) -> Dict[str,list[float]]:
         """Gets the category dictionary which has entries for each section of 
         information for every passenger"""
         return self._categoryDictionary

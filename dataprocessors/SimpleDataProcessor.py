@@ -1,9 +1,9 @@
-from preprocessdata.PreProcessDataBase import PreProcessDataBase
+from dataprocessors.DataProcessorBase import DataProcessorBase
 import numpy as np
 
-class SimpleDataPreProcessor (PreProcessDataBase):
+class SimpleDataProcessor (DataProcessorBase):
     """First data attempt at processing data. This code is deprecated and 
-    DataPreProcessorWithVisitor Should be used instead"""
+    DataProcessorWithVisitor Should be used instead"""
 
     def __init__(self, data:np.ndarray, dataIncludesLabels:bool=True) -> None:
         super().__init__(data, dataIncludesLabels)

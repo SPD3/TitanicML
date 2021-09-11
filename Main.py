@@ -1,7 +1,7 @@
 from endtoenditerators.AllModelCombinationsIterator import AllModelCombinationsIterator
 from modelgenerators.RectangularDenseModelGenerator import RectangularDenseModelGenerator
 from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
-from preprocessdata.DataPreProcessorWithVisitor import DataPreProcessorWithVisitor
+from dataprocessors.DataProcessorWithVisitor import DataProcessorWithVisitor
 from datacategoryvisitors.ScaledDataCategoryVisitor import ScaledDataCategoryVisitor
 import pandas as pd
 from utilities.savehistories.SaveAccAndValAccSeperateFiles import SaveAccAndValAccSeperateFiles
@@ -24,7 +24,7 @@ if( __name__ == "__main__"):
         CategorizedDataVisitor()
     ]
     dataProcessorsWithVisitors = [
-        DataPreProcessorWithVisitor(train_data, True)
+        DataProcessorWithVisitor(train_data, True)
     ]
     modelGenerators = [
         RectangularDenseModelGenerator(layerSize=512, layers=20),

@@ -1,10 +1,9 @@
-from preprocessdata.DataPreProcessorWithVisitor import DataPreProcessorWithVisitor
+from dataprocessors.DataProcessorWithVisitor import DataProcessorWithVisitor
 from modelgenerators.RectangularDenseModelGenerator import RectangularDenseModelGenerator
 from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
 from endtoendfactories.EndToEndFactoryBase import EndToEndFactoryBase
 import numpy as np
-from modelgenerators.ModelGeneratorBase import ModelGeneratorBase
-from preprocessdata.PreProcessDataBase import PreProcessDataBase
+from __future__ import annotations
 
 class EndToEndFactoryV1 (EndToEndFactoryBase):
     """First version of an EndToEndFactory, will increase in version number as 
@@ -15,19 +14,19 @@ class EndToEndFactoryV1 (EndToEndFactoryBase):
         self._name = "ModelV1"
 
     _instance = None
-    def getInstance():
+    def getInstance() -> EndToEndFactoryV1:
         """Gets the single instance of this singleton"""
         if(EndToEndFactoryV1._instance == None):
             EndToEndFactoryV1._instance = EndToEndFactoryV1()
         return EndToEndFactoryV1._instance
 
-    def getPreProcessData(self, data:np.ndarray, dataIncludesLabels:bool) -> PreProcessDataBase:
+    def getPreProcessData(self, data:np.ndarray, dataIncludesLabels:bool) -> CategorizedDataVisitor:
         """Gets a dataPreprocessorWithVisitor with a CategorizedDataVisitor"""
         categorizedDataVisitor = CategorizedDataVisitor()
-        dataPreProcessorWithVisitor = DataPreProcessorWithVisitor(data, dataIncludesLabels,categorizedDataVisitor)
-        return dataPreProcessorWithVisitor
+        dataProcessorWithVisitor = DataProcessorWithVisitor(data, dataIncludesLabels,categorizedDataVisitor)
+        return dataProcessorWithVisitor
 
-    def getModelGenerator(self) -> ModelGeneratorBase:
+    def getModelGenerator(self) -> RectangularDenseModelGenerator:
         """Gets a RectangularDenseModelGenerator"""
         return RectangularDenseModelGenerator(self._name)
 

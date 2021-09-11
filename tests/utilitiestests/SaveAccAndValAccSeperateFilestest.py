@@ -4,6 +4,10 @@ import tensorflow as tf
 from utilities.savehistories.SaveAccAndValAccSeperateFiles import SaveAccAndValAccSeperateFiles
 
 class SaveAccAndValAccSeperateFilesTest (unittest.TestCase):
+    """Test code for the SaveAccAndValAccSeperateFiles class which makes sure 
+    that accuracy and validation accuracy are saved in seperate files for a 
+    given set of histories"""
+
     def setUp(self) -> None:
         self.saveAccAndValAccSeperateFiles = SaveAccAndValAccSeperateFiles()
         history1 = MockHistory([0.6, 0.7, 0.8], [0.6, 0.71, 0.79])
@@ -14,6 +18,8 @@ class SaveAccAndValAccSeperateFilesTest (unittest.TestCase):
         self.saveAccAndValAccSeperateFiles.addHistory(history3, "hist3")
 
     def testCreateFilesWithLinesToSaveDict(self):
+        """Makes sure that _createFilesWithLinesToSaveDict creates lines 
+        correctly for the data passed in so that a csv file can be created"""
         self.saveAccAndValAccSeperateFiles._createFilesWithLinesToSaveDict()
         solution = {
             "AccuracyComparison" : [
@@ -49,6 +55,8 @@ class SaveAccAndValAccSeperateFilesTest (unittest.TestCase):
         self.assertEquals(myList, solution)
 
     def testSetUpEpochLines(self):
+        """Tests the _setUpEpochLines method to make sure that epoch numbers are
+         added to _filesWithLinesToSave in the correct list format"""
         self.saveAccAndValAccSeperateFiles._filesWithLinesToSave = {
             "AccuracyComparison": [
                 ["Epoch"]
@@ -75,6 +83,8 @@ class SaveAccAndValAccSeperateFilesTest (unittest.TestCase):
         self.assertEquals(self.saveAccAndValAccSeperateFiles._filesWithLinesToSave, solution)
 
     def testAddMetricToLines(self):
+        """Tests the _addMetricToLines method to makes sure that metric values 
+        are added to their corresponding epochs"""
         metric = [1,2,3,4]
         lines = [
             [5],

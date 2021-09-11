@@ -1,15 +1,19 @@
 from abc import ABC, abstractmethod
-from preprocessdata.DataPreProcessorWithVisitor import DataPreProcessorWithVisitor
+from dataprocessors.DataProcessorWithVisitor import DataProcessorWithVisitor
 from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
-from preprocessdata.PreProcessDataBase import PreProcessDataBase
+from dataprocessors.DataProcessorBase import DataProcessorBase
 from typing import Tuple
 import numpy as np
 from modelgenerators.ModelGeneratorBase import ModelGeneratorBase
 
 class EndToEndIteratorBase(ABC):
+    """Base class for defining iteration through various end-to-end model 
+    combinations. Subclasses will specify how the lists of data category 
+    visitors, data processors, and model generators will be combined to form an 
+    ML algorithm"""
 
     def __init__(self, dataCategoryVisitors:list[DataCategoryVisitorBase], 
-        dataProcessors:list[DataPreProcessorWithVisitor], modelGenerators:list[ModelGeneratorBase]) -> None:
+        dataProcessors:list[DataProcessorWithVisitor], modelGenerators:list[ModelGeneratorBase]) -> None:
         super().__init__()
         self._dataCategoryVisitors = dataCategoryVisitors
         self._dataProcessors = dataProcessors
