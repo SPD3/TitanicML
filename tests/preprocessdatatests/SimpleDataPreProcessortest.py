@@ -1,6 +1,7 @@
-from preprocessdata import SimpleDataPreProcessor
+from preprocessdata.SimpleDataPreProcessor import SimpleDataPreProcessor
 import unittest
 import numpy as np
+from preprocessdata.SimpleDataPreProcessor import SimpleDataPreProcessor
 
 class SimpleDataPreProcessorTest (unittest.TestCase):
     """Tests for the SimpleDataPreProcessor class"""
