@@ -34,10 +34,11 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
 
     def checkOutputTypes(self, output):
         """Makes sure that the output of the iterator is of the types expected"""
-        X, y, modelGenerator = output
+        X, y, modelGenerator, name = output
         self.assertEquals(type(X), np.ndarray)
         self.assertEquals(type(y), np.ndarray)
         self.assertEquals(type(modelGenerator), RectangularDenseModelGenerator)
+        self.assertEquals(type(name), str)
 
     def testFirst(self):
         """Makes sure that the first item is of the type expected and resets 
@@ -49,6 +50,7 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
         self.assertEquals(output[0].tolist(), currentItem[0].tolist())
         self.assertEquals(output[1].tolist(), currentItem[1].tolist())
         self.assertEquals(output[2], currentItem[2])
+        self.assertEquals(output[3], currentItem[3])
         
     def testIsDone(self):
         """Makes sure isDone returns true """
@@ -58,7 +60,7 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
         self.assertTrue(self._allModelCominationsIterator._isDone())
         self._allModelCominationsIterator._first()
 
-    def _makeSureOutputIsUnique(self, listOfOutputs:list[tuple[np.ndarray, np.ndarray, ModelGeneratorBase]], newOutput:tuple[np.ndarray, np.ndarray, ModelGeneratorBase]):
+    def _makeSureOutputIsUnique(self, listOfOutputs:list[tuple[np.ndarray, np.ndarray, ModelGeneratorBase, str]], newOutput:tuple[np.ndarray, np.ndarray, ModelGeneratorBase, str]):
         """Makes sure that the new output is not the same as any of the previous
         outputs"""
         for output in listOfOutputs:
@@ -72,8 +74,10 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
             sameX = outputX == newOutputX
             sameY = outputY == newOutputY
             sameModelGenerator = outputModelGenerator == newOutputModelGenerator
-
             self.assertFalse(sameX and sameY and sameModelGenerator, msg="One of the new outputs was not unique relative to the previous outputs.")
+
+            sameName = output[3] == newOutput[3]
+            self.assertFalse(sameName, msg="The names of any two outputs should be unique")
 
     def testNextAndCurrentItem(self):
         """Tests the normal flow of the iterator"""
@@ -91,6 +95,8 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
             numOfLoops += 1
             
     def testPythonInterationLoops(self):
+        """Tests the built in interation within python with the 
+        AllModelCominationsIterator"""
         listOfOutputs = []
         numOfLoops = 0
         for currentOutput in self._allModelCominationsIterator:
@@ -101,5 +107,12 @@ class AllModelCombinationsIteratorTest (unittest.TestCase):
             
             numOfLoops += 1
 
+    def testGetName(self):
+        """Tests the get name function within the iterator by getting the first 
+        item and making sure that the name is correct"""
+        self._allModelCominationsIterator._first()
+        name = self._allModelCominationsIterator._getName()
+        solution = str(self._dataCategoryVisitors[0]) + "_" + str(self._dataProcessors[0]) + "_" + str(self._modelGenerators[0])
+        self.assertEquals(name, solution)
 
 
