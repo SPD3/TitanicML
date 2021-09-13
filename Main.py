@@ -1,3 +1,4 @@
+from dataprocessors.DataProcessorGaussianKernel import DataProcessorGaussianKernel
 from utilities.savehistories.SaveMetricsSeperateFiles import SaveMetricsSeperateFiles
 from endtoenditerators.AllModelCombinationsIterator import AllModelCombinationsIterator
 from modelgenerators.RectangularDenseModelGenerator import RectangularDenseModelGenerator
@@ -26,12 +27,13 @@ if( __name__ == "__main__"):
     ]
     dataProcessorsWithVisitors = [
         DataProcessorWithVisitor(train_data, True),
+        DataProcessorGaussianKernel(train_data, True),
     ]
     modelGenerators = [
-        RectangularDenseModelGenerator(layerSize=512, layers=20),
+        #RectangularDenseModelGenerator(layerSize=512, layers=20),
         RectangularDenseModelGenerator(layerSize=1024, layers=10),
-        RectangularDenseModelGenerator(layerSize=2048, layers=5),
-        RectangularDenseModelGenerator(layerSize=4096, layers=2),
+        #RectangularDenseModelGenerator(layerSize=2048, layers=5),
+        #RectangularDenseModelGenerator(layerSize=4096, layers=2),
     ]
 
     allModelCombinationsIterator = AllModelCombinationsIterator(dataCategoryVisitors, dataProcessorsWithVisitors, modelGenerators)
@@ -41,7 +43,7 @@ if( __name__ == "__main__"):
         ("Accuracy", ["accuracy"]),
         ("Val_Accuracy", ["val_accuracy"]),
     ]
-    saveMetricsSeperateFiles = SaveMetricsSeperateFiles(metrics, "ModelsComparison")
+    saveMetricsSeperateFiles = SaveMetricsSeperateFiles(metrics, "KernelComparison")
     for y, X, modelGenerator, name in allModelCombinationsIterator:
         history = modelGenerator.fitModel(X, y)
         saveMetricsSeperateFiles.addHistory(history, name)
