@@ -47,6 +47,15 @@ class DataProcessorWithVisitorTest (unittest.TestCase):
             [1.0/3.0,   0.0,0.0,1.0,0.0,0.0,0.0,     0.0, 38/80.0, 1.0/8.0, 0.0,    0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,    71.2833/512.0, 0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,    0.0,1.0,0.0],
             [1.0,    0.0,1.0,0.0,0.0,0.0,0.0,    0.0, 26/80.0, 0.0, 0.0,   0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,     7.925/512.0, 1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,      1.0,0.0,0.0]
         ]
+        
+        self.assertEquals(type(y), np.ndarray, msg="Y needs to be a numpy array")
+        self.assertEquals(type(X), np.ndarray, msg="X needs to be a numpy array")
+        self.assertEquals(len(y.shape), 1, msg="Y needs to be a 1d array")
+        self.assertEquals(len(X.shape), 2, msg="X needs to be a 2d array")
+        length = len(X[0])
+        for example in X:
+            self.assertEquals(len(example), length, msg="The examples in X need to be all the same length")
+        
         for i in range(len(solutionX)):
             for j in range(len(solutionX[i])):
                 self.assertAlmostEquals(X[i,j], solutionX[i][j], delta=0.001)

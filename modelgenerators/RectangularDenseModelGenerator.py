@@ -5,7 +5,7 @@ import numpy as np
 class RectangularDenseModelGenerator (ModelGeneratorBase):
     """Creates a NN with the same layersize for all layers specified"""
 
-    def __init__(self, name:str=None, layerSize:int=512, layers:int=10, epochs:int=40, learningRate:float=5.0e-5) -> None:
+    def __init__(self, name:str=None, layerSize:int=512, layers:int=10, epochs:int=40, learningRate:float=5.0e-5, validation_split:float=0.1) -> None:
         """
         Arguments:
         -----------
@@ -19,7 +19,7 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
         self._layerSize = layerSize
         self._layers = layers
         self._epochs = epochs
-        self._validation_split = 0.1
+        self._validation_split = validation_split
         self._model = None
         self._learningRate = learningRate
         self._inputShape = None
@@ -66,4 +66,4 @@ class RectangularDenseModelGenerator (ModelGeneratorBase):
         return self._model.fit(X, y,batch_size=len(X), epochs=self._epochs, validation_split=self._validation_split, callbacks=[callbacks])
 
     def __str__(self) -> str:
-        return "RecL" + str(self._layers) + "N" + str(self._layerSize)
+        return "RecL" + str(self._layers) + "N" + str(self._layerSize) + "VS" + str(self._validation_split)

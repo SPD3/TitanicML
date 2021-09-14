@@ -1,9 +1,9 @@
+from __future__ import annotations
 from dataprocessors.DataProcessorWithVisitor import DataProcessorWithVisitor
 from modelgenerators.RectangularDenseModelGenerator import RectangularDenseModelGenerator
 from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
 from endtoendfactories.EndToEndFactoryBase import EndToEndFactoryBase
 import numpy as np
-from __future__ import annotations
 
 class EndToEndFactoryV1 (EndToEndFactoryBase):
     """First version of an EndToEndFactory, will increase in version number as 

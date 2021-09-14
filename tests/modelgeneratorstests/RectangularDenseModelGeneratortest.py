@@ -97,7 +97,7 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         numberOfLayers = 5
         neuronsPerLayer = 500
         simpleDenseModel = RectangularDenseModelGenerator(self._name, neuronsPerLayer, numberOfLayers, epochs=10, learningRate=1.0e-3)
-        self.assertEquals(str(simpleDenseModel), "RecL5N500")
+        self.assertEquals(str(simpleDenseModel), "RecL5N500VS0.1")
 
     def testModelGeneratorInitWithoutName(self) -> None:
         """Makes sure that a modelGenerator can be created without a name and 

@@ -1,31 +1,41 @@
+from datacategoryvisitors.CategorizedDataVisitor import CategorizedDataVisitor
 import math
 from datacategoryvisitors.DataCategoryVisitorBase import DataCategoryVisitorBase
 import numpy as np
 from dataprocessors.DataProcessorWithVisitor import DataProcessorWithVisitor
 
 class DataProcessorGaussianKernel (DataProcessorWithVisitor):
-    def __init__(self, data: list[list], dataIncludesLabels: bool, dataCategoryVisitor: DataCategoryVisitorBase, sigma:float=1.0) -> None:
+    def __init__(self, data: list[list], dataIncludesLabels: bool, dataCategoryVisitor:DataCategoryVisitorBase=CategorizedDataVisitor, sigma:float=1.0, dataToCompareTo:list[list[float]]=None) -> None:
         super().__init__(data, dataIncludesLabels, dataCategoryVisitor=dataCategoryVisitor)
         self._sigma = sigma
+        self._dataToCompareTo = dataToCompareTo
 
     def getProcessedData(self) -> tuple[np.ndarray, np.ndarray]:
-        self.y, self.X = super().getProcessedData()
+        self._y, self._X = super().getProcessedData()
         self._applyGaussianKernelToAllTrainingExamplesInX()
-        return self.y, self.X
+        return np.array(self._y), np.array(self._X)
 
     def _applyGaussianKernelToAllTrainingExamplesInX(self) -> list[list[float]]:
         """Gets the similarity between every example in X with every other 
         example and then replaces the parameters of X with those values"""
         newX = []
-        for example in self.X:
+        try:
+            if self._dataToCompareTo == None:
+                self._dataToCompareTo = self._X
+        except ValueError:
+            #this means that _dataToCompareTo has something in it and will throw
+            #an excpetion when being compared to None
+            pass
+
+        for example in self._X:
             newExampleEncoding = []
-            for otherExample in self.X:
-                newExampleEncoding.append(self._getSimilarity(example, otherExample))
+            for otherExample in self._dataToCompareTo:
+                newExampleEncoding.append(self._getGaussianSimilarity(example, otherExample))
             newX.append(newExampleEncoding)
 
-        self.X = newX
+        self._X = newX
 
-    def _getSimilarity(self, list1:list[float], list2:list[float]) -> float:
+    def _getGaussianSimilarity(self, list1:list[float], list2:list[float]) -> float:
         """Gets the similarity between two lists based on the formula:
         similarity = e^(-distanceBetweenLists^2/(2*(sigma^2)))
         """
@@ -33,3 +43,6 @@ class DataProcessorGaussianKernel (DataProcessorWithVisitor):
         for value1, value2 in zip(list1, list2):
             distance += (value2 - value1)**2
         return math.e**(-distance/(2 * self._sigma**2))
+
+    def __str__(self) -> str:
+        return "GausVisS:" + str(self._sigma)

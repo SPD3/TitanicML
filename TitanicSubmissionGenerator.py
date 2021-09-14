@@ -1,6 +1,6 @@
+from endtoendfactories.EndToEndFactoryV2 import EndToEndFactoryV2
 import pandas as pd
 import csv
-from endtoendfactories.EndToEndFactoryV1 import EndToEndFactoryV1
 
 """
 This is where a submission is generated for the titanic competition once a model
@@ -9,15 +9,16 @@ test data provided by the contest. These predictions are then saved into a csv
 file to be submitted for grading.
 """
 
-if( __name__ == "_main_"):
-    factory = EndToEndFactoryV1.getInstance()
+if( __name__ == "__main__"):
+    factory = EndToEndFactoryV2.getInstance()
 
     test_data = pd.read_csv("titanic/test.csv")
-    test_data = test_data.to_numpy()
+    test_data = test_data.to_numpy().tolist()
 
     _, X = factory.getPreProcessData(test_data, False).getProcessedData()
 
-    modelGenerator = factory.getModelGenerator(len(X[0]))
+    modelGenerator = factory.getModelGenerator()
+    modelGenerator.createModel(len(X[0]))
     model = modelGenerator.getModel()
     model.load_weights(modelGenerator.getCheckpointPath())
 
