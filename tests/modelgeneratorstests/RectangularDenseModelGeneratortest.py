@@ -36,8 +36,14 @@ class RectangularDenseModelGeneratorTest (unittest.TestCase):
         simpleDenseModel._createInputsLinkedToOutputs()
         model = tf.keras.Model(inputs=simpleDenseModel._inputs, outputs=simpleDenseModel._outputs)
         self.assertEquals(type(model.layers[0]), tf.keras.layers.InputLayer)
+        unitsInLayer1 = model.layers[1].units
         for i in range(1,len(model.layers)):
             self.assertTrue(issubclass(type(model.layers[i]), tf.keras.layers.Dense))
+            if not i == len(model.layers) - 1:
+                self.assertEquals(model.layers[i].units, unitsInLayer1)
+            else:
+                self.assertEquals(model.layers[i].units, 1)
+
     
     def testCompileModel(self) -> None:
         """Makes sure that when the model is compiled no exceptions are thrown"""

@@ -5,12 +5,17 @@ import numpy as np
 from dataprocessors.DataProcessorWithVisitor import DataProcessorWithVisitor
 
 class DataProcessorGaussianKernel (DataProcessorWithVisitor):
+    """Applies a gaussian kernel to compare every example with all other 
+    examples and uses these values to make up the features of each example"""
+
     def __init__(self, data: list[list], dataIncludesLabels: bool, dataCategoryVisitor:DataCategoryVisitorBase=CategorizedDataVisitor, sigma:float=1.0, dataToCompareTo:list[list[float]]=None) -> None:
         super().__init__(data, dataIncludesLabels, dataCategoryVisitor=dataCategoryVisitor)
         self._sigma = sigma
         self._dataToCompareTo = dataToCompareTo
 
     def getProcessedData(self) -> tuple[np.ndarray, np.ndarray]:
+        """Gets the processed data from visitors with a call to super's 
+        getprocessedData and then applies the gaussian kernel to these examples"""
         self._y, self._X = super().getProcessedData()
         self._applyGaussianKernelToAllTrainingExamplesInX()
         return np.array(self._y), np.array(self._X)

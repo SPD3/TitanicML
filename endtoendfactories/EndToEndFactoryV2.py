@@ -11,9 +11,8 @@ from endtoendfactories.EndToEndFactoryBase import EndToEndFactoryBase
 import numpy as np
 
 class EndToEndFactoryV2 (EndToEndFactoryBase):
-    """First version of an EndToEndFactory, will increase in version number as 
-    models are generated with higher and higher scores on the test set.
-    """
+    """Second version of an EndToEndFactory, This one uses a gaussian data 
+    processor to compare data to the examples trained on"""
 
     def __init__(self) -> None:
         self._name = "V2"
@@ -26,7 +25,7 @@ class EndToEndFactoryV2 (EndToEndFactoryBase):
         return EndToEndFactoryV2._instance
 
     def getPreProcessData(self, data:np.ndarray, dataIncludesLabels:bool) -> DataProcessorWithVisitor:
-        """Gets a dataPreprocessorWithVisitor with a CategorizedDataVisitor"""
+        """Gets a DataProcessorGaussAndCosine with a ScaledDataCategoryVisitor"""
         scaledDataCategoryVisitor = ScaledDataCategoryVisitor()
         train_data = pd.read_csv("titanic/train.csv")
         train_data = train_data.to_numpy().tolist()

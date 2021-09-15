@@ -3,6 +3,9 @@ import numpy as np
 from dataprocessors.DataProcessorWithVisitor import DataProcessorWithVisitor
 
 class DataProcessorCombiner (DataProcessorWithVisitor):
+    """For each value within an example, this data processor multiplies that 
+    value with all of the other values that make up the example and append this 
+    new product onto the example. It combines all the data within each example"""
 
     def getProcessedData(self) -> tuple[np.ndarray, np.ndarray]:
         self._y, self._X = super().getProcessedData()

@@ -5,7 +5,8 @@ import unittest
 from datacategoryvisitors.ScaledDataCategoryVisitor import ScaledDataCategoryVisitor
 import numpy as np
 
-class DataPorcessorGaussAndOrigTest (unittest.TestCase):
+class DataProcessorGaussAndOrigTest (unittest.TestCase):
+    """Test code for the DataProcessorGaussAndOrig class"""
     def setUp(self) -> None:
         self.data = [
             [1,0,3,"Braund, Mr. Owen Harris","male",22,1,0,"A/5 21171",7.25,np.nan,"S"],
@@ -40,6 +41,8 @@ class DataPorcessorGaussAndOrigTest (unittest.TestCase):
             self.assertEquals(example[gaussExampleLength:], origExample, msg="orig example is not right")
 
     def testCombineOrigXAndGaussX(self) -> None:
+        """Tests the combineOrigXAndGaussX() method to ensure that data from 
+        _categoryDictionary is added onto X"""
         self.dataProcessorGaussAndOrig._X = [
             [1,2,3,4],
             [5,6,7,8],

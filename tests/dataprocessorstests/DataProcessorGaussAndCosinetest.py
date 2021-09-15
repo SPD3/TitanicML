@@ -5,6 +5,7 @@ import numpy as np
 from dataprocessors.DataProcessorGaussAndCosine import DataProcessorGaussAndCosine
 
 class DataProcessorGaussAndCosineTest (unittest.TestCase):
+    """Test code for the DataProcessorGaussAndCosine class"""
     def setUp(self) -> None:
         data = [
             [1,0,3,"Braund, Mr. Owen Harris","male",22,1,0,"A/5 21171",7.25,np.nan,"S"],
@@ -14,6 +15,9 @@ class DataProcessorGaussAndCosineTest (unittest.TestCase):
         self.dataProcessorGaussAndCosine = DataProcessorGaussAndCosine(data, True, ScaledDataCategoryVisitor())
 
     def testGetCosineSimilarity(self):
+        """Tests that the getCosineSimilarity method returns a value of 0 for 
+        vectors that are orthogonal and a value of 1 for values that are in the 
+        same direction"""
         list1 = [1,0,1,0]
         list2 = [0,1,0,1]
         list3 = [2,0,2,0]

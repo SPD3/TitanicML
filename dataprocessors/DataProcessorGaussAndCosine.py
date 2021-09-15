@@ -25,6 +25,7 @@ class DataProcessorGaussAndCosine (DataProcessorGaussianKernel):
         self._X = newX
         
     def _getCosineSimilarity(self, list1:list[float], list2:list[float]) -> float:
+        """Gets the cosine similarity between two list of values."""
         dot = 0
         list1Mag = 0
         list2Mag = 0
